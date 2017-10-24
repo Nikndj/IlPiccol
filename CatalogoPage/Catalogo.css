@@ -1,0 +1,21 @@
+body{
+	text-align: center;
+}
+tr{
+	margin-bottom: 5px;
+}
+td{
+	width: 20%;
+}
+.bottom5{
+	margin-bottom: 5px;
+}
+.w100{
+	width: 100%;
+}
+.strong{
+ font-weight: bold;
+}
+.mar{
+	margin:10px;
+}
