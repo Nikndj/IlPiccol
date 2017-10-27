@@ -1,0 +1,21 @@
+#bottom {
+	background-color: lightgrey; 
+}
+
+#contenuto {
+	margin: auto 100px 50px 100px;
+}
+
+html {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	font-family: "Arial";
+    font-weight: bold;
+    font-size: 20px;
+}
