@@ -1,0 +1,23 @@
+{
+  "name": "ilpiccol",
+  "version": "1.0.0",
+  "description": "Best site of stupid offers\r  SEEEEEEEEEEEES",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LinkindayL/IlPiccol.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LinkindayL/IlPiccol/issues"
+  },
+  "homepage": "https://github.com/LinkindayL/IlPiccol#readme",
+  "dependencies": {
+    "ejs": "^2.5.7",
+    "express": "^4.16.2"
+  }
+}
