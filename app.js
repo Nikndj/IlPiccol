@@ -27,12 +27,20 @@ app.get('/', function(req, res) {
 	res.render('Homepage.ejs');
 });
 
+app.get('/contacts', function(req, res) {
+	res.render('Contatti.ejs');
+});
+
 app.get('/login', function(req, res) {
 	res.render('Accesso.ejs');
 });
 
 app.get('/register', function(req, res) {
 	res.render('Registrazione.ejs');
+});
+
+app.get('/support', function(req, res) {
+	res.render('Supporto.ejs');
 });
 
 app.get('/cart', function(req, res) {
