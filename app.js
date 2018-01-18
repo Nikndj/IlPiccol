@@ -1,11 +1,11 @@
 var express = require('express'),
  ejs = require('ejs'),
  mongoose = require('mongoose'),
+ passport = require('passport'),
+ bodyParser= require("body-parser"),
  Utente = require('./models/utenti'),
  Fornitore = require('./models/fornitori'),
  Prodotto = require('./models/prodotti'),
- bodyParser= require("body-parser"),
- passport = require('passport'),
  localStrategy= require('passport-local');
  passportLocalMongoose= require('passport-local-mongoose');
  app = express();
@@ -42,10 +42,6 @@ app.get('/', function(req, res) {
 
 app.get('/contacts', function(req, res) {
 	res.render('Contatti.ejs');
-});
-
-app.get('/login', function(req, res) {
-	res.render('Accesso.ejs');
 });
 
 app.get('/support', function(req, res) {
@@ -85,6 +81,28 @@ app.post("/register", function(req, res){
 });
 
 //LOGIN ROUTES
+
+app.get('/login', function(req, res) {
+	res.render('Accesso.ejs');
+});
+
+app.post("/login", passport.authenticate("local",{
+    successRedirect: "/secret",
+    failureRedirect: "/login"
+}), function (req, res) {
+});
+
+app.get("/logout", function(req, res){
+	req.logOut();
+	res.redirect("/");
+});
+
+function isLoggedIn(req, res, next) {
+	if (req.isAuthenticated()){
+		return next();
+	}
+	res.redirect("/login");
+}
 
 //per indicare su che porta deve ascoltare il server
 app.listen(3000, function() {
