@@ -49,6 +49,16 @@ app.get('/catalog', function(req, res) {
 	res.render('Catalogo.ejs');
 });
 
+app.get("/catalog/:id", function (req, res){
+	Prodotto.findById(req.params.id, function (err, foundProdotto) {
+		if(err){
+			console.log(err);
+		}else{
+			res.render("Item.ejs", {prodotti: foundProdotto})
+		}
+	});
+});
+
 //REGISTRATION ROUTES
 app.get('/register', function(req, res) {
 	res.render('Registrazione.ejs');
@@ -65,7 +75,7 @@ app.post("/register", function(req, res) {
 				console.log(err);
 				return res.render("Registrazione.ejs");
 			}
-			passport.authenticate("local")(req, res, function(){
+			passport.authenticate("ilpiccoldb")(req, res, function(){
 				res.redirect("*");
 			});
 		});
@@ -80,7 +90,7 @@ app.get('/login', function(req, res) {
 	res.render('Accesso.ejs');
 });
 
-app.post("/login", passport.authenticate("local",{
+app.post("/login", passport.authenticate("ilpiccoldb",{
     successRedirect: "secret.ejs",
     failureRedirect: "Accesso.ejs"
 }), function (req, res) {
