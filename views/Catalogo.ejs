@@ -2,8 +2,15 @@
 <% include partials/navbar%>
 
 <div>
-    <% prodotti.forEach(function(prodotto){%>
-
+    <% prodotti.forEach(function(Prodotto){%>
+        <div>
+            <div>
+                <h4><%= Prodotto.nome %></h4>             
+            </div>
+            <div><h2><%= Prodotto.prezzo %></h2></div>
+            <p><a href="/Item
+                /<%= prodotti._id"> More Info! </a></p>
+        </div>
 
 
     <% }) %>
