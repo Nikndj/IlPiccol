@@ -17,6 +17,11 @@ mongoose.connect('mongodb://localhost/ilpiccoldb');
 
 //APP SETTINGS
 app.set('view engine', 'ejs');
+app.use(require('express-session')({
+	secret: 'very secret words',
+	resave: false,
+	saveUninitialized: false
+  }));
 //use per specificare la cartella in cui si trovano i file statici (css, immagini...)
 app.use(express.static('../public'));
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -65,6 +70,10 @@ app.get("/catalog/:id", function (req, res){
 	});
 });
 
+app.get('/secret', function(req, res) {
+	res.render('secret.ejs');
+});
+
 //REGISTRATION ROUTES
 app.get('/register', function(req, res) {
 	res.render('Registrazione.ejs');
@@ -72,17 +81,18 @@ app.get('/register', function(req, res) {
 
 app.post("/register", function(req, res) {
 	//req.body.nomeUtente
-	var pass = req.body.password
-	var passRepeat = req.body.passwordRepeat
+	var pass = req.body.password;
+	var passRepeat = req.body.passwordRepeat;
 	//req.body.email
+	
 	if (pass === passRepeat) {
-		Utente.register(new Utente({nomeUtente: req.body.nomeUtente, email: req.body.email}), req.body.password, function(err, user){
+		Utente.register(new Utente({username: req.body.username}), req.body.password, function(err, user){
 			if(err){
 				console.log(err);
 				return res.render("Registrazione.ejs");
 			}
-			passport.authenticate("ilpiccoldb")(req, res, function(){
-				res.redirect("*");
+			passport.authenticate("local")(req, res, function(){
+				res.redirect("/secret");
 			});
 		});
 	} else {
@@ -96,9 +106,9 @@ app.get('/login', function(req, res) {
 	res.render('Accesso.ejs');
 });
 
-app.post("/login", passport.authenticate("ilpiccoldb",{
-    successRedirect: "secret.ejs",
-    failureRedirect: "Accesso.ejs"
+app.post("/login", passport.authenticate("local",{
+    successRedirect: "/secret",
+    failureRedirect: "/login"
 }), function (req, res) {
 });
 
