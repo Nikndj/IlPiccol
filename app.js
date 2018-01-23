@@ -27,7 +27,6 @@ passport.use(new localStrategy(Utente.authenticate()));
 passport.serializeUser(Utente.serializeUser());
 passport.deserializeUser(Utente.deserializeUser());
 
-
 //ROUTES
 app.get('/', function(req, res) {
 	res.render('Homepage.ejs');
@@ -46,7 +45,14 @@ app.get('/cart', function(req, res) {
 });
 
 app.get('/catalog', function(req, res) {
-	res.render('Catalogo.ejs');
+	//aggiungi reference a prodotto per ejs
+	Prodotto.find({}, function(err, allProdotti){
+        if(err){
+            console.log(err);
+        }else{
+            res.render("Catalogo.ejs", {prodotti: allProdotti});
+        }
+    })
 });
 
 app.get("/catalog/:id", function (req, res){
