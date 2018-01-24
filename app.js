@@ -124,6 +124,12 @@ function isLoggedIn(req, res, next) {
 	res.redirect("/login");
 }
 
+//ADMIN ROUTES and COMMANDS
+
+app.get('/admin', function(req, res) {
+	res.render('adminPage.ejs');
+});
+
 //deve rimanere in fondo altrimenti le altre routes non funzionano
 app.get("*", function(req, res) {
 	res.send("Che cazzo ce stai a fa qua ao");
