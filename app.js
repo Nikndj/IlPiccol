@@ -130,6 +130,21 @@ app.get('/admin', function(req, res) {
 	res.render('adminPage.ejs');
 });
 
+app.post("/adminCreate", function (req, res){
+	Prodotto.create({
+		nome: req.body.nome,
+		prezzo: req.body.prezzo,
+	}, function(err, prodotto){
+		if(err){
+			console.log(err);
+		}else{
+			console.log("New Product Insert: ");
+			console.log(prodotto);
+		}
+	});
+	res.redirect("/admin");
+});
+
 //deve rimanere in fondo altrimenti le altre routes non funzionano
 app.get("*", function(req, res) {
 	res.send("Che cazzo ce stai a fa qua ao");
