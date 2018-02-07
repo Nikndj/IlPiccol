@@ -10,7 +10,7 @@ Best site of stupid offers
  - 
  - 
  USER STORIES
- 1) Come admin voglio poter accedere ad un’area privata tramite username e password; (Nicola)
+ 1) Come admin voglio poter accedere ad un’area privata tramite username e password; (Da Sistemare)
  2) Come admin voglio gestire le rimanenze e i re-ordini dei prodotti; (Luigi)
  3) Il server deve inviare una email all’admin quando sta per terminare un prodotto; (Leonardo)
  4) Come admin voglio poter creare e inserire un nuovo prodotto (con proprietà come nome, descrizione, peso, ecc.); (Da Sistemare)
