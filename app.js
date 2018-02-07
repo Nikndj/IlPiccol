@@ -10,7 +10,6 @@ var express = require('express'),
  passportLocalMongoose= require('passport-local-mongoose');
  app = express();
 
-
 /*prima bisogna far partire mongod.bat (dovrebbe funzionare
  se si è lasciato il path di default nell'installazione)*/
 mongoose.connect('mongodb://localhost/ilpiccoldb');
@@ -186,13 +185,6 @@ app.post("/adminCreate", function (req, res){
 	res.redirect("/admin");
 });
 
-//deve rimanere in fondo altrimenti le altre routes non funzionano
-app.get("*", function(req, res) {
-	res.send("Che cazzo ce stai a fa qua ao");
-});
-
-
 //per indicare su che porta deve ascoltare il server
 app.listen(3000, function() {
-	console.log("Connesso correttamente al server sulla porta 3000");
-});
+	console.log("Connesso correttamente al server sulla porta 3000")})
