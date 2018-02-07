@@ -17,6 +17,11 @@ mongoose.connect('mongodb://localhost/ilpiccoldb');
 
 //APP SETTINGS
 app.set('view engine', 'ejs');
+app.use(require('express-session')({
+	secret: 'very secret words',
+	resave: false,
+	saveUninitialized: false
+  }));
 //use per specificare la cartella in cui si trovano i file statici (css, immagini...)
 app.use(express.static('../public'));
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -38,6 +43,28 @@ app.get('/contacts', function(req, res) {
 
 app.get('/support', function(req, res) {
 	res.render('Supporto.ejs');
+});
+
+app.get('/barradiricerca2', function(req,res){
+	res.render('barradiricerca2.ejs');
+})
+
+app.get('/risultati', function(req,res){
+	res.render('risultati.ejs');
+})
+
+app.post("/barradiricerca2", function(req,res){
+	
+		Prodotto.find({"nome": req.body.cerca.toLowerCase()}, function(err,arrayProdotti){
+			console.log(req.body.cerca);
+			if(err){
+				console.log(err);
+				res.render('notfound.ejs');
+			}else{
+				res.render('risultati.ejs', { prodotti: arrayProdotti });
+			}
+		}
+	)
 });
 
 app.get('/cart', function(req, res) {
@@ -65,6 +92,10 @@ app.get("/catalog/:id", function (req, res){
 	});
 });
 
+app.get('/secret', function(req, res) {
+	res.render('secret.ejs');
+});
+
 //REGISTRATION ROUTES
 app.get('/register', function(req, res) {
 	res.render('Registrazione.ejs');
@@ -72,17 +103,18 @@ app.get('/register', function(req, res) {
 
 app.post("/register", function(req, res) {
 	//req.body.nomeUtente
-	var pass = req.body.password
-	var passRepeat = req.body.passwordRepeat
+	var pass = req.body.password;
+	var passRepeat = req.body.passwordRepeat;
 	//req.body.email
+	
 	if (pass === passRepeat) {
-		Utente.register(new Utente({nomeUtente: req.body.nomeUtente, email: req.body.email}), req.body.password, function(err, user){
+		Utente.register(new Utente({username: req.body.username, admin: false}), req.body.password, function(err, user){
 			if(err){
 				console.log(err);
 				return res.render("Registrazione.ejs");
 			}
-			passport.authenticate("ilpiccoldb")(req, res, function(){
-				res.redirect("*");
+			passport.authenticate("local")(req, res, function(){
+				res.redirect("/secret");
 			});
 		});
 	} else {
@@ -96,16 +128,35 @@ app.get('/login', function(req, res) {
 	res.render('Accesso.ejs');
 });
 
-app.post("/login", passport.authenticate("ilpiccoldb",{
-    successRedirect: "secret.ejs",
-    failureRedirect: "Accesso.ejs"
-}), function (req, res) {
-});
+app.post("/login", isAdmin()
+
+);
+    
+function isAdmin() {
+	return function (req, res) {
+		Utente.findOne({"username": req.body.username}, function (err, utente) {
+			if (err){
+				//res.redirect("/login");
+				console.log(err);
+			}
+			if(utente.admin){
+				passport.authenticate("local")(req, res, function(){
+					res.redirect("/admin");
+				});
+			} else {
+				passport.authenticate("local")(req, res, function(){
+					res.redirect("/secret");
+				});
+			}
+		});
+	}	
+}
 
 app.get("/logout", function(req, res){
 	req.logOut();
 	res.redirect("/");
 });
+
 
 function isLoggedIn(req, res, next) {
 	if (req.isAuthenticated()){
@@ -113,6 +164,27 @@ function isLoggedIn(req, res, next) {
 	}
 	res.redirect("/login");
 }
+
+//ADMIN ROUTES and COMMANDS
+
+app.get('/admin', function(req, res) {
+	res.render('adminPage.ejs');
+});
+
+app.post("/adminCreate", function (req, res){
+	Prodotto.create({
+		nome: req.body.nome,
+		prezzo: req.body.prezzo,
+	}, function(err, prodotto){
+		if(err){
+			console.log(err);
+		}else{
+			console.log("New Product Insert: ");
+			console.log(prodotto);
+		}
+	});
+	res.redirect("/admin");
+});
 
 //deve rimanere in fondo altrimenti le altre routes non funzionano
 app.get("*", function(req, res) {
