@@ -86,7 +86,7 @@ app.post("/register", function(req, res) {
 	//req.body.email
 	
 	if (pass === passRepeat) {
-		Utente.register(new Utente({username: req.body.username}), req.body.password, function(err, user){
+		Utente.register(new Utente({username: req.body.username, admin: false}), req.body.password, function(err, user){
 			if(err){
 				console.log(err);
 				return res.render("Registrazione.ejs");
@@ -106,11 +106,29 @@ app.get('/login', function(req, res) {
 	res.render('Accesso.ejs');
 });
 
-app.post("/login", passport.authenticate("local",{
-    successRedirect: "/secret",
-    failureRedirect: "/login"
-}), function (req, res) {
-});
+app.post("/login", isAdmin()
+
+);
+    
+function isAdmin() {
+	return function (req, res) {
+		Utente.findOne({"username": req.body.username}, function (err, utente) {
+			if (err){
+				//res.redirect("/login");
+				console.log(err);
+			}
+			if(utente.admin){
+				passport.authenticate("local")(req, res, function(){
+					res.redirect("/admin");
+				});
+			} else {
+				passport.authenticate("local")(req, res, function(){
+					res.redirect("/secret");
+				});
+			}
+		});
+	}	
+}
 
 app.get("/logout", function(req, res){
 	req.logOut();

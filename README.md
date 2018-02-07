@@ -18,5 +18,5 @@ Best site of stupid offers
  6) Come utente voglio poter modificare gli articoli nel mio carrello; (Leonardo)
  7) Come utente voglio poter fare una ricerca dei prodotti e ordinarli in base a vari voti; (Matteo)
  8) Come utente voglio poter aggiungere prodotti ad una wishlist; (Matteo)
- 9) Come utente voglio poter vedere gli ultimi articoli aggiunti;
- 10) Come utente voglio poter lasciare feedback e voti e poter ordinare gli articoli in base al voto;
+ 9) Come utente voglio poter vedere gli ultimi articoli aggiunti; (Luigi)
+ 10) Come utente voglio poter lasciare feedback e voti e poter ordinare gli articoli in base al voto;(Luigi)
