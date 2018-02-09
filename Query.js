@@ -34,22 +34,22 @@ db.Utenti.find({email: /^req.body.stringaRicerca$/i },{_id:0, username:1, email:
 db.Utenti.find({password: /^req.body.stringaRicerca$/i},{_id:0, username:1, email:1})
 
 //Ricerca di un prodotto ordinata in base al prezzo Crescente.
-db.Prodotti.find({nome:{/req.body.stringaRicerca/i}},{_id:0, nome:1, PrezzoScontanto:1}).sort({PrezzoScontato:1})
+db.Prodotti.find({nome:/req.body.stringaRicerca/i},{_id:0, nome:1, PrezzoScontanto:1}).sort({PrezzoScontato:1})
 
 //Ricerca di un prodotto ordinata in base al prezzo Decrescente.
-db.Prodotti.find({nome:{/req.body.stringaRicerca/i}},{_id:0, nome:1, PrezzoScontanto:1}).sort({PrezzoScontato:-1})
+db.Prodotti.find({nome:/req.body.stringaRicerca/i},{_id:0, nome:1, PrezzoScontanto:1}).sort({PrezzoScontato:-1})
 
 //Ricerca di un prodotto ordinata in base al Nome Crescente
-db.Prodotti.find({nome:{/req.body.stringaRicerca/i}},{_id:0, nome:1, PrezzoScontanto:1}).sort({nome:1})
+db.Prodotti.find({nome:/req.body.stringaRicerca/i},{_id:0, nome:1, PrezzoScontanto:1}).sort({nome:1})
 
 //Ricerca di un prodotto ordinata in base al Nome Decrescente
-db.Prodotti.find({nome:{/req.body.stringaRicerca/i}},{_id:0, nome:1, PrezzoScontanto:1}).sort({nome:-1})
+db.Prodotti.find({nome:/req.body.stringaRicerca/i},{_id:0, nome:1, PrezzoScontanto:1}).sort({nome:-1})
 
 //Ricerca di un prodotto ordinata in base al Voto Crescente
-db.Prodotti.find({nome:{/req.body.stringaRicerca/i}},{_id:0, nome:1, prezzoScontato:1, voto:1}).sort({voto: 1})
+db.Prodotti.find({nome:/req.body.stringaRicerca/i},{_id:0, nome:1, prezzoScontato:1, voto:1}).sort({voto: 1})
 
 //Ricerca di un prodotto ordinata in base al Voto Crescente
-db.Prodotti.find({nome:{/req.body.stringaRicerca/i}},{_id:0, nome:1, prezzoScontato:1, voto:1}).sort({voto: -1})
+db.Prodotti.find({nome:/req.body.stringaRicerca/i},{_id:0, nome:1, prezzoScontato:1, voto:1}).sort({voto: -1})
 
 //*************************************************************************************************
 // Ricerca Particolare, tramite creazione di un indice, più efficiente
