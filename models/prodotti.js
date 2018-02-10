@@ -6,6 +6,7 @@ var Schema = mongoose.Schema;
 var schemaProdotto = new Schema({
 	nome: String,
 	prezzo: Number,
+	dataInserimento: Date,
 	/*
 	prezzoScontato: Number, //di base uguale al prezzo
 	produttore: String, 

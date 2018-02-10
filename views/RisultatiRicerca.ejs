@@ -1,0 +1,24 @@
+<% include partials/header%>
+<% include partials/navbar%>
+
+<div>
+        <form action="/RisultatiRicerca" method="POST">
+            <input type="text" name="cerca" placeholder="Cerca...">
+            <button type="submit">Cerca</button>
+        </form>
+    </div>
+
+<div>
+    <% prodotti.forEach(function(Prodotto){%>
+        <div>
+            <div>
+                <h4><%= Prodotto.nome %></h4>             
+            </div>
+            <div>
+                <h2><%= Prodotto.prezzo %></h2>
+            </div>
+        </div>
+    <% }) %>
+</div>
+
+<% include partials/footer%>
