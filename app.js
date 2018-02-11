@@ -56,57 +56,17 @@ app.get('/NotFound', function(req, res){
 	res.render('NotFound.ejs');
 })
 
-app.post("/BarraDiRicerca", function(req,res){
-	    var stringa=req.body.cerca.toLowerCase(); //stringa dalla BarraDiRicerca passa da MARIO LOMBARDI a mario lombardi
-		var paroleChiave = stringa.split(" "); //converte in un array di stringhe con delimitatore es. [mario, lombardi]
-		//viene salvato sulla variabile "tuttiiprodotti" ogni prodotto
-		Prodotto.find({},function(err,tuttiiprodotti){
-		if(err){
-			console.log(err);
-		}else{
-			//parte complessa. Find usato a caso perchè non so mettere una function da sola senza sminchiare tutto.
-			//viene fatto il foreach su "tuttiiprodotti"
-			//viene fatto il foreach di ogni parola chiave
-			//viene controllata la corrispondenza della parola chiave nel nome di ogni prodotto
-			//viene aggiunto al risultato nel caso venga trovato e che non sia già presente nella soluzione
-			Prodotto.find({nome: null},function(err,arrayProdotti){
-			    tuttiiprodotti.forEach(function(item){
-				    paroleChiave.forEach(function(parolaChiave){
-						var pos = item.nome.indexOf(parolaChiave);
-					    if(pos>=0){
-							if(arrayProdotti.length<=0){
-								arrayProdotti.push(item);
-							}else{
-								var trovato=false;
-								arrayProdotti.forEach(function(oggetto){
-									if(oggetto._id===item._id){
-										trovato=true;
-									}
-								})
-								if(trovato==false){
-								arrayProdotti.push(item);
-								}
-						}
-							
-					}
-				})
-				})
-				if(err){
-				console.log(err);
-				res.render('NotFound.ejs');
-			    }else{
-					if(arrayProdotti.length==0){
-						res.render('NotFound.ejs');
-					}else{
-				res.render('RisultatiRicerca.ejs', { prodotti: arrayProdotti });
-					}
-				}
-			})
-	    }
-		})	
-});
-
-//stesso algoritmo anche per la pagina dei risultati poichè contiene anch'essa una barra di ricerca
+app.get("/itemManagement",function(req,res){
+	res.render('itemManagement.ejs');
+})
+//stringa dalla BarraDiRicerca passa da MARIO LOMBARDI a mario lombardi
+//converte in un array di stringhe con delimitatore es. [mario, lombardi]
+//viene salvato sulla variabile "tuttiiprodotti" ogni prodotto
+//parte complessa. Find usato a caso perchè non so mettere una function da sola senza sminchiare tutto.
+//viene fatto il foreach su "tuttiiprodotti"
+//viene fatto il foreach di ogni parola chiave
+//viene controllata la corrispondenza della parola chiave nel nome di ogni prodotto
+//viene aggiunto al risultato nel caso venga trovato e che non sia già presente nella soluzione
 app.post("/RisultatiRicerca", function(req,res){
 	var stringa=req.body.cerca.toLowerCase();
 		var paroleChiave = stringa.split(" ");
@@ -174,6 +134,10 @@ app.get("/catalog/:id", function (req, res){
 		}
 	});
 });
+
+app.get('/itemManagement',function(req,res){
+	res.render('itemManagement.ejs');
+})
 
 app.get('/secret', function(req, res) {
 	res.render('secret.ejs');
@@ -255,9 +219,14 @@ app.get('/admin', function(req, res) {
 });
 
 app.post("/adminCreate", function (req, res){
+	var today=new Date();
 	Prodotto.create({
 		nome: req.body.nome,
 		prezzo: req.body.prezzo,
+		dataInserimento: today,
+		prezzoScontato: req.body.prezzo,
+		emailProduttore: req.body.emailProduttore,
+		quantita: req.body.quantita,
 	}, function(err, prodotto){
 		if(err){
 			console.log(err);
@@ -267,6 +236,49 @@ app.post("/adminCreate", function (req, res){
 		}
 	});
 	res.redirect("/admin");
+});
+
+app.post("/adminManagement", function (req, res){
+	var stringa=req.body.cerca.toLowerCase();
+	var paroleChiave = stringa.split(" ");
+	Prodotto.find({},function(err,tuttiiprodotti){
+	if(err){
+		console.log(err);
+	}else{
+		Prodotto.find({nome: null},function(err,arrayProdotti){
+			tuttiiprodotti.forEach(function(item){
+				paroleChiave.forEach(function(parolaChiave){
+					var pos = item.nome.indexOf(parolaChiave);
+					if(pos>=0){
+						if(arrayProdotti.length<=0){
+							arrayProdotti.push(item);
+						}else{
+							var trovato=false;
+							arrayProdotti.forEach(function(oggetto){
+								if(oggetto._id===item._id){
+									trovato=true;
+								}
+							})
+							if(trovato==false){
+							arrayProdotti.push(item);
+							}
+					}
+				}
+			})
+			})
+			if(err){
+			console.log(err);
+			res.render('NotFound.ejs');
+			}else{
+				if(arrayProdotti.length==0){
+					res.render('NotFound.ejs');
+				}else{
+			res.render("itemManagement.ejs", { prodotti: arrayProdotti });
+				}
+			}
+		})
+	}
+	})
 });
 
 app.get("*",function (req,res){

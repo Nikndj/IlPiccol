@@ -2,12 +2,21 @@
 
 <!-- form per aggiungere prodotti al DB (user story4)-->
 <div>
+    <h1>Aggiungere Prodotti al DB:</h1>
     <form action="/adminCreate" method="POST">
     <input type="text" name="nome" id="" placeholder="nome in string">
     <input type="number" name="prezzo" id="" placeholder="prezzo in numero">
-    <button type="submit">Butta sta merda</button>
+    <input type="email" name="emailProduttore" id="" placeholder="e-mail Produttore">
+    <input type="number" name="quantita" id="" placeholder="disponibilità (q.ta)">
+    <button type="submit">Crea nuovo Prodotto</button>
     </form>
 </div>
 <!-- form o div da cui gestire i prodotti (user Story2-->
-
+<div>
+    <h1>Gestione di un Prodotto</h1>
+    <form action="/adminManagement" method="POST">
+        <input type="text" name="cerca" placeholder="nome del prodotto da gestire">
+        <button type="submit">Gestisci</button>
+    </form>
+</div>
 <% include partials/footer%>
