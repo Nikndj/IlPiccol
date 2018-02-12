@@ -1,6 +1,45 @@
 <% include partials/header%>
 <% include partials/navbar%>
 
-<p><%= prodotti.nome%></p>
+<h1><%= prodotti.nomeVisualizzato%></h1>
+<h3>Prezzo base: <strike><%= prodotti.prezzo%>€</strike></h3>
+<h2>Prezzo scontato: <%= prodotti.prezzoScontato%>€</h2>
+<h4>Voto Medio: <%= prodotti.votoMedio%></h4>
+<img src="<%= prodotti.immagine%>" height="400px" width="460px">
+<p><%= prodotti.descrizione%></p>
+<h5>Recensioni</h5>
+<div>
+<hr>
+<% prodotti.commenti.forEach(function(commento){%>
+<p><%= commento.autore%>, il <%= commento.data.getDate()%>/<%= commento.data.getMonth()%>/<%= commento.data.getFullYear()%>
+   , ore <%= commento.data.getHours()%>:<%= commento.data.getMinutes()%> con Voto: <%= commento.voto%> dice:</p>
+<p><%= commento.testo%></p>
+<hr>
+<% })%>
+</div>
+
+<!-- predisposizione per carrello-->
+<div>
+    <form action="/catalog/<%= prodotti._id %>" method="POST">
+    <label for="addCart">Aggiungi al Carrello: </label>
+    <input type="submit" id="addCart" value="Add to cart"></input>
+    <input type="hidden" name="azioneUtente" value="cart"></input>
+    </form>
+</div>
+<!-- predisposizione per wishlist-->
+<div>
+    <form action="/catalog/<%= prodotti._id %>" method="POST">
+    <label for="addWish">Aggiungi a WishList: </label>
+    <input type="submit" id="addWish" value="Add to WishList"></input>
+    <input type="hidden" name="azioneUtente" value="wishlist"></input>
+    </form>
+</div>
+<div>
+<form action="/catalog/<%= prodotti._id %>" method="POST">
+    <label for="bottoneToRecensione">Recensisci questo prodotto!</label>
+    <input type="hidden" name="prodottoRecensione" value="<%= prodotti._id %>"></input>
+    <button type="submit" id="bottoneToRecensione">Vai</button>
+</form>
+</div>
 
 <% include partials/footer%>
