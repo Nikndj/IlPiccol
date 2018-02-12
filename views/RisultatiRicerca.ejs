@@ -2,21 +2,21 @@
 <% include partials/navbar%>
 
 <div>
-        <form action="/RisultatiRicerca" method="POST">
-            <input type="text" name="cerca" placeholder="Cerca...">
-            <button type="submit">Cerca</button>
-        </form>
-    </div>
-
-<div>
     <% prodotti.forEach(function(Prodotto){%>
         <div>
             <div>
-                <h4><%= Prodotto.nome %></h4>             
+                <h2><%= Prodotto.nomeVisualizzato %></h2>             
             </div>
             <div>
-                <h2><%= Prodotto.prezzo %></h2>
+                <h3>Prezzo: <%= Prodotto.prezzoScontato %>€</h3>
             </div>
+            <div>
+                <h4>Voto: <%= Prodotto.votoMedio %></h4>
+            </div>
+            <div>
+                <img src="<%= Prodotto.immagine%>" height="200px" width="240px">
+            </div>
+            <p><a href="/catalog/<%= Prodotto._id %>"> More Info! </a></p>
         </div>
     <% }) %>
 </div>

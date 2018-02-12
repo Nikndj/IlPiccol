@@ -2,17 +2,32 @@
 <% include partials/navbar%>
 
 <div>
-    <% prodotti.forEach(function(Prodotto){%>
-        <div>
-            <div>
-                <h4><%= Prodotto.nome %></h4>             
-            </div>
-            <div><h2><%= Prodotto.prezzo %></h2></div>
-            <p><a href="/catalog/<%= Prodotto._id %>"> More Info! </a></p>
-        </div>
-
-        
-    <% }) %>
+    <% var contatore=0; %>
+    <table>
+        <thead>
+        </thead>
+        <tbody>
+            <tr>
+                <% prodotti.forEach(function(Prodotto){%>
+                <td>
+                    <div>
+                        <h4><%= Prodotto.nome.toUpperCase() %></h4>             
+                    </div>
+                    <div>
+                        <h2><%= Prodotto.prezzoScontato %>€</h2>
+                    </div>
+                    <div>
+                        <img src="<%= Prodotto.immagine%>" height="200px" width="225px">
+                    </div>
+                    <a href="/catalog/<%= Prodotto._id %>"> More Info! </a>
+                </td> 
+                <% contatore=contatore+1; %>
+                <% if(contatore%4==0){ %>
+            </tr>
+            <tr>
+              <% } %>
+              <% }) %>
+            </tr>
 </div>
 
 <% include partials/footer%>
