@@ -1,0 +1,40 @@
+<% include partials/header%>
+<div>
+    <h3>Ricerca di nuovo per la gestione di un prodotto</h3>
+        <form action="/adminManagement" method="POST">
+            <input type="text" name="cerca" placeholder="Cerca..." size="35" maxlength="35">
+            <button type="submit">Cerca</button>
+        </form>
+    </div>
+
+<div>
+    <% prodotti.forEach(function(Prodotto){%>
+        <div>
+                <p>***</p>
+                <p><%= Prodotto.nomeVisualizzato %></p>
+                <p>Prezzo: <%= Prodotto.prezzo %></p>
+                <p>Prezzo Scontato: <%= Prodotto.prezzoScontato %></p>
+                <p>Quantità disponibili: <%= Prodotto.quantita %></p>
+                <p>Email Produttore per il Riordino: <a href="mailto:<%= Prodotto.emailProduttore %>"><%= Prodotto.emailProduttore %></a></p>
+                <p>Immagine: <img src="<%= Prodotto.immagine %>" height="300px" width="300px"> </p>
+                <p>Descrizione: <%= Prodotto.descrizione%></p>
+                <div>
+                <form action="/itemManagement" method="POST">
+                    <label for="inputPrezzo">Cambia il Prezzo scontato di questo prodotto: </label>
+                    <input id="inputPrezzo" name="inputPrezzo" type="number" placeholder="prezzo in euro" required="required" min="1" step="any" max="10000,00"></input>
+                    <input type="hidden" name="idProdotto" value="<%=Prodotto._id%>"></input>
+                    <input type="hidden" name="inputImmagine" value="null"></input>
+                </form>
+                <form action="/itemManagement" method="POST">
+                    <label for="inputImmagine">Cambia L'immagine di questo prodotto: </label>
+                    <input id="inputImmagine" name="inputImmagine" type="text" placeholder="Link immagine (locale o remota)" required="required"></input>
+                    <input type="hidden" name="idProdotto" value="<%=Prodotto._id%>"></input>
+                    <input type="hidden" name="inputPrezzo" value="null"></input>
+                </form>
+                </div>
+                <p>***</p>
+        </div>
+    <% }) %>
+</div>
+
+<% include partials/footer%>
