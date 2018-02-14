@@ -1,0 +1,24 @@
+<% include partials/header%>
+<% include partials/navbar%>
+
+<div>
+    <% prodotti.forEach(function(Prodotto){%>
+        <div>
+            <div>
+                <h2><%= Prodotto.nomeVisualizzato %></h2>             
+            </div>
+            <div>
+                <h3>Prezzo: <%= Prodotto.prezzoScontato %>€</h3>
+            </div>
+            <div>
+                <h4>Voto: <%= Prodotto.votoMedio %></h4>
+            </div>
+            <div>
+                <img src="<%= Prodotto.immagine%>" height="200px" width="240px">
+            </div>
+            <p><a href="/catalog/<%= Prodotto._id %>"> More Info! </a></p>
+        </div>
+    <% }) %>
+</div>
+
+<% include partials/footer%>

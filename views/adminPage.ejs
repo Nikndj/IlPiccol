@@ -1,13 +1,21 @@
 <% include partials/header%>
-
-<!-- form per aggiungere prodotti al DB (user story4)-->
 <div>
+    <h1>Aggiungere Prodotti al DB:</h1>
     <form action="/adminCreate" method="POST">
-    <input type="text" name="nome" id="" placeholder="nome in string">
-    <input type="number" name="prezzo" id="" placeholder="prezzo in numero">
-    <button type="submit">Butta sta merda</button>
+    <input type="text" name="nome" placeholder="nome in string" required="required">
+    <input type="number" name="prezzo" placeholder="prezzo in euro" required="required" min="1" step="any" max="10000,00">
+    <input type="email" name="emailProduttore" placeholder="e-mail Produttore" required="required">
+    <input type="number" name="quantita" placeholder="disponibilità (q.ta)" required="required">
+    <textarea name="descrizione" placeholder="descrizione" required="required"></textarea>
+    <input type="text" name="immagine" placeholder="Inserire Link Immagine (Locale/Remoto)" required="required">
+    <button type="submit" onclick="alert('Stai Creando un Prodotto')">Crea nuovo Prodotto</button>
     </form>
 </div>
-<!-- form o div da cui gestire i prodotti (user Story2-->
-
+<div>
+    <h1>Gestione di un Prodotto</h1>
+    <form action="/adminManagement" method="POST">
+        <input type="text" name="cerca" placeholder="nome del prodotto da gestire" required="required" minlength="1">
+        <button type="submit" onclick="alert('Stai Gestendo un Prodotto')">Gestisci</button>
+    </form>
+</div>
 <% include partials/footer%>
