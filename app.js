@@ -254,8 +254,12 @@ app.post("/catalog/:id",function(req,res){
 	}
 });
 
-app.get('/secret', function(req, res) {
+app.get('/secret', isLoggedIn(), function(req, res) {
+	if(req.user.admin){
+		res.redirect("/admin")
+	}else{
 	res.render('secret.ejs');
+	}
 });
 
 //REGISTRATION ROUTES
@@ -320,11 +324,14 @@ app.get("/logout", function(req, res){
 });
 
 
-function isLoggedIn(req, res, next) {
-	if (req.isAuthenticated()){
-		return next();
+function isLoggedIn() {
+	return function (req, res, next) {
+		if (req.isAuthenticated()){
+			return next();
+		}else{
+		res.redirect("/login");
+		}	
 	}
-	res.redirect("/login");
 }
 
 //ADMIN ROUTES and COMMANDS
