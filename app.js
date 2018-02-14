@@ -70,8 +70,8 @@ app.get("/catalog/:id", function (req, res){
 	});
 });
 
-app.get('/secret', function(req, res) {
-	res.render('secret.ejs');
+app.get('/secret', isUserLoggedIn(), function (err) {
+	console.log(err);
 });
 
 //REGISTRATION ROUTES
@@ -80,10 +80,8 @@ app.get('/register', function(req, res) {
 });
 
 app.post("/register", function(req, res) {
-	//req.body.nomeUtente
 	var pass = req.body.password;
 	var passRepeat = req.body.passwordRepeat;
-	//req.body.email
 	
 	if (pass === passRepeat) {
 		Utente.register(new Utente({username: req.body.username, admin: false}), req.body.password, function(err, user){
@@ -114,7 +112,7 @@ function isAdmin() {
 	return function (req, res) {
 		Utente.findOne({"username": req.body.username}, function (err, utente) {
 			if (err){
-				//res.redirect("/login");
+				res.redirect("/login");
 				console.log(err);
 			}
 			if(utente.admin){
@@ -135,16 +133,33 @@ app.get("/logout", function(req, res){
 	res.redirect("/");
 });
 
-function isLoggedIn(req, res, next) {
-	if (req.isAuthenticated()){
-		return next();
-	}
+function isUserLoggedIn() {
+	return function(req, res){
+	if (req.user) {
+		res.redirect("/secret");
+		}
 	res.redirect("/login");
+	}
 }
-
+/*
+function isAdminLoggedIn() {
+	return function(req, res, next) {
+		Utente.findOne({"username": req.user}, function (err, utente) {
+			if (err){
+				res.redirect("/login");
+				console.log(err);
+			}
+			if (req.isAuthenticated() && utente.admin) {
+				return next();
+			}
+		});
+		res.redirect("/login");
+	}
+}
+*/
 //ADMIN ROUTES and COMMANDS
 
-app.get('/admin', function(req, res) {
+app.get('/admin',  function(req, res) {
 	res.render('adminPage.ejs');
 });
 
