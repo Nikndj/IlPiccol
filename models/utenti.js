@@ -3,10 +3,10 @@ var Schema = mongoose.Schema;
 var passportLocalMongoose = require("passport-local-mongoose");
 
 var schemaUtente = new Schema({
-	username: String,
+	"username": String,
 	//email: String,
-	password: String,
-	admin: Boolean
+	"password": String,
+	"admin": { "type": Boolean, "required": true, "default": false},
 	/*
 	nome: String,
 	cognome: String,
@@ -15,7 +15,12 @@ var schemaUtente = new Schema({
 	cap: Number,
 	citta: String
 	*/
-});
+	"carrello": [{ 
+		prodotto: { "type": Schema.Types.ObjectId, "ref": 'Prodotto' }, 
+		quantita: { "type": Number, "default": 1 }
+	}],
+	"ordiniPassati": [{ "type": Schema.Types.ObjectId, "ref": 'Ordine' }]
+}, {usePushEach: true});
 
 schemaUtente.plugin(passportLocalMongoose);
 

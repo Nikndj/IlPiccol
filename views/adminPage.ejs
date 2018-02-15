@@ -1,7 +1,7 @@
 <% include partials/header%>
 <div>
     <h1>Aggiungere Prodotti al DB:</h1>
-    <form action="/adminCreate" method="POST">
+    <form action="/adminInsertProduct" method="POST">
     <input type="text" name="nome" placeholder="nome in string" required="required">
     <input type="number" name="prezzo" placeholder="prezzo in euro" required="required" min="1" step="any" max="10000,00">
     <input type="email" name="emailProduttore" placeholder="e-mail Produttore" required="required">
@@ -13,7 +13,7 @@
 </div>
 <div>
     <h1>Gestione di un Prodotto</h1>
-    <form action="/adminManagement" method="POST">
+    <form action="/adminProductManagement" method="POST">
         <input type="text" name="cerca" placeholder="nome del prodotto da gestire" required="required" minlength="1">
         <button type="submit" onclick="alert('Stai Gestendo un Prodotto')">Gestisci</button>
     </form>

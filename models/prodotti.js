@@ -18,3 +18,15 @@ var schemaProdotto = new Schema({
 });
 
 module.exports = mongoose.model('Prodotto', schemaProdotto);
+
+
+
+
+
+
+/*<% prodotti.commenti.forEach(function(commento){%>
+<p><%= commento.autore%>, il <%= commento.data.getDate()%>/<%= commento.data.getMonth()%>/<%= commento.data.getFullYear()%>
+   , ore <%= commento.data.getHours()%>:<%= commento.data.getMinutes()%> con Voto: <%= commento.voto%> dice:</p>
+<p><%= commento.testo%></p>
+<hr>
+<% })%>*/

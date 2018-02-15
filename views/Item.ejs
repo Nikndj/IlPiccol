@@ -2,31 +2,35 @@
 <% include partials/navbar%>
 
 <h1><%= prodotti.nomeVisualizzato%></h1>
-<h3>Prezzo base: <strike><%= prodotti.prezzo%>€</strike></h3>
-<h2>Prezzo scontato: <%= prodotti.prezzoScontato%>€</h2>
+<% if (prodotti.prezzo > prodotti.prezzoScontato) {%> 
+    <h3>Prezzo base: <strike><%= prodotti.prezzo%>€</strike></h3>
+    <h2>Prezzo scontato: <%= prodotti.prezzoScontato%>€</h2>
+<% } else {%>
+    <h3>Prezzo base: <%= prodotti.prezzo%></h3>
+<% }%>
+<h4>Disponibilità: <%=prodotti.quantita%> pezzi</h4>
 <h4>Voto Medio: <%= prodotti.votoMedio%></h4>
 <img src="<%= prodotti.immagine%>" height="400px" width="460px">
 <p><%= prodotti.descrizione%></p>
+
 <h5>Recensioni</h5>
 <div>
 <hr>
-<% prodotti.commenti.forEach(function(commento){%>
-<p><%= commento.autore%>, il <%= commento.data.getDate()%>/<%= commento.data.getMonth()%>/<%= commento.data.getFullYear()%>
-   , ore <%= commento.data.getHours()%>:<%= commento.data.getMinutes()%> con Voto: <%= commento.voto%> dice:</p>
-<p><%= commento.testo%></p>
-<hr>
-<% })%>
+
+<!-- RIAGGIUNGI QUI DA PRODOTTI.JS -->
+
 </div>
 
 <!-- predisposizione per carrello-->
 <div>
-    <form action="/catalog/<%= prodotti._id %>" method="POST">
+    <form action="/catalog/<%= prodotti._id%>" method="POST">
     <label for="addCart">Aggiungi al Carrello: </label>
+    <input type="number" id="quantita" name="quantita" value="1" min="1" max="<%= prodotti.quantita%>"></input>
     <input type="submit" id="addCart" value="Add to cart"></input>
     <input type="hidden" name="azioneUtente" value="cart"></input>
     </form>
 </div>
-<!-- predisposizione per wishlist-->
+<!-- predisposizione per wishlist
 <div>
     <form action="/catalog/<%= prodotti._id %>" method="POST">
     <label for="addWish">Aggiungi a WishList: </label>
@@ -34,8 +38,9 @@
     <input type="hidden" name="azioneUtente" value="wishlist"></input>
     </form>
 </div>
+-->
 <div>
-<form action="/catalog/<%= prodotti._id %>" method="POST">
+<form action="/catalog/<%= prodotti._id%>/recenstioni>" method="POST">
     <label for="bottoneToRecensione">Recensisci questo prodotto!</label>
     <input type="hidden" name="prodottoRecensione" value="<%= prodotti._id %>"></input>
     <button type="submit" id="bottoneToRecensione">Vai</button>

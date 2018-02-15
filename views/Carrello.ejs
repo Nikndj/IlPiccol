@@ -1,6 +1,33 @@
 <% include partials/header%>
 <% include partials/navbar%>
 
+<h1> CARRELLO <h1>
+
+<div>
+	<% if (elementi.length > 0) {%>
+		<tr>
+	        <% elementi.forEach(function(elemento){%>
+	            <td>
+	                <div>
+	                    <h4><%= elemento.prodotto.nome.toUpperCase() %></h4>             
+	                    </div>
+	                <div>
+	                    <h2><%= elemento.prodotto.prezzoScontato * elemento.quantita %>€</h2>
+	                    </div>
+	                <div>
+	                    <h2><%= elemento.quantita %></h2>
+	                    </div>
+	                <div>
+	                    <img src="<%= elemento.prodotto.immagine%>" height="200px" width="225px">
+	                    </div>
+	                <a href="/catalog/<%= elemento.prodotto._id %>"> More Info! </a>
+	            </td> 
+	        <% }); %>
+	    </tr>
+	<% } else {%>
+		<h1> CARRELLO VUOTO <h1>
+	<% }%>
+</div>
 
 
 <% include partials/footer%>
