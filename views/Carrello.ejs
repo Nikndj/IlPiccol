@@ -9,18 +9,21 @@
 	        <% elementi.forEach(function(elemento){%>
 	            <td>
 	                <div>
-	                    <h4><%= elemento.prodotto.nome.toUpperCase() %></h4>             
+	                    <a href="/catalog/<%= elemento.prodotto._id %>"><h4><%= elemento.prodotto.nome.toUpperCase() %></h4></a>
 	                    </div>
 	                <div>
 	                    <h2><%= elemento.prodotto.prezzoScontato * elemento.quantita %>€</h2>
 	                    </div>
 	                <div>
+	                <form action="/modificaQuantita" method="POST">
 	                    <h2><%= elemento.quantita %></h2>
+	                    <input name="newQuantita" type="number" min="1" max="<%= elemento.prodotto.quantita%>"> </input>
+	                    <button type="submit"> Modifica Quantita </button>
+	                </form>
 	                    </div>
 	                <div>
 	                    <img src="<%= elemento.prodotto.immagine%>" height="200px" width="225px">
-	                    </div>
-	                <a href="/catalog/<%= elemento.prodotto._id %>"> More Info! </a>
+	                    </div> 
 	            </td> 
 	        <% }); %>
 	    </tr>

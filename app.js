@@ -7,27 +7,14 @@ var express = require('express'),
  Fornitore = require('./models/fornitori'),
  Prodotto = require('./models/prodotti'),
  Ordine = require('./models/ordini'),
- localStrategy= require('passport-local');
- passportLocalMongoose= require('passport-local-mongoose');
+ localStrategy= require('passport-local'),
+ passportLocalMongoose= require('passport-local-mongoose'),
+ path = require('path'),
  app = express();
 
 /*prima bisogna far partire mongod.bat (dovrebbe funzionare
  se si è lasciato il path di default nell'installazione)*/
 mongoose.connect('mongodb://localhost/ilpiccoldb', {useMongoClient: true});
-
-/*Prodotto.create({
-	nome: "Penna",
-	nomeVisualizzato: "Penna",
-	prezzo: 1,
-	dataInserimento: Date.now(),
-	prezzoScontato: 1,
-	emailProduttore: "asd@asd.asd",
-	quantita: 100,
-	immagine: "http://mongoosejs.com/docs/images/mongoose5_62x30_transparent.png",
-	commenti: null,
-	descrizione: "che bella",
-	votoMedio: 0
-});*/
 
 //APP SETTINGS
 app.set('view engine', 'ejs');
@@ -38,7 +25,7 @@ app.use(require('express-session')({
 }));
 
 //use per specificare la cartella in cui si trovano i file statici (css, immagini...)
-app.use(express.static('/public'));
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -62,17 +49,17 @@ app.get('/support', function(req, res) {
 
 app.get('/RisultatiRicerca', function(req,res){
 	res.render('RisultatiRicerca.ejs');
-})
+});
 
 app.get('/NotFound', function(req, res){
 	res.render('NotFound.ejs');
-})
+});
 
 app.get('/itemManagement',function(req,res){
 	Prodotto.find({}, function(err, prodotti){
 		res.render('itemManagement.ejs', {prodotti: prodotti});
 	});
-})
+});
 
 app.post('/itemManagementPrezzo', function(req,res){
 	Prodotto.findByIdAndUpdate(req.body.idProdotto, {
@@ -177,14 +164,14 @@ app.post("/RisultatiRicerca", function(req,res){
                         res.render('RisultatiRicerca.ejs', { prodotti: arrayProdotti });
 					}
 				}
-			})
+			});
 	    }
-	})	
+	});	
 });
 
 app.get('/recensione',function(req,res){
 	res.render('recensione.ejs');
-})
+});
 
 app.post('/recensione', function(req,res){
 	var recUser=req.user.username;
@@ -254,7 +241,7 @@ app.get('/catalog', function(req, res) {
         }else{
             res.render("Catalogo.ejs", {prodotti: allProdotti});
         }
-    })
+    });
 });
 
 app.get("/catalog/:id", function (req, res) {
@@ -345,7 +332,7 @@ function login() {
 				});
 			} else {
 				passport.authenticate("local")(req, res, function(){
-					res.redirect("/Homepage");
+					res.redirect("/");
 				});
 			}
 		});
