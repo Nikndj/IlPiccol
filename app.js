@@ -254,13 +254,27 @@ app.post("/catalog/:id",function(req,res){
 	}
 });
 
+app.get('/pageSecret', isLoggedIn(), function(req, res){
+	if (req.user.admin){
+		res.redirect('/admin')
+	}else{
+		Utente.findById(req.params.id, function(err, foundUtente){
+			if(err){
+				console.log(err);
+			}else{
+				res.render("userPage.ejs", {utenti: foundUtente})
+			}
+		})
+	}
+});
+/*
 app.get('/secret', isLoggedIn(), function(req, res) {
 	if(req.user.admin){
 		res.redirect("/admin")
 	}else{
 	res.render('secret.ejs');
 	}
-});
+});*/
 
 //REGISTRATION ROUTES
 app.get('/register', function(req, res) {
@@ -311,7 +325,7 @@ function isAdmin() {
 				});
 			} else {
 				passport.authenticate("local")(req, res, function(){
-					res.redirect("/secret");
+					res.redirect("/pageSecret");
 				});
 			}
 		});
