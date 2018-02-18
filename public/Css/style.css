@@ -802,3 +802,7 @@ padding-bottom: 60px;
 margin-top: -260px;
 margin-right: 95px;
 } 
+
+.hidden{
+  display: none;
+}

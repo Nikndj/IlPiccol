@@ -30,17 +30,17 @@
     <input type="hidden" name="azioneUtente" value="cart"></input>
     </form>
 </div>
-<!-- predisposizione per wishlist
+<!-- predisposizione per wishlist -->
 <div>
-    <form action="/catalog/<%= prodotti._id %>" method="POST">
+    <form action="/catalog/<%= prodotti._id%>/wishlist" method="POST">
     <label for="addWish">Aggiungi a WishList: </label>
     <input type="submit" id="addWish" value="Add to WishList"></input>
     <input type="hidden" name="azioneUtente" value="wishlist"></input>
     </form>
 </div>
--->
+
 <div>
-<form action="/catalog/<%= prodotti._id%>/recenstioni>" method="POST">
+<form action="/catalog/<%= prodotti._id%>/recensioni>" method="POST">
     <label for="bottoneToRecensione">Recensisci questo prodotto!</label>
     <input type="hidden" name="prodottoRecensione" value="<%= prodotti._id %>"></input>
     <button type="submit" id="bottoneToRecensione">Vai</button>

@@ -227,9 +227,68 @@ app.post('/recensione', function(req,res){
 });
 
 app.get('/cart', isLoggedIn, function(req, res) {
-	//Utente.findById(req.user._id).populate({path: 'carrello', populate: { path: 'prodotto', populate: { path: 'prodotto'}}}).exec(function(err, utente){
 	Utente.findById(req.user._id).populate({path: 'carrello.prodotto'}).exec(function(err, utente){
 		res.render('Carrello.ejs', { elementi: utente.carrello });
+	});
+});
+
+app.post('/eliminaProdottoCarrello/:id', isLoggedIn, function(req, res){
+	Utente.findById(req.user._id).exec(function(err, utente){
+		utente.carrello.forEach(function(elemento){
+			if (req.params.id == elemento.prodotto){
+				utente.carrello.splice(utente.carrello.indexOf(elemento.prodotto), 1);
+				utente.save(function(err){
+					if (err) console.log(err);
+					else res.redirect('/cart');
+				});
+			}
+		});
+	});
+});
+
+app.post('/modificaProdottoCarrello/:idProdotto/:idQuantita', isLoggedIn, function(req, res){
+	var idQuantitaFin = Number(req.params.idQuantita);
+	var quantita = req.body.idQuantitaFin;
+	console.log(req);
+	//console.log(quantita);
+	Utente.findById(req.user._id).populate({path: 'carrello.prodotto'}).exec(function(err, utente){
+		utente.carrello.forEach(function(elemento){
+			if (req.params.idProdotto == elemento.prodotto){
+				elemento.quantita = quantita;
+				utente.save(function(err){
+					if (err) console.log(err);
+					else res.redirect('/cart');
+				});
+			}
+		});
+		
+	});
+});
+
+app.post('/concludiOrdine', isLoggedIn, function(req, res){
+	var carrello = req.user.carrello;
+	Utente.findById(req.user._id).populate({path: 'carrello.prodotto'}).exec(function(err, utente){
+		var totale = 0;
+		utente.carrello.forEach(function(elemento){
+			totale += elemento.prodotto.prezzo * elemento.quantita;
+			elemento.prodotto.quantita -= elemento.quantita;
+			elemento.prodotto.save(function(err){});
+		}); 
+		utente.carrello = [];
+		var ordine = new Ordine({
+			"utente": utente._id,
+			"prodotti": carrello,
+			"totale": totale,
+			"data": Date.now()
+		}); 
+		utente.ordiniPassati.push(ordine);
+		ordine.save(function(err){
+			if (err) console.log(err);
+			else utente.save(function(err){
+				if (err) console.log(err)
+				else res.redirect("/checkout"); 
+			});
+		});
 	});
 });
 
@@ -275,7 +334,30 @@ app.post("/catalog/:id", isLoggedIn, function(req, res) {
 				if (err) console.log(err);
 				else res.redirect("/cart");
 			});
-			console.log(utente.carrello);
+		}
+	});
+});
+
+app.post('/catalog/:id/wishlist', isLoggedIn, function(req, res){
+	Utente.findById(req.user._id, function(err, utente){
+		if (err) console.log(err);
+		else {
+			var trovato = false;
+			utente.wishlist.forEach(function(elemento){
+				if(elemento.prodotto == req.params.id) {
+					//prodotto già presente nella wishlist
+					trovato = true;
+				}
+			});
+			if (!trovato) {
+				//prodotto non presente nella wishlist
+				utente.wishlist.push(req.params.id);
+			}
+			utente.save(function(err){
+				if (err) console.log(err);
+				else res.redirect("/wishlist");
+			});
+			console.log(utente.wishlist);
 		}
 	});
 });
@@ -283,6 +365,27 @@ app.post("/catalog/:id", isLoggedIn, function(req, res) {
 app.post("/catalog/:id/recensioni", isLoggedIn, function(req,res){
 	res.render('recensione.ejs', {idProdottoSent: req.body.prodottoRecensione});
 });
+
+app.get('/wishlist', isLoggedIn, function(req, res){
+	Utente.findById(req.user._id).populate({path: 'wishlist'}).exec(function(err, utente){
+		res.render('Wishlist.ejs', { elementi: utente.wishlist });
+	});
+});
+
+app.post('/eliminaProdottoWishlist/:id', isLoggedIn, function(req, res){
+	Utente.findById(req.user._id).exec(function(err, utente){
+		utente.wishlist.forEach(function(elemento){
+			if (req.params.id == elemento){
+				utente.wishlist.splice(utente.wishlist.indexOf(elemento), 1);
+				utente.save(function(err){
+					if (err) console.log(err);
+					else res.redirect('/wishlist');
+				});
+			}
+		});
+	});
+});
+
 
 app.get('/secret', function(req, res) {
 	res.render('secret.ejs');
@@ -297,7 +400,7 @@ app.post("/register", function(req, res) {
 	var pass = req.body.password;
 	var passRepeat = req.body.passwordRepeat;
 	if (pass === passRepeat) {
-		Utente.register(new Utente({username: req.body.username, admin: false, carrello: [], ordiniPassati: null}), pass, function(err, user){
+		Utente.register(new Utente({username: req.body.username, admin: false, carrello: [], ordiniPassati: [], wishlist: []}), pass, function(err, user){
 			if(err){
 				console.log(err);
 				return res.render("Registrazione.ejs");
@@ -441,4 +544,5 @@ app.get("*",function (req,res){
 
 //per indicare su che porta deve ascoltare il server
 app.listen(3000, function() {
-	console.log("Connesso correttamente al server sulla porta 3000")});
+	console.log("Connesso correttamente al server sulla porta 3000");
+});

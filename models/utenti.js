@@ -7,7 +7,13 @@ var schemaUtente = new Schema({
 	//email: String,
 	"password": String,
 	"admin": { "type": Boolean, "required": true, "default": false},
-	/*
+	"carrello": [{ 
+		prodotto: { "type": Schema.Types.ObjectId, "ref": 'Prodotto' }, 
+		quantita: { "type": Number, "default": 1 }
+	}],
+	"ordiniPassati": [{ "type": Schema.Types.ObjectId, "ref": 'Ordine' }],
+	"wishlist": [{ "type": Schema.Types.ObjectId, "ref": 'Prodotto'}]
+		/*
 	nome: String,
 	cognome: String,
 	dataNascita: Date,
@@ -15,11 +21,6 @@ var schemaUtente = new Schema({
 	cap: Number,
 	citta: String
 	*/
-	"carrello": [{ 
-		prodotto: { "type": Schema.Types.ObjectId, "ref": 'Prodotto' }, 
-		quantita: { "type": Number, "default": 1 }
-	}],
-	"ordiniPassati": [{ "type": Schema.Types.ObjectId, "ref": 'Ordine' }]
 }, {usePushEach: true});
 
 schemaUtente.plugin(passportLocalMongoose);
