@@ -420,6 +420,20 @@ app.get('/login', function(req, res) {
 	res.render('Accesso.ejs');
 });
 
+app.get('/pageSecret', isLoggedIn(), function(req, res){
+	if (req.user.admin){
+		res.redirect('/admin')
+	}else{
+		Utente.findById(req.params.id, function(err, foundUtente){
+			if(err){
+				console.log(err);
+			}else{
+				res.render("userPage.ejs", {utenti: foundUtente})
+			}
+		})
+	}
+});
+
 app.post("/login", login());
     
 function login() {
