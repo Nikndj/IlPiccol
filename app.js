@@ -6,8 +6,10 @@ var express = require('express'),
  Utente = require('./models/utenti'),
  Fornitore = require('./models/fornitori'),
  Prodotto = require('./models/prodotti'),
- localStrategy= require('passport-local');
- passportLocalMongoose= require('passport-local-mongoose');
+ Ordine = require('./models/ordini'),
+ localStrategy= require('passport-local'),
+ passportLocalMongoose= require('passport-local-mongoose'),
+ path = require('path'),
  app = express();
 
 /*prima bisogna far partire mongod.bat (dovrebbe funzionare
@@ -21,8 +23,9 @@ app.use(require('express-session')({
 	resave: false,
 	saveUninitialized: false
 }));
+
 //use per specificare la cartella in cui si trovano i file statici (css, immagini...)
-app.use(express.static('../public'));
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -46,32 +49,21 @@ app.get('/support', function(req, res) {
 
 app.get('/RisultatiRicerca', function(req,res){
 	res.render('RisultatiRicerca.ejs');
-})
+});
 
 app.get('/NotFound', function(req, res){
 	res.render('NotFound.ejs');
-})
+});
 
 app.get('/itemManagement',function(req,res){
-	res.render('itemManagement.ejs');
-})
+	Prodotto.find({}, function(err, prodotti){
+		res.render('itemManagement.ejs', {prodotti: prodotti});
+	});
+});
 
-app.post('/itemManagement', function(req,res){
-	if(req.body.inputPrezzo=="null"){
-		Prodotto.findByIdAndUpdate(req.body.idProdotto,{
-			immagine:req.body.inputImmagine, dataInserimento: new Date()},function(err, prodottoDaAggiornare){
-			if(err){
-				console.log("Non è stato trovato")
-				console.log(err);
-				res.redirect('/admin');
-			}else{
-				console.log("E' stato aggiornato")
-				console.log(prodottoDaAggiornare);
-			}
-		});
-	}else{
-	Prodotto.findByIdAndUpdate(req.body.idProdotto,{
-		prezzoScontato:req.body.inputPrezzo, dataInserimento: new Date()},function(err, prodottoDaAggiornare){
+app.post('/itemManagementPrezzo', function(req,res){
+	Prodotto.findByIdAndUpdate(req.body.idProdotto, {
+		prezzoScontato: req.body.inputPrezzo, dataInserimento: new Date()},function(err, prodottoDaAggiornare){
 		if(err){
 			console.log("Non è stato trovato")
 			console.log(err);
@@ -81,9 +73,23 @@ app.post('/itemManagement', function(req,res){
 			console.log(prodottoDaAggiornare);
 		}
 	});
-    }
 	res.redirect('/admin');
-})
+});
+
+app.post('/itemManagementImmagine', function(req,res){
+	Prodotto.findByIdAndUpdate(req.body.idProdotto,{
+		immagine: req.body.inputImmagine, dataInserimento: new Date()},function(err, prodottoDaAggiornare){
+		if(err){
+			console.log("Non è stato trovato")
+			console.log(err);
+			res.redirect('/admin');
+		}else{
+			console.log("E' stato aggiornato")
+			console.log(prodottoDaAggiornare);
+		}
+	});
+	res.redirect('/admin');
+});
 
 //stringa dalla BarraDiRicerca passa da MARIO LOMBARDI a mario lombardi
 //converte in un array di stringhe con delimitatore es. [mario, lombardi]
@@ -158,14 +164,14 @@ app.post("/RisultatiRicerca", function(req,res){
                         res.render('RisultatiRicerca.ejs', { prodotti: arrayProdotti });
 					}
 				}
-			})
+			});
 	    }
-	})	
+	});	
 });
 
 app.get('/recensione',function(req,res){
 	res.render('recensione.ejs');
-})
+});
 
 app.post('/recensione', function(req,res){
 	var recUser=req.user.username;
@@ -182,47 +188,108 @@ app.post('/recensione', function(req,res){
 					console.log(err);
 				}else{
 					var strunz= false;
-			lui.commenti.forEach(function(commento){
-				if(commento.autore==recUser){
-					strunz=true;
-				}
-			})
-			if(strunz==false){
-				Prodotto.findByIdAndUpdate(recProd,{
-				$addToSet: { commenti: {testo: recText, data: new Date(), autore: recUser, voto: recVote}}} ,
-				{ new: true },function(err,updated){
-                     if(err){
-				        console.log(err);
-			         }else{
-						var media;
-						var somma=0;
-						updated.commenti.forEach(function(commento){
-                             somma=somma+commento.voto;
-						})
-						media=somma/updated.commenti.length;
-						Prodotto.findByIdAndUpdate(recProd,{votoMedio: media},{ new: true },function(err,suino){
-							if(err){
-								console.log("Media non aggiornata");
-							}else{
-								console.log("Media Voti Updated");
-							}
+					lui.commenti.forEach(function(commento){
+						if(commento.autore==recUser){
+							strunz=true;
+						}
+					})
+					if(strunz==false){
+						Prodotto.findByIdAndUpdate(recProd,{
+						$addToSet: { commenti: {testo: recText, data: new Date(), autore: recUser, voto: recVote}}},
+						{ new: true },function(err,updated){
+		                    if(err){
+						        console.log(err);
+					        }else{
+								var media;
+								var somma=0;
+								updated.commenti.forEach(function(commento){
+		                             somma=somma+commento.voto;
+								})
+								media=somma/updated.commenti.length;
+								Prodotto.findByIdAndUpdate(recProd,{votoMedio: media},{ new: true },function(err,suino){
+									if(err){
+										console.log("Media non aggiornata");
+									}else{
+										console.log("Media Voti Updated");
+									}
+								});
+								res.redirect('/catalog');
+					        }  
 						});
+					}else{
+						console.log("questo utente ha già recensito questo prodotto");
 						res.redirect('/catalog');
-			         }  
-			});
-		}else{
-			 console.log("questo utente ha già recensito questo prodotto");
-			 res.redirect('/catalog');
-		}
+					}
 				}
 			});
-			
 		}
-	})
-})
+	});
+});
 
-app.get('/cart', function(req, res) {
-	res.render('Carrello.ejs');
+app.get('/cart', isLoggedIn, function(req, res) {
+	Utente.findById(req.user._id).populate({path: 'carrello.prodotto'}).exec(function(err, utente){
+		res.render('Carrello.ejs', { elementi: utente.carrello });
+	});
+});
+
+app.post('/eliminaProdottoCarrello/:id', isLoggedIn, function(req, res){
+	Utente.findById(req.user._id).exec(function(err, utente){
+		utente.carrello.forEach(function(elemento){
+			if (req.params.id == elemento.prodotto){
+				utente.carrello.splice(utente.carrello.indexOf(elemento.prodotto), 1);
+				utente.save(function(err){
+					if (err) console.log(err);
+					else res.redirect('/cart');
+				});
+			}
+		});
+	});
+});
+
+app.post('/modificaProdottoCarrello/:idProdotto/:idQuantita', isLoggedIn, function(req, res){
+	var idQuantitaFin = Number(req.params.idQuantita);
+	var quantita = req.body.idQuantitaFin;
+	console.log(req);
+	//console.log(quantita);
+	Utente.findById(req.user._id).populate({path: 'carrello.prodotto'}).exec(function(err, utente){
+		utente.carrello.forEach(function(elemento){
+			if (req.params.idProdotto == elemento.prodotto){
+				elemento.quantita = quantita;
+				utente.save(function(err){
+					if (err) console.log(err);
+					else res.redirect('/cart');
+				});
+			}
+		});
+		
+	});
+});
+
+app.post('/concludiOrdine', isLoggedIn, function(req, res){
+	var carrello = req.user.carrello;
+	Utente.findById(req.user._id).populate({path: 'carrello.prodotto'}).exec(function(err, utente){
+		var totale = 0;
+		utente.carrello.forEach(function(elemento){
+			totale += elemento.prodotto.prezzo * elemento.quantita;
+			elemento.prodotto.quantita -= elemento.quantita;
+			elemento.prodotto.save(function(err){});
+		}); 
+		utente.carrello = [];
+		var ordine = new Ordine({
+			"utente": utente._id,
+			"prodotti": carrello,
+			"totale": totale,
+			"data": Date.now()
+		}); 
+		utente.ordiniPassati.push(ordine);
+		ordine.save(function(err){
+			if (err) console.log(err);
+			else utente.save(function(err){
+				if (err) console.log(err)
+				else res.redirect("/checkout"); 
+			});
+		});
+	});
 });
 
 app.get('/catalog', function(req, res) {
@@ -233,48 +300,96 @@ app.get('/catalog', function(req, res) {
         }else{
             res.render("Catalogo.ejs", {prodotti: allProdotti});
         }
-    })
+    });
 });
 
-app.get("/catalog/:id", function (req, res){
+app.get("/catalog/:id", function (req, res) {
 	Prodotto.findById(req.params.id, function (err, foundProdotto) {
-		if(err){
+		if (err) {
 			console.log(err);
-		}else{
+		} else {
 			res.render("Item.ejs", {prodotti: foundProdotto});
 		}
 	});
 });
 
-app.post("/catalog/:id",function(req,res){
-	if(req.isAuthenticated()){
-	res.render('recensione.ejs', {idProdottoSent: req.body.prodottoRecensione})
-	}else{
-		res.redirect('/login');
-	}
+//per aggiungere un prodotto al carrello
+app.post("/catalog/:id", isLoggedIn, function(req, res) {
+	Utente.findById(req.user._id, function(err, utente){
+		if (err) console.log(err);
+		else {
+			var trovato = false;
+			utente.carrello.forEach(function(elemento){
+				if(elemento.prodotto == req.params.id) {
+					//prodotto già presente nel carrello
+					elemento.quantita += Number(req.body.quantita);
+					trovato = true;
+				}
+			});
+			if (!trovato) {
+				//prodotto non presente nel carrello
+				utente.carrello.push({"prodotto": req.params.id, "quantita": req.body.quantita});
+			}
+			utente.save(function(err){
+				if (err) console.log(err);
+				else res.redirect("/cart");
+			});
+		}
+	});
 });
 
-app.get('/pageSecret', isLoggedIn(), function(req, res){
-	if (req.user.admin){
-		res.redirect('/admin')
-	}else{
-		Utente.findById(req.params.id, function(err, foundUtente){
-			if(err){
-				console.log(err);
-			}else{
-				res.render("userPage.ejs", {utenti: foundUtente})
+app.post('/catalog/:id/wishlist', isLoggedIn, function(req, res){
+	Utente.findById(req.user._id, function(err, utente){
+		if (err) console.log(err);
+		else {
+			var trovato = false;
+			utente.wishlist.forEach(function(elemento){
+				if(elemento.prodotto == req.params.id) {
+					//prodotto già presente nella wishlist
+					trovato = true;
+				}
+			});
+			if (!trovato) {
+				//prodotto non presente nella wishlist
+				utente.wishlist.push(req.params.id);
 			}
-		})
-	}
+			utente.save(function(err){
+				if (err) console.log(err);
+				else res.redirect("/wishlist");
+			});
+			console.log(utente.wishlist);
+		}
+	});
 });
-/*
-app.get('/secret', isLoggedIn(), function(req, res) {
-	if(req.user.admin){
-		res.redirect("/admin")
-	}else{
+
+app.post("/catalog/:id/recensioni", isLoggedIn, function(req,res){
+	res.render('recensione.ejs', {idProdottoSent: req.body.prodottoRecensione});
+});
+
+app.get('/wishlist', isLoggedIn, function(req, res){
+	Utente.findById(req.user._id).populate({path: 'wishlist'}).exec(function(err, utente){
+		res.render('Wishlist.ejs', { elementi: utente.wishlist });
+	});
+});
+
+app.post('/eliminaProdottoWishlist/:id', isLoggedIn, function(req, res){
+	Utente.findById(req.user._id).exec(function(err, utente){
+		utente.wishlist.forEach(function(elemento){
+			if (req.params.id == elemento){
+				utente.wishlist.splice(utente.wishlist.indexOf(elemento), 1);
+				utente.save(function(err){
+					if (err) console.log(err);
+					else res.redirect('/wishlist');
+				});
+			}
+		});
+	});
+});
+
+
+app.get('/secret', function(req, res) {
 	res.render('secret.ejs');
-	}
-});*/
+});
 
 //REGISTRATION ROUTES
 app.get('/register', function(req, res) {
@@ -282,13 +397,10 @@ app.get('/register', function(req, res) {
 });
 
 app.post("/register", function(req, res) {
-	//req.body.nomeUtente
 	var pass = req.body.password;
 	var passRepeat = req.body.passwordRepeat;
-	//req.body.email
-	
 	if (pass === passRepeat) {
-		Utente.register(new Utente({username: req.body.username, admin: false}), req.body.password, function(err, user){
+		Utente.register(new Utente({username: req.body.username, admin: false, carrello: [], ordiniPassati: [], wishlist: []}), pass, function(err, user){
 			if(err){
 				console.log(err);
 				return res.render("Registrazione.ejs");
@@ -308,16 +420,28 @@ app.get('/login', function(req, res) {
 	res.render('Accesso.ejs');
 });
 
-app.post("/login", isAdmin()
+app.get('/pageSecret', isLoggedIn(), function(req, res){
+	if (req.user.admin){
+		res.redirect('/admin')
+	}else{
+		Utente.findById(req.params.id, function(err, foundUtente){
+			if(err){
+				console.log(err);
+			}else{
+				res.render("userPage.ejs", {utenti: foundUtente})
+			}
+		})
+	}
+});
 
-);
+app.post("/login", login());
     
-function isAdmin() {
+function login() {
 	return function (req, res) {
 		Utente.findOne({"username": req.body.username}, function (err, utente) {
 			if (err){
-				//res.redirect("/login");
 				console.log(err);
+				res.redirect("/login");
 			}
 			if(utente.admin){
 				passport.authenticate("local")(req, res, function(){
@@ -325,12 +449,13 @@ function isAdmin() {
 				});
 			} else {
 				passport.authenticate("local")(req, res, function(){
-					res.redirect("/pageSecret");
+					res.redirect("/");
 				});
 			}
 		});
 	}	
 }
+
 
 app.get("/logout", function(req, res){
 	req.logOut();
@@ -338,23 +463,28 @@ app.get("/logout", function(req, res){
 });
 
 
-function isLoggedIn() {
-	return function (req, res, next) {
-		if (req.isAuthenticated()){
-			return next();
-		}else{
+function isLoggedIn(req, res, next) {
+	if (req.isAuthenticated()) {
+		return next();
+	}
+	res.redirect("/login");
+}
+
+function isAdmin(req, res, next) {
+	if(req.user.admin){
+		next();
+	} else {
 		res.redirect("/login");
-		}	
 	}
 }
 
 //ADMIN ROUTES and COMMANDS
 
-app.get('/admin', function(req, res) {
+app.get('/admin', isLoggedIn, isAdmin, function(req, res) {
 	res.render('adminPage.ejs');
 });
 
-app.post("/adminCreate", function (req, res){
+app.post("/adminInsertProduct", isAdmin, function (req, res){
 	var today=new Date();
 	Prodotto.create({
 		nome: req.body.nome.toLowerCase(),
@@ -378,8 +508,8 @@ app.post("/adminCreate", function (req, res){
 	res.redirect("/admin");
 });
 
-app.post("/adminManagement", function (req, res){
-	var stringa=req.body.cerca.toLowerCase();
+app.post("/adminProductManagement", isAdmin, function (req, res){
+	var stringa = req.body.cerca.toLowerCase();
 	var paroleChiave = stringa.split(" ");
 	Prodotto.find({},function(err,tuttiiprodotti){
 	if(err){
@@ -398,28 +528,28 @@ app.post("/adminManagement", function (req, res){
 								if(oggetto._id===item._id){
 									trovato=true;
 								}
-							})
+							});
 							if(trovato==false){
-							arrayProdotti.push(item);
+								arrayProdotti.push(item);
 							}
+						}
 					}
-				}
-			})
-			})
+				});
+			});
 			if(err){
-			console.log(err);
-			res.redirect('/admin');
+				console.log(err);
+				res.redirect('/admin');
 			}else{
 				if(arrayProdotti.length==0){
 					console.log("Not Found");
 					res.redirect('/admin');
 				}else{
-			res.render("itemManagement.ejs", { prodotti: arrayProdotti });
+					res.render("itemManagement.ejs", { prodotti: arrayProdotti });
 				}
 			}
-		})
+		});
 	}
-	})
+	});
 });
 
 app.get("*",function (req,res){
@@ -428,4 +558,5 @@ app.get("*",function (req,res){
 
 //per indicare su che porta deve ascoltare il server
 app.listen(3000, function() {
-	console.log("Connesso correttamente al server sulla porta 3000")});
+	console.log("Connesso correttamente al server sulla porta 3000");
+});

@@ -1,5 +1,5 @@
-<% include partials/header%>
-<% include partials/navbar%>
+<% include partials/header.ejs%>
+<% include partials/navbar.ejs%>
 
 <div>
     <% var contatore=0; %>
@@ -23,11 +23,11 @@
                 </td> 
                 <% contatore=contatore+1; %>
                 <% if(contatore%4==0){ %>
-            </tr>
-            <tr>
-              <% } %>
+                    </tr>
+                    <tr>
+                <% } %>
               <% }) %>
             </tr>
 </div>
 
-<% include partials/footer%>
+<% include partials/footer.ejs%>
