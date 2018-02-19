@@ -534,7 +534,7 @@
     text-decoration: none; 
 }
 
-body{
+body {
 background: -moz-linear-gradient(top, #ffffff 0%, #e5e5e5 100%); /* FF3.6-15 */
 background: -webkit-linear-gradient(top, #ffffff 0%,#e5e5e5 100%); /* Chrome10-25,Safari5.1-6 */
 background: linear-gradient(to bottom, #ffffff 0%,#e5e5e5 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */   
@@ -774,7 +774,7 @@ dd {
 ._error {
     background-color: #f3e4e4;
     border: solid 2px #ff0000;
-            }
+}
             
  .Helpsection1 {
 width: 500px;
@@ -788,6 +788,10 @@ padding-bottom: 60px;
 
 .Helpsection2 {
     float: right;
-margin-top: -260px;
-margin-right: 95px;
+    margin-top: -260px;
+    margin-right: 95px;
 } 
+
+.hidden {
+  display: none;
+}
