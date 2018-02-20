@@ -15,7 +15,11 @@
                 <p>Prezzo: <%= Prodotto.prezzo %></p>
                 <p>Prezzo Scontato: <%= Prodotto.prezzoScontato %></p>
                 <p>Quantità disponibili: <%= Prodotto.quantita %></p>
-                <p>Email Produttore per il Riordino: <a href="mailto:<%= Prodotto.emailProduttore %>"><%= Prodotto.emailProduttore %></a></p>
+                 <form action="/itemManagementMail" method="POST">
+                    <button type="submit" onclick="return confirm('Inviare email di riordino?')">Riordino?</button>
+                    <input type="hidden" name="inputProdottoHidden" value="<%= Prodotto.nome%>"></input>
+                    <input type="hidden" name="inputEmailHidden" value="<%= Prodotto.emailProduttore%>"></input>
+                </form>
                 <p>Immagine: <img src="<%= Prodotto.immagine %>" height="300px" width="300px"> </p>
                 <p>Descrizione: <%= Prodotto.descrizione%></p>
                 <div>
