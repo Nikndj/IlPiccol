@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 //var Utente = require('utenti.js');
 var Schema = mongoose.Schema;
 var nodemailer = require('nodemailer');
+var Utente = require('../models/utenti');
 var transporter = nodemailer.createTransport({
 	service: 'gmail',
 	auth: {
@@ -17,23 +18,48 @@ var schemaProdotto = new Schema({
 	"dataInserimento": Date,
 	"prezzoScontato": Number, //di base uguale al prezzo
 	"emailProduttore": String, //nel form type=email.
-	"quantita": Number,
+	"quantita": { "type": Number, "default": 1},
 	"immagine": String, //il link es."https://i.imgur.com/lyFdSv2.png"
 	"commenti": [{"testo": String, "data": Date, "autore": String, "voto": Number}],
 	"descrizione": String, 
-	"votoMedio": Number
-});
+	"votoMedio": Number,
+	"esaurito": { "type": Boolean, "default": false },
+	"utentiInteressati": [{ "type": Schema.Types.ObjectId, "ref": "Utente"}]
+}, {usePushEach: true});
 
 
 schemaProdotto.pre("save", function(next){
+	if (!this.isNew && this.isModified('quantita') && this.quantita <= 0) {
+		this.esaurito = true;
+	}
+	if (!this.isNew && this.isModified('quantita') && this.quantita > 0 && this.esaurito) {
+		this.esaurito = false;
+		var mailOptionsUtenti = {
+			from: 'transporterilpiccol@gmail.com',
+			to: '',
+			subject: 'Prodotto ' + this.nome + ' disponibile',
+			text:'Il prodotto ' + this.nome + ' è di nuovo disponibile'
+		};
+		this.utentiInteressati.forEach(function(idUtente){
+			Utente.findById(idUtente).exec(function(err, utente){
+				if (err) console.log(err);
+				else {
+					mailOptionsUtenti.to = utente.email;
+					transporter.sendMail(mailOptionsUtenti, function(err, info){
+						if (err) console.log(err);
+					});
+				}
+			});
+		});
+	}
 	if (!this.isNew && this.isModified('quantita') && this.quantita < 5) {
-		var mailOptions = {
+		var mailOptionsAdmin = {
 			from: 'transporterilpiccol@gmail.com',
 			to: "admpiccol@gmail.com",
-			subject: 'Prodotto' + this.nome + ' in scadenza',
+			subject: 'Prodotto ' + this.nome + ' in scadenza',
 			text:'Il prodotto ' + this.nome + ' sta per esaurirsi'
 		};
-		transporter.sendMail(mailOptions, function(err, info){
+		transporter.sendMail(mailOptionsAdmin, function(err, info){
 			if (err) console.log(err);
 		});
 	}

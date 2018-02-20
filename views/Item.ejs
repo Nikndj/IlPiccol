@@ -40,7 +40,7 @@
 </div>
 
 <div>
-<form action="/catalog/<%= prodotti._id%>/recensioni>" method="POST">
+<form action="/catalog/<%= prodotti._id%>/recensioni" method="POST">
     <label for="bottoneToRecensione">Recensisci questo prodotto!</label>
     <input type="hidden" name="prodottoRecensione" value="<%= prodotti._id %>"></input>
     <button type="submit" id="bottoneToRecensione">Vai</button>
