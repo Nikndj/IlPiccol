@@ -15,9 +15,13 @@
 
 <h5>Recensioni</h5>
 <div>
-<hr>
-
-<!-- RIAGGIUNGI QUI DA PRODOTTI.JS -->
+    <hr>
+    <% prodotti.commenti.forEach(function(commento){%>
+        <p><%= commento.autore%>, il <%= commento.data.getDate()%>/<%= commento.data.getMonth()%>/<%= commento.data.getFullYear()%>
+         , ore <%= commento.data.getHours()%>:<%= commento.data.getMinutes()%> con Voto: <%= commento.voto%> dice:</p>
+        <p><%= commento.testo%></p>
+    <hr>
+<% })%>
 
 </div>
 
@@ -40,7 +44,7 @@
 </div>
 
 <div>
-<form action="/catalog/<%= prodotti._id%>/recensioni>" method="POST">
+<form action="/catalog/<%= prodotti._id%>/recensioni" method="POST">
     <label for="bottoneToRecensione">Recensisci questo prodotto!</label>
     <input type="hidden" name="prodottoRecensione" value="<%= prodotti._id %>"></input>
     <button type="submit" id="bottoneToRecensione">Vai</button>

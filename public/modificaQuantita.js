@@ -1,19 +1,23 @@
-var quantita = document.getElementById("quantita");
-var bottone = document.getElementById("newQuantitaButton");
-var input = document.getElementById("newQuantitaValue");
+var prezzi = document.getElementsByClassName("prezzo");
+var quantita = document.getElementsByClassName("quantita");
+var prezzoFinale = document.getElementById('prezzoFinale');
 
-quantita.addEventListener("click", function() {
-	quantita.classList.add("hidden");
-	input.value = Number(quantita.innerHTML);
-	input.classList.remove("hidden");
-	bottone.classList.remove("hidden");
-});
+for (var k = 0; k < quantita.length; k++) {
+	quantita[k].addEventListener('change', function(){
+		
+	});
+}
 
-bottone.addEventListener("click", function() {
-	quantita.classList.remove("hidden");
-	input.classList.add("hidden");
-	bottone.classList.add("hidden");
-	quantita.innerHTML = input.value;
-}); 
+prezzoFinale.innerHTML = totalUpdate();
+prezzoFinale.innerHTML += ' €';
+console.log(totalUpdate());
+
+function totalUpdate() {
+	var totale = 0;
+	for (var i = 0; i < prezzi.length; i++) {
+		totale += Number(prezzi[i].innerHTML);
+	}
+	return totale;
+}
 
 console.log("ao");

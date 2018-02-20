@@ -34,6 +34,7 @@ passport.use(new localStrategy(Utente.authenticate()));
 passport.serializeUser(Utente.serializeUser());
 passport.deserializeUser(Utente.deserializeUser());
 
+
 //ROUTES
 app.get('/', function(req, res) {
 	res.render('Homepage.ejs');
@@ -63,7 +64,7 @@ app.get('/itemManagement',function(req,res){
 
 app.post('/itemManagementPrezzo', function(req,res){
 	Prodotto.findByIdAndUpdate(req.body.idProdotto, {
-		prezzoScontato: req.body.inputPrezzo, dataInserimento: new Date()},function(err, prodottoDaAggiornare){
+		"prezzoScontato": req.body.inputPrezzo, "dataInserimento": new Date()},function(err, prodottoDaAggiornare){
 		if(err){
 			console.log("Non è stato trovato")
 			console.log(err);
@@ -78,7 +79,7 @@ app.post('/itemManagementPrezzo', function(req,res){
 
 app.post('/itemManagementImmagine', function(req,res){
 	Prodotto.findByIdAndUpdate(req.body.idProdotto,{
-		immagine: req.body.inputImmagine, dataInserimento: new Date()},function(err, prodottoDaAggiornare){
+		"immagine": req.body.inputImmagine, "dataInserimento": new Date()}, function(err, prodottoDaAggiornare){
 		if(err){
 			console.log("Non è stato trovato")
 			console.log(err);
@@ -86,6 +87,21 @@ app.post('/itemManagementImmagine', function(req,res){
 		}else{
 			console.log("E' stato aggiornato")
 			console.log(prodottoDaAggiornare);
+		}
+	});
+	res.redirect('/admin');
+});
+
+app.post('/itemManagementQuantita', function(req, res){
+	Prodotto.findById(req.body.idProdotto, function(err, prodottoDaAggiornare){
+		if (err) {
+			console.log("Errore");
+			console.log(err);
+		} else {
+			prodottoDaAggiornare.quantita = Number(req.body.inputQuantita); 
+			prodottoDaAggiornare.save(function(err){
+				if (err) console.log(err);
+			});
 		}
 	});
 	res.redirect('/admin');
@@ -246,22 +262,18 @@ app.post('/eliminaProdottoCarrello/:id', isLoggedIn, function(req, res){
 	});
 });
 
+//madonna cara non funzionerà mai
 app.post('/modificaProdottoCarrello/:idProdotto/:idQuantita', isLoggedIn, function(req, res){
-	var idQuantitaFin = Number(req.params.idQuantita);
-	var quantita = req.body.idQuantitaFin;
-	console.log(req);
-	//console.log(quantita);
 	Utente.findById(req.user._id).populate({path: 'carrello.prodotto'}).exec(function(err, utente){
 		utente.carrello.forEach(function(elemento){
-			if (req.params.idProdotto == elemento.prodotto){
-				elemento.quantita = quantita;
+			if (req.params.idProdotto == elemento.prodotto._id){ 
+				elemento.quantita = Number(req.body.quantitaModificata);
 				utente.save(function(err){
 					if (err) console.log(err);
 					else res.redirect('/cart');
 				});
 			}
 		});
-		
 	});
 });
 
@@ -344,7 +356,7 @@ app.post('/catalog/:id/wishlist', isLoggedIn, function(req, res){
 		else {
 			var trovato = false;
 			utente.wishlist.forEach(function(elemento){
-				if(elemento.prodotto == req.params.id) {
+				if(elemento == req.params.id) {
 					//prodotto già presente nella wishlist
 					trovato = true;
 				}
@@ -352,6 +364,16 @@ app.post('/catalog/:id/wishlist', isLoggedIn, function(req, res){
 			if (!trovato) {
 				//prodotto non presente nella wishlist
 				utente.wishlist.push(req.params.id);
+				Prodotto.findById(req.params.id).exec(function(err, prodotto){
+					if (err) console.log(err);
+					else {
+						if (prodotto.utentiInteressati.indexOf(utente._id) < 0)
+							prodotto.utentiInteressati.push(utente._id);
+					}
+					prodotto.save(function(err){
+						if (err) console.log(err);
+					});
+				});
 			}
 			utente.save(function(err){
 				if (err) console.log(err);
@@ -400,7 +422,7 @@ app.post("/register", function(req, res) {
 	var pass = req.body.password;
 	var passRepeat = req.body.passwordRepeat;
 	if (pass === passRepeat) {
-		Utente.register(new Utente({username: req.body.username, admin: false, carrello: [], ordiniPassati: [], wishlist: []}), pass, function(err, user){
+		Utente.register(new Utente({username: req.body.username, admin: false, email: req.body.email, carrello: [], ordiniPassati: [], wishlist: []}), pass, function(err, user){
 			if(err){
 				console.log(err);
 				return res.render("Registrazione.ejs");
@@ -420,7 +442,7 @@ app.get('/login', function(req, res) {
 	res.render('Accesso.ejs');
 });
 
-app.get('/pageSecret', isLoggedIn(), function(req, res){
+app.get('/pageSecret', isLoggedIn, function(req, res){
 	if (req.user.admin){
 		res.redirect('/admin')
 	}else{
@@ -472,7 +494,7 @@ function isLoggedIn(req, res, next) {
 
 function isAdmin(req, res, next) {
 	if(req.user.admin){
-		next();
+		return next();
 	} else {
 		res.redirect("/login");
 	}
@@ -493,10 +515,12 @@ app.post("/adminInsertProduct", isAdmin, function (req, res){
 		dataInserimento: today,
 		prezzoScontato: req.body.prezzo,
 		emailProduttore: req.body.emailProduttore,
-		quantita: req.body.quantita,
+		quantita: Number(req.body.quantita),
 		descrizione: req.body.descrizione,
 		immagine: req.body.immagine,
 		votoMedio: 0,
+		esaurito: Number(req.body.quantita) > 0 ? false : true,
+		utentiInteressati: []
 	}, function(err, prodotto){
 		if(err){
 			console.log(err);
