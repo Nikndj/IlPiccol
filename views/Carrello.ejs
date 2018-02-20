@@ -19,7 +19,7 @@
 
 
 	                    <form action="modificaProdottoCarrello/<%=elemento.prodotto._id%>/<%=i%>" method="POST">
-	                    	<input id="<%=i%>" class="quantita" type="number" min="1" max="<%= elemento.prodotto.quantita%>" value="<%=elemento.quantita%>"> </input>
+	                    	<input id="quantitaModificata" class="quantita" type="number" min="1" max="<%= elemento.prodotto.quantita%>" value="<%=elemento.quantita%>"> </input>
 	                    	<button type="submit"> Modifica Quantita </button>
 	                    	</form>
 

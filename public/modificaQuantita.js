@@ -15,7 +15,7 @@ console.log(totalUpdate());
 function totalUpdate() {
 	var totale = 0;
 	for (var i = 0; i < prezzi.length; i++) {
-		totale += Number(prezzi[i].innerHTML) * quantita[i].value;
+		totale += Number(prezzi[i].innerHTML);
 	}
 	return totale;
 }

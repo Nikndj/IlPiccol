@@ -271,22 +271,18 @@ app.post('/eliminaProdottoCarrello/:id', isLoggedIn, function(req, res){
 	});
 });
 
+//madonna cara non funzionerà mai
 app.post('/modificaProdottoCarrello/:idProdotto/:idQuantita', isLoggedIn, function(req, res){
-	var idQuantitaFin = Number(req.params.idQuantita);
-	var quantita = req.body.idQuantitaFin;
-	console.log(req);
-	//console.log(quantita);
 	Utente.findById(req.user._id).populate({path: 'carrello.prodotto'}).exec(function(err, utente){
 		utente.carrello.forEach(function(elemento){
-			if (req.params.idProdotto == elemento.prodotto){
-				elemento.quantita = quantita;
+			if (req.params.idProdotto == elemento.prodotto._id){ 
+				elemento.quantita = Number(req.body.quantitaModificata);
 				utente.save(function(err){
 					if (err) console.log(err);
 					else res.redirect('/cart');
 				});
 			}
 		});
-		
 	});
 });
 
@@ -455,7 +451,7 @@ app.get('/login', function(req, res) {
 	res.render('Accesso.ejs');
 });
 
-app.get('/pageSecret', isLoggedIn(), function(req, res){
+app.get('/pageSecret', isLoggedIn, function(req, res){
 	if (req.user.admin){
 		res.redirect('/admin')
 	}else{
