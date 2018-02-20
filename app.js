@@ -34,15 +34,6 @@ passport.use(new localStrategy(Utente.authenticate()));
 passport.serializeUser(Utente.serializeUser());
 passport.deserializeUser(Utente.deserializeUser());
 
-/*Utente.findOne({'username': 'qwe'}, function(err, utente){
-	utente.admin = true;
-	utente.save(function(err){});
-});*/
-
-/*Prodotto.findOne({'nomeVisualizzato': 'Stelle di Pane'}, function(err, prodotto){ 
-	prodotto.quantita += 10;
-	prodotto.save(function(err){});
-});*/
 
 //ROUTES
 app.get('/', function(req, res) {
