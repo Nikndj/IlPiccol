@@ -13,7 +13,7 @@ module.exports = function sendMail(to, subject, message) {
         from: 'admpiccol@gmail.com',
         to,
         subject,
-        html: message,
+        text: message,
     };
 
     transport.sendMail(mailOptions, (error) => {

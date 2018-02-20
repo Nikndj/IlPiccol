@@ -11,10 +11,10 @@
                 <% prodotti.forEach(function(Prodotto){%>
                 <td>
                     <div>
-                        <h4><%= Prodotto.nome.toUpperCase() %></h4>             
+                        <h2><%= Prodotto.nomeVisualizzato %></h2>             
                     </div>
                     <div>
-                        <h2><%= Prodotto.prezzoScontato %>€</h2>
+                        <h3><%= Prodotto.prezzoScontato %>€</h3>
                     </div>
                     <div>
                         <img src="<%= Prodotto.immagine%>" height="200px" width="225px">

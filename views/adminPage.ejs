@@ -8,14 +8,14 @@
     <input type="number" name="quantita" placeholder="disponibilità (q.ta)" required="required">
     <textarea name="descrizione" placeholder="descrizione" required="required"></textarea>
     <input type="text" name="immagine" placeholder="Inserire Link Immagine (Locale/Remoto)" required="required">
-    <button type="submit" onclick="alert('Stai Creando un Prodotto')">Crea nuovo Prodotto</button>
+    <button type="submit" onclick="return confirm('Creare Prodotto?')">Crea nuovo Prodotto</button>
     </form>
 </div>
 <div>
     <h1>Gestione di un Prodotto</h1>
     <form action="/adminProductManagement" method="POST">
         <input type="text" name="cerca" placeholder="nome del prodotto da gestire" required="required" minlength="1">
-        <button type="submit" onclick="alert('Stai Gestendo un Prodotto')">Gestisci</button>
+        <button type="submit" onclick="return confirm('Gestire Prodotto?')">Gestisci</button>
     </form>
 </div>
 <% include partials/footer%>
