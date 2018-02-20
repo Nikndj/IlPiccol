@@ -6,7 +6,9 @@
     <h2>Recensione</h2>
     <textarea rows="5" cols="100"  maxlength="500" name="testoRecensione" placeholder="Ho acquistato..." required="required"></textarea>
     <!-- è solo un'idea di usare il range -->
-    <input type="range" name="votoRecensione" min="1" max="5" required="required" list="tickmarks" step="1" valueAsNumber defaultValue="3"></input>
+    <br>
+    <hr style="padding-bottom:5px">
+    <p>Voto che dai a questo prodotto: <input type="range" name="votoRecensione" min="1" max="5" required="required" list="tickmarks" step="1" valueAsNumber defaultValue="3"></input>
     <datalist id="tickmarks">
             <option value="1" label="1">
             <option value="2" label="2">
@@ -16,6 +18,7 @@
     </datalist>
     <input type="hidden" name="prodottoRecensione" value="<%= idProdottoSent %>"></input>
     <button type="submit">Invia</button>
+    </p>
 </form>
 </div>
 

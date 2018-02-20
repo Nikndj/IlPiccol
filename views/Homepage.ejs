@@ -1,20 +1,22 @@
 <% include partials/header%>
 <% include partials/navbar%>
 
+<br>
 <div>
     <h1> HOT - LE OFFERTE DEL MOMENTO <img src="Immagini/flame.png" alt="Fiamma"> </h1>
+    <br>
     <div class="box">
             <% var contatore=0; %>
             <table>
                 <thead>
                 </thead>
                 <tbody>
-                    <tr>
+                    <tr style="width:99%">
                         <!-- controllo per array vuoto?-->
                         <% prodottiHot.forEach(function(ProdottoHot){%>
-                        <td>
+                        <td style="width: 33%">
                             <div>
-                                <h2><%= ProdottoHot.nomeVisualizzato %></h2>             
+                                <a href="/catalog/<%= ProdottoHot._id %>"><h2><%= ProdottoHot.nomeVisualizzato %></h2></a>          
                             </div>
                             <div>
                                 <strike><h4><%= ProdottoHot.prezzo %>€</h4></strike>
@@ -28,12 +30,11 @@
                                 <h4>Risparmia <%=sconto%>€ (-<%= percentualeSconto%>%)</h4>
                             </div>
                             <div>
-                                <img src="<%= ProdottoHot.immagine%>" height="200px" width="225px">
+                                <a href="/catalog/<%= ProdottoHot._id %>"><img src="<%= ProdottoHot.immagine%>" height="200px" width="225px"></a>
                             </div>
-                            <a href="/catalog/<%= ProdottoHot._id %>"> More Info! </a>
                         </td> 
                         <% contatore=contatore+1; %>
-                        <% if(contatore%4==0){ %>
+                        <% if(contatore%3==0){ %>
                             </tr>
                             <tr>
                         <% } %>
@@ -44,32 +45,33 @@
     </div>
 </div>
 
+<br>
 
 <div>
     <h1> LE ULTIME NOVITA' </h1>
+    <br>
     <div class="box">
             <% var conta=0; %>
             <table>
                 <thead>
                 </thead>
                 <tbody>
-                    <tr>
+                    <tr style="width:100%">
                         <!-- controllo per array vuoto?-->
                         <% prodottiNuovi.forEach(function(ProdottoNew){%>
-                        <td>
+                        <td style="width:25%">
                             <div>
-                                <h4><%= ProdottoNew.nomeVisualizzato %></h4>             
+                                <a href="/catalog/<%= ProdottoNew._id %>"><h2><%= ProdottoNew.nomeVisualizzato %></h2></a>             
                             </div>
                             <div>
                                 <h2><%= ProdottoNew.prezzoScontato %>€</h2>
                             </div>
                             <div>
-                                <img src="<%= ProdottoNew.immagine%>" height="200px" width="225px">
+                                <a href="/catalog/<%= ProdottoNew._id %>"><img src="<%= ProdottoNew.immagine%>" height="200px" width="225px"></a>
                             </div>
-                            <a href="/catalog/<%= ProdottoNew._id %>"> More Info! </a>
                         </td> 
                         <% conta=conta+1; %>
-                        <% if(contatore%4==0){ %>
+                        <% if(conta%4==0){ %>
                             </tr>
                             <tr>
                         <% } %>
@@ -79,7 +81,7 @@
             </table>
     </div>
 </div>
-
+<br>
 <!-- chi se la sente?
 <div>
     <h1> CONSIGLIATI PER TE </h1>

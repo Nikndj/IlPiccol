@@ -2,23 +2,31 @@
 <% include partials/navbar%>
 
 <div>
+        <table>
+                <thead>
+                    <tbody>
     <% prodotti.forEach(function(Prodotto){%>
-        <div>
-            <div>
-                <h2><%= Prodotto.nomeVisualizzato %></h2>             
-            </div>
-            <div>
-                <h3>Prezzo: <%= Prodotto.prezzoScontato %>€</h3>
-            </div>
-            <div>
-                <h4>Voto: <%= Prodotto.votoMedio %></h4>
-            </div>
-            <div>
-                <img src="<%= Prodotto.immagine%>" height="200px" width="240px">
-            </div>
-            <p><a href="/catalog/<%= Prodotto._id %>"> More Info! </a></p>
-        </div>
+                    <tr>
+                        <td>
+                            <a href="/catalog/<%= Prodotto._id %>"><img src="<%= Prodotto.immagine%>" height="200px" width="240px"></a>
+                        </td>
+                        <td>
+                            <a href="/catalog/<%= Prodotto._id %>"><h2><%= Prodotto.nomeVisualizzato %></h2></a>  
+                        <br>
+                            <h3>Prezzo: <%= Prodotto.prezzoScontato %>€</h3>
+                        <br>
+                            <% if(Prodotto.votoMedio!=0){ %>
+                            <h4>Voto: <%= Prodotto.votoMedio %></h4>
+                            <% }else {%>
+                            <h4>Nessun Voto</h4>
+                            <% } %>
+                        </td>
+                    </tr>
+               
     <% }) %>
+</tbody>
+</thead>
+</table>
 </div>
 
 <% include partials/footer%>
