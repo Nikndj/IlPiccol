@@ -63,7 +63,7 @@ app.get('/', function(req, res) {
 				}
 			})
 			shishPrice.sort(function(a, b){return (100*(a.prezzo-a.prezzoScontato)/a.prezzo) - (100*(b.prezzo-b.prezzoScontato)/b.prezzo)}).reverse();
-			shishNew.sort(function(a, b){return a.dataInserimento - b.dataInserimento});
+			shishNew.sort(function(a, b){return a.dataInserimento - b.dataInserimento}).reverse();
 			res.render('Homepage.ejs',{ prodottiNuovi:shishNew,prodottiHot:shishPrice});
 		}
 	})

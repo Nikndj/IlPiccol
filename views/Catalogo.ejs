@@ -7,19 +7,25 @@
         <thead>
         </thead>
         <tbody>
-            <tr>
+            <tr style="width:100%">
                 <% prodotti.forEach(function(Prodotto){%>
-                <td>
+                <td style="width:25%">
                     <div>
-                        <h2><%= Prodotto.nomeVisualizzato %></h2>             
+                        <a class="aCatalog" href="/catalog/<%= Prodotto._id %>"><h2><%= Prodotto.nomeVisualizzato %></h2></a>             
                     </div>
                     <div>
                         <h3><%= Prodotto.prezzoScontato %>€</h3>
                     </div>
                     <div>
-                        <img src="<%= Prodotto.immagine%>" height="200px" width="225px">
+                            <% if(Prodotto.votoMedio!=0){ %>
+                                <h4>Voto: <%= Prodotto.votoMedio %></h4>
+                                <% }else {%>
+                                <h4>Nessun Voto</h4>
+                                <% } %>
                     </div>
-                    <a href="/catalog/<%= Prodotto._id %>"> More Info! </a>
+                    <div>
+                        <a href="/catalog/<%= Prodotto._id %>"><img src="<%= Prodotto.immagine%>" height="200px" width="225px"></a>
+                    </div>
                 </td> 
                 <% contatore=contatore+1; %>
                 <% if(contatore%4==0){ %>
@@ -28,6 +34,7 @@
                 <% } %>
               <% }) %>
             </tr>
+        </tbody>
+        </table>
 </div>
-
 <% include partials/footer.ejs%>

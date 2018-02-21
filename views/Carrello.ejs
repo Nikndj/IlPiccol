@@ -13,19 +13,13 @@
 	                <div>
 	                    <img src="<%= elemento.prodotto.immagine%>" height="100px" width="100px" style="float: left;">
 	                    <a href="/catalog/<%= elemento.prodotto._id %>"><h4 style="float: left;"><%= elemento.prodotto.nome.toUpperCase() %></h4></a>
-	                    <h2> <span class="prezzo"><%=elemento.prodotto.prezzo * elemento.quantita%></span> €</h2>
-
-
-
-
+						<h2> <span class="prezzo"><%=elemento.prodotto.prezzo * elemento.quantita%></span> €</h2>
+						
 	                    <form action="modificaProdottoCarrello/<%=elemento.prodotto._id%>/<%=i%>" method="POST">
 	                    	<input id="quantitaModificata" class="quantita" type="number" min="1" max="<%= elemento.prodotto.quantita%>" value="<%=elemento.quantita%>"> </input>
 	                    	<button type="submit"> Modifica Quantita </button>
-	                    	</form>
-
-
-
-
+							</form>
+							
 	                    <form action="eliminaProdottoCarrello/<%=elemento.prodotto._id%>" method="POST">
 	                    	<button type="submit"> Elimina Prodotto </button>
 	                    	</form>
