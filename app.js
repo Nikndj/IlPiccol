@@ -4,7 +4,6 @@ var express = require('express'),
  passport = require('passport'),
  bodyParser= require("body-parser"),
  Utente = require('./models/utenti'),
- Fornitore = require('./models/fornitori'),
  Prodotto = require('./models/prodotti'),
  Ordine = require('./models/ordini'),
  localStrategy= require('passport-local'),
@@ -34,16 +33,10 @@ passport.use(new localStrategy(Utente.authenticate()));
 passport.serializeUser(Utente.serializeUser());
 passport.deserializeUser(Utente.deserializeUser());
 
-/*Utente.findOne({'username': 'qwe'}, function(err, utente){
-	utente.admin = true;
-	utente.save(function(err){});
-});*/
+<<<<<<< HEAD
+=======
 
-/*Prodotto.findOne({'nomeVisualizzato': 'Stelle di Pane'}, function(err, prodotto){ 
-	prodotto.quantita += 10;
-	prodotto.save(function(err){});
-});*/
-
+>>>>>>> 8b95099ae4dbe2373f2251e20af1287e320022a2
 //ROUTES
 app.get('/', function(req, res) {
 	res.render('Homepage.ejs');
@@ -257,11 +250,12 @@ app.get('/cart', isLoggedIn, function(req, res) {
 	});
 });
 
-app.post('/eliminaProdottoCarrello/:id', isLoggedIn, function(req, res){
+app.post('/modificaProdottoCarrello/:idProdotto/:idQuantita', isLoggedIn, function(req, res){
+	console.log(req.body[req.params.idQuantita]);
 	Utente.findById(req.user._id).exec(function(err, utente){
 		utente.carrello.forEach(function(elemento){
-			if (req.params.id == elemento.prodotto){
-				utente.carrello.splice(utente.carrello.indexOf(elemento.prodotto), 1);
+			if (req.params.idProdotto == elemento.prodotto){ 
+				elemento.quantita = req.body[req.params.idQuantita];
 				utente.save(function(err){
 					if (err) console.log(err);
 					else res.redirect('/cart');
@@ -271,12 +265,11 @@ app.post('/eliminaProdottoCarrello/:id', isLoggedIn, function(req, res){
 	});
 });
 
-//madonna cara non funzionerà mai
-app.post('/modificaProdottoCarrello/:idProdotto/:idQuantita', isLoggedIn, function(req, res){
-	Utente.findById(req.user._id).populate({path: 'carrello.prodotto'}).exec(function(err, utente){
+app.post('/eliminaProdottoCarrello/:id', isLoggedIn, function(req, res){
+	Utente.findById(req.user._id).exec(function(err, utente){
 		utente.carrello.forEach(function(elemento){
-			if (req.params.idProdotto == elemento.prodotto._id){ 
-				elemento.quantita = Number(req.body.quantitaModificata);
+			if (req.params.id == elemento.prodotto){
+				utente.carrello.splice(utente.carrello.indexOf(elemento.prodotto), 1);
 				utente.save(function(err){
 					if (err) console.log(err);
 					else res.redirect('/cart');
@@ -294,22 +287,35 @@ app.post('/concludiOrdine', isLoggedIn, function(req, res){
 			totale += elemento.prodotto.prezzo * elemento.quantita;
 			elemento.prodotto.quantita -= elemento.quantita;
 			elemento.prodotto.save(function(err){});
-		}); 
-		utente.carrello = [];
-		var ordine = new Ordine({
+		});
+		Ordine.create({
 			"utente": utente._id,
-			"prodotti": carrello,
+			"prodotti": utente.carrello,
 			"totale": totale,
 			"data": Date.now()
-		}); 
-		utente.ordiniPassati.push(ordine);
-		ordine.save(function(err){
+		}, function(err, ordine){
 			if (err) console.log(err);
-			else utente.save(function(err){
-				if (err) console.log(err)
-				else res.redirect("/checkout"); 
-			});
-		});
+			else {
+				utente.carrello = [];
+				utente.ordiniPassati.push(ordine._id);
+				console.log(utente.ordiniPassati);
+				utente.save(function(err){
+					if (err) console.log(err);
+					else res.render('/checkout', { ordine: ordine });
+				});
+			}
+		}); 
+	});
+});
+
+app.get('/checkout', isLoggedIn, function(req, res){
+	res.render('Checkout.ejs');
+});
+
+app.get('/storicoOrdini', isLoggedIn, function(req, res){
+	Utente.findById(req.user._id).populate({path: 'ordiniPassati', populate: { path: 'prodotti.prodotto' }}).exec(function(err, utente){
+		console.log(utente);
+		res.render('StoricoOrdini.ejs', { ordini: utente.ordiniPassati });	
 	});
 });
 
@@ -417,11 +423,6 @@ app.post('/eliminaProdottoWishlist/:id', isLoggedIn, function(req, res){
 	});
 });
 
-
-app.get('/secret', function(req, res) {
-	res.render('secret.ejs');
-});
-
 //REGISTRATION ROUTES
 app.get('/register', function(req, res) {
 	res.render('Registrazione.ejs');
@@ -431,17 +432,23 @@ app.post("/register", function(req, res) {
 	var pass = req.body.password;
 	var passRepeat = req.body.passwordRepeat;
 	if (pass === passRepeat) {
-		Utente.register(new Utente({username: req.body.username, admin: false, email: req.body.email, carrello: [], ordiniPassati: [], wishlist: []}), pass, function(err, user){
+		Utente.register(new Utente({
+			username: req.body.username, 
+			email: req.body.email, 
+			carrello: [], 
+			ordiniPassati: [],
+			wishlist: [],
+			}), pass, function(err, user){
 			if(err){
 				console.log(err);
 				return res.render("Registrazione.ejs");
 			}
 			passport.authenticate("local")(req, res, function(){
-				res.redirect("/secret");
+				res.redirect("/userPage", { utente: req.user });
 			});
 		});
 	} else {
-		res.redirect("Registrazione.ejs");
+		res.redirect("/register");
 		console.log("Le password non coincidono");
 	}
 });
@@ -451,7 +458,7 @@ app.get('/login', function(req, res) {
 	res.render('Accesso.ejs');
 });
 
-app.get('/pageSecret', isLoggedIn, function(req, res){
+app.get('/userPage', isLoggedIn, function(req, res){
 	if (req.user.admin){
 		res.redirect('/admin')
 	}else{
@@ -459,10 +466,30 @@ app.get('/pageSecret', isLoggedIn, function(req, res){
 			if(err){
 				console.log(err);
 			}else{
-				res.render("userPage.ejs", {utenti: foundUtente})
+				res.render("userPage.ejs", {utente: req.user});
 			}
 		})
 	}
+});
+
+app.post('/aggiornaInformazioniUtente', isLoggedIn, function(req, res){
+	Utente.findById(req.user._id, function(err, utente){
+		if (err) console.log(err);
+		else {
+			req.body.nome != undefined ? utente.nome = req.body.nome : utente.nome = utente.nome;
+			req.body.cognome != undefined ? utente.cognome = req.body.cognome : utente.cognome = utente.cognome;
+			req.body.dataNascita != undefined ? utente.dataNascita = req.body.dataNascita : utente.dataNascita = utente.dataNascita;
+			req.body.indirizzo != undefined ? utente.indirizzo = req.body.indirizzo : utente.indirizzo = utente.indirizzo;
+			req.body.cap != undefined ? utente.cap = req.body.cap : utente.cap = utente.cap;
+			req.body.citta != undefined ? utente.citta = req.body.citta : utente.citta = utente.citta;
+			req.body.numeroCarta != undefined ? utente.numeroCarta = req.body.numeroCarta : utente.numeroCarta = utente.numeroCarta;
+		}
+		utente.save(function(err){
+			if (err) console.log (err);
+		});
+		console.log(req.user);
+	});
+	res.redirect('/userPage');
 });
 
 app.post("/login", login());

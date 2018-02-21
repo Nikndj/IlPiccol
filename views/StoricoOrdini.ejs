@@ -1,0 +1,30 @@
+<% include partials/header%>
+
+<h1> STORICO ORDINI <h1>
+
+<div>
+	<% if (ordini.length > 0) {%>
+		<%var i = 0;%>
+	        <% ordini.forEach(function(ordine){%>
+	            <td>
+	            	<p> Ordine del <%=ordine.data%></p>
+	                <div>
+		                <% ordine.prodotti.forEach(function(elemento){ %>
+		                	<tr>
+		                	<a href="/catalog/<%= elemento.prodotto._id %>">
+			                    <img src="<%= elemento.prodotto.immagine%>" height="100px" width="100px" style="float: left;">
+			                    <h4 style="float: left;"><%= elemento.prodotto.nome.toUpperCase() %></h4>
+		                    </a>
+		                    <h2> <span class="prezzo"><%=elemento.prodotto.prezzo * elemento.quantita%></span> €</h2>
+		                    <h3> <%=elemento.quantita%> </h3>
+		                    </tr>
+		                <% }); %>
+		            <h3> Totale: <%=ordine.totale%>€ </h3>
+		            </div>
+	            </td>
+	            <br>
+	        <% }); %>
+	<% } else {%>
+		<h1> NESSUN ORDINE DA VISUALIZZARE <h1>
+	<% }%>
+</div>
