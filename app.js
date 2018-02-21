@@ -33,6 +33,10 @@ passport.use(new localStrategy(Utente.authenticate()));
 passport.serializeUser(Utente.serializeUser());
 passport.deserializeUser(Utente.deserializeUser());
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 8b95099ae4dbe2373f2251e20af1287e320022a2
 //ROUTES
 app.get('/', function(req, res) {
 	res.render('Homepage.ejs');
