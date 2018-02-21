@@ -5,7 +5,9 @@
     <% prodotti.forEach(function(Prodotto){%>
         <div>
             <div>
-                <h2><%= Prodotto.nomeVisualizzato %></h2>             
+                <a href="/catalog/<%= Prodotto._id %>">
+                    <h2><%= Prodotto.nomeVisualizzato %></h2>   
+                </a>          
             </div>
             <div>
                 <h3>Prezzo: <%= Prodotto.prezzoScontato %>€</h3>
@@ -14,9 +16,10 @@
                 <h4>Voto: <%= Prodotto.votoMedio %></h4>
             </div>
             <div>
-                <img src="<%= Prodotto.immagine%>" height="200px" width="240px">
+                <a href="/catalog/<%= Prodotto._id %>">
+                    <img src="<%= Prodotto.immagine%>" height="200px" width="240px">
+                </a>
             </div>
-            <p><a href="/catalog/<%= Prodotto._id %>"> More Info! </a></p>
         </div>
     <% }) %>
 </div>

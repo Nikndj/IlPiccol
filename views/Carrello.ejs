@@ -6,26 +6,20 @@
 
 <div>
 	<% if (elementi.length > 0) {%>
-		<% var i = 0; %>
+		<%var i = 0;%>
 		<tr>
 	        <% elementi.forEach(function(elemento){%>
 	            <td>
 	                <div>
-	                    <img src="<%= elemento.prodotto.immagine%>" height="100px" width="100px" style="float: left;">
-	                    <a href="/catalog/<%= elemento.prodotto._id %>"><h4 style="float: left;"><%= elemento.prodotto.nome.toUpperCase() %></h4></a>
+	                	<a href="/catalog/<%= elemento.prodotto._id %>">
+		                    <img src="<%= elemento.prodotto.immagine%>" height="100px" width="100px" style="float: left;">
+		                    <h4 style="float: left;"><%= elemento.prodotto.nome.toUpperCase() %></h4>
+	                    </a>
 	                    <h2> <span class="prezzo"><%=elemento.prodotto.prezzo * elemento.quantita%></span> €</h2>
-
-
-
-
 	                    <form action="modificaProdottoCarrello/<%=elemento.prodotto._id%>/<%=i%>" method="POST">
-	                    	<input id="quantitaModificata" class="quantita" type="number" min="1" max="<%= elemento.prodotto.quantita%>" value="<%=elemento.quantita%>"> </input>
-	                    	<button type="submit"> Modifica Quantita </button>
+	                    	<input type="number" name="<%=i%>" value="<%=elemento.quantita%>" class="quantita"> </input>
+	                    	<button type="submit"> Modifica Quantità </button>
 	                    	</form>
-
-
-
-
 	                    <form action="eliminaProdottoCarrello/<%=elemento.prodotto._id%>" method="POST">
 	                    	<button type="submit"> Elimina Prodotto </button>
 	                    	</form>

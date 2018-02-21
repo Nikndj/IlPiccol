@@ -11,15 +11,16 @@
                 <% prodotti.forEach(function(Prodotto){%>
                 <td>
                     <div>
-                        <h4><%= Prodotto.nome.toUpperCase() %></h4>             
+                       <a href="/catalog/<%= Prodotto._id %>"> <h4><%= Prodotto.nome.toUpperCase() %></h4> </a>             
                     </div>
                     <div>
                         <h2><%= Prodotto.prezzoScontato %>€</h2>
                     </div>
                     <div>
+                    <a href="/catalog/<%= Prodotto._id %>">
                         <img src="<%= Prodotto.immagine%>" height="200px" width="225px">
+                    </a>
                     </div>
-                    <a href="/catalog/<%= Prodotto._id %>"> More Info! </a>
                 </td> 
                 <% contatore=contatore+1; %>
                 <% if(contatore%4==0){ %>
