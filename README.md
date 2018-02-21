@@ -46,4 +46,4 @@ Bucchicchio Luigi, luigi.bucchicchio@studenti.unicam.it
 Guardabassi Matteo, matteo.guardabassi@studenti.unicam.it
 
 Admin credentials:
-id: * pw: *
+id: admin pw: 123
