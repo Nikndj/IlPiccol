@@ -17,11 +17,11 @@
                         <h3><%= Prodotto.prezzoScontato %>€</h3>
                     </div>
                     <div>
-                            <% if(Prodotto.votoMedio!=0){ %>
-                                <h4>Voto: <%= Prodotto.votoMedio %></h4>
-                                <% }else {%>
-                                <h4>Nessun Voto</h4>
-                                <% } %>
+                        <% if(Prodotto.votoMedio!=0){ %>
+                            <h4>Voto: <%= Prodotto.votoMedio %></h4>
+                        <% }else {%>
+                            <h4>Nessun Voto</h4>
+                        <% } %>
                     </div>
                     <div>
                         <a href="/catalog/<%= Prodotto._id %>"><img src="<%= Prodotto.immagine%>" height="200px" width="225px"></a>

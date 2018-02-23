@@ -2,10 +2,10 @@
 <% include partials/navbar%>
 
 <div>
-        <table>
-                <thead>
-                    <tbody>
-    <% prodotti.forEach(function(Prodotto){%>
+    <table>
+        <thead>
+            <tbody>
+                <% prodotti.forEach(function(Prodotto){%>
                     <tr>
                         <td>
                             <a href="/catalog/<%= Prodotto._id %>"><img src="<%= Prodotto.immagine%>" height="200px" width="240px"></a>
@@ -16,17 +16,16 @@
                             <h3>Prezzo: <%= Prodotto.prezzoScontato %>€</h3>
                         <br>
                             <% if(Prodotto.votoMedio!=0){ %>
-                            <h4>Voto: <%= Prodotto.votoMedio %></h4>
+                                <h4>Voto: <%= Prodotto.votoMedio %></h4>
                             <% }else {%>
-                            <h4>Nessun Voto</h4>
+                                <h4>Nessun Voto</h4>
                             <% } %>
                         </td>
                     </tr>
-               
-    <% }) %>
-</tbody>
-</thead>
-</table>
+                <% }); %>
+            </tbody>
+        </thead>
+    </table>
 </div>
 
 <% include partials/footer%>

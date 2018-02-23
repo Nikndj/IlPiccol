@@ -1,16 +1,9 @@
 var prezzi = document.getElementsByClassName("prezzo");
-var quantita = document.getElementsByClassName("quantita");
 var prezzoFinale = document.getElementById('prezzoFinale');
-
-for (var k = 0; k < quantita.length; k++) {
-	quantita[k].addEventListener('change', function(){
-		
-	});
-}
+var quantita = document.getElementsByClassName('quantita');
 
 prezzoFinale.innerHTML = totalUpdate();
 prezzoFinale.innerHTML += ' €';
-console.log(totalUpdate());
 
 function totalUpdate() {
 	var totale = 0;
@@ -19,5 +12,3 @@ function totalUpdate() {
 	}
 	return totale;
 }
-
-console.log("ao");

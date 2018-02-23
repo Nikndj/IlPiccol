@@ -11,8 +11,10 @@
 	        <% elementi.forEach(function(elemento){%>
 	            <td>
 	                <div>
-	                    <img src="<%= elemento.immagine%>" height="100px" width="100px" style="float: left;">
-	                    <a href="/catalog/<%= elemento._id %>"><h4 style="float: left;"><%= elemento.nome.toUpperCase() %></h4></a>
+	                	<a href="/catalog/<%= elemento._id %>">
+	                    	<img src="<%= elemento.immagine%>" height="100px" width="100px" style="float: left;">
+	                    	<h4 style="float: left;"><%= elemento.nome.toUpperCase() %></h4>
+	                    </a>
 	                    <h2> <span class="prezzo"><%=elemento.prezzo%></span> €</h2>
 	                    
 	                    <form action="eliminaProdottoWishlist/<%=elemento._id%>" method="POST">
@@ -23,7 +25,7 @@
 	        <% }); %>
 	    </tr>
 	<% } else {%>
-		<h1> WISHLIST VUOTO </h1>
+		<h1> WISHLIST VUOTA <h1>
 	<% }%>
 </div>
 
