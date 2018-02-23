@@ -2,7 +2,7 @@
 <% include partials/navbar%>
 
 
-<h1> CARRELLO <h1>
+<h1> CARRELLO </h1>
 
 <div>
 	<% if (elementi.length > 0) {%>
@@ -20,6 +20,7 @@
 	                    	<input type="number" name="<%=i%>" value="<%=elemento.quantita%>" class="quantita"> </input>
 	                    	<button type="submit"> Modifica Quantità </button>
 	                    	</form>
+
 	                    <form action="eliminaProdottoCarrello/<%=elemento.prodotto._id%>" method="POST">
 	                    	<button type="submit"> Elimina Prodotto </button>
 	                    	</form>
@@ -29,7 +30,7 @@
 	        <% }); %>
 	    </tr>
 	<% } else {%>
-		<h1> CARRELLO VUOTO <h1>
+		<h1> CARRELLO VUOTO </h1>
 	<% }%>
 </div>
 

@@ -11,9 +11,20 @@ var express = require('express'),
  path = require('path'),
  app = express();
 
+
 /*prima bisogna far partire mongod.bat (dovrebbe funzionare
  se si è lasciato il path di default nell'installazione)*/
 mongoose.connect('mongodb://localhost/ilpiccoldb', {useMongoClient: true});
+
+//mailer
+var nodemailer = require('nodemailer');
+var transporter = nodemailer.createTransport({
+	service: 'gmail',
+	auth: {
+		user: 'transporterilpiccol@gmail.com',
+		pass: "transpiccol"
+	}
+});
 
 //APP SETTINGS
 app.set('view engine', 'ejs');
@@ -39,7 +50,26 @@ passport.deserializeUser(Utente.deserializeUser());
 >>>>>>> 8b95099ae4dbe2373f2251e20af1287e320022a2
 //ROUTES
 app.get('/', function(req, res) {
-	res.render('Homepage.ejs');
+	Prodotto.find({},function(err,arrayProdotti){
+		if(err){
+			console.log(err);
+		}else{
+			var shishPrice=new Array();
+			var shishNew=new Array();
+			arrayProdotti.forEach(function(item){
+				if((100*(item.prezzo-item.prezzoScontato)/item.prezzo)>=15){
+				shishPrice.push(item);
+				}
+				if((Math.abs(new Date() - item.dataInserimento))/86,400,000<=30){
+				shishNew.push(item);
+				}
+			})
+			shishPrice.sort(function(a, b){return (100*(a.prezzo-a.prezzoScontato)/a.prezzo) - (100*(b.prezzo-b.prezzoScontato)/b.prezzo)}).reverse();
+			shishNew.sort(function(a, b){return a.dataInserimento - b.dataInserimento}).reverse();
+			res.render('Homepage.ejs',{ prodottiNuovi:shishNew,prodottiHot:shishPrice});
+		}
+	})
+	
 });
 
 app.get('/contacts', function(req, res) {
@@ -78,6 +108,20 @@ app.post('/itemManagementPrezzo', function(req,res){
 	});
 	res.redirect('/admin');
 });
+
+app.post('/itemManagementMail',function(req,res){
+	var mailOptionsRiordino = {
+		from: 'transporterilpiccol@gmail.com',
+		to: req.body.inputEmailHidden,
+		subject: 'Riordino '+req.body.inputProdottoHidden+'',
+		text:'Il Piccol ha urgente bisogno di nuove disponibilità del prodotto '+req.body.inputProdottoHidden+'\n'+
+		'aspettiamo con ansia Vostre notizie,\nCordiali saluti,\nIl Piccol'
+	};
+	transporter.sendMail(mailOptionsRiordino, function(err, info){
+		if (err) console.log(err);
+		res.redirect('/admin');
+	});
+})
 
 app.post('/itemManagementImmagine', function(req,res){
 	Prodotto.findByIdAndUpdate(req.body.idProdotto,{

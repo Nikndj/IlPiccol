@@ -7,19 +7,24 @@
         <thead>
         </thead>
         <tbody>
-            <tr>
+            <tr style="width:100%">
                 <% prodotti.forEach(function(Prodotto){%>
-                <td>
+                <td style="width:25%">
                     <div>
-                       <a href="/catalog/<%= Prodotto._id %>"> <h4><%= Prodotto.nome.toUpperCase() %></h4> </a>             
+                        <a class="aCatalog" href="/catalog/<%= Prodotto._id %>"><h2><%= Prodotto.nomeVisualizzato %></h2></a>             
                     </div>
                     <div>
-                        <h2><%= Prodotto.prezzoScontato %>€</h2>
+                        <h3><%= Prodotto.prezzoScontato %>€</h3>
                     </div>
                     <div>
-                    <a href="/catalog/<%= Prodotto._id %>">
-                        <img src="<%= Prodotto.immagine%>" height="200px" width="225px">
-                    </a>
+                        <% if(Prodotto.votoMedio!=0){ %>
+                            <h4>Voto: <%= Prodotto.votoMedio %></h4>
+                        <% }else {%>
+                            <h4>Nessun Voto</h4>
+                        <% } %>
+                    </div>
+                    <div>
+                        <a href="/catalog/<%= Prodotto._id %>"><img src="<%= Prodotto.immagine%>" height="200px" width="225px"></a>
                     </div>
                 </td> 
                 <% contatore=contatore+1; %>
@@ -29,6 +34,7 @@
                 <% } %>
               <% }) %>
             </tr>
+        </tbody>
+        </table>
 </div>
-
 <% include partials/footer.ejs%>

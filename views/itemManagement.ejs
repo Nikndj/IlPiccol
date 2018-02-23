@@ -15,7 +15,11 @@
                 <p>Prezzo: <%= Prodotto.prezzo %></p>
                 <p>Prezzo Scontato: <%= Prodotto.prezzoScontato %></p>
                 <p>Quantità disponibili: <%= Prodotto.quantita %></p>
-                <p>Email Produttore per il Riordino: <a href="mailto:<%= Prodotto.emailProduttore %>"><%= Prodotto.emailProduttore %></a></p>
+                 <form action="/itemManagementMail" method="POST">
+                    <button type="submit" onclick="return confirm('Inviare email di riordino?')">Riordino?</button>
+                    <input type="hidden" name="inputProdottoHidden" value="<%= Prodotto.nome%>"></input>
+                    <input type="hidden" name="inputEmailHidden" value="<%= Prodotto.emailProduttore%>"></input>
+                </form>
                 <p>Immagine: <img src="<%= Prodotto.immagine %>" height="300px" width="300px"> </p>
                 <p>Descrizione: <%= Prodotto.descrizione%></p>
                 <div>
@@ -23,13 +27,11 @@
                     <label for="inputPrezzo">Cambia il Prezzo scontato di questo prodotto: </label>
                     <input id="inputPrezzo" name="inputPrezzo" type="number" placeholder="Prezzo in euro" required="required" min="1" step="any" max="10000,00"></input>
                     <input type="hidden" name="idProdotto" value="<%=Prodotto._id%>"></input>
-                    <input type="hidden" name="inputPrezzo" value="null"></input>
                 </form>
                 <form action="/itemManagementImmagine" method="POST">
                     <label for="inputImmagine">Cambia l'immagine di questo prodotto: </label>
                     <input id="inputImmagine" name="inputImmagine" type="text" placeholder="Link immagine (locale o remota)" required="required"></input>
                     <input type="hidden" name="idProdotto" value="<%=Prodotto._id%>"></input>
-                    <input type="hidden" name="inputImmagine" value="null"></input>
                 </form>
                 <form action="/itemManagementQuantita" method="POST">
                     <label for="inputQuantita">Aggiorna la quantità di questo prodotto: </label>
