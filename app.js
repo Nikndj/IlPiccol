@@ -484,7 +484,7 @@ app.post("/register", function(req, res) {
 				return res.render("Registrazione.ejs");
 			}
 			passport.authenticate("local")(req, res, function(){
-				res.redirect("/userPage", { utente: req.user });
+				res.render("userPage.ejs", { utente: req.user });
 			});
 		});
 	} else {

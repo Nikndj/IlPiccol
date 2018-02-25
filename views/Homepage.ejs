@@ -2,7 +2,8 @@
 <% include partials/navbar%>
 
 <br>
-<div>
+<div style="margin-left: 10%; margin-right: 10%;">
+    <div style="border: solid black 2px; padding: 10px;">
     <h1> HOT - LE OFFERTE DEL MOMENTO <img src="Immagini/flame.png" alt="Fiamma"> </h1>
     <br>
     <div class="box">
@@ -27,7 +28,7 @@
                             <div>
                                 <% var sconto=Math.round((ProdottoHot.prezzo-ProdottoHot.prezzoScontato)*100)/100; %>
                                 <% var percentualeSconto=Math.round((100*sconto/ProdottoHot.prezzo)*100)/100; %>
-                                <h4>Risparmia <%=sconto%>€ (-<%= percentualeSconto%>%)</h4>
+                                <h5>Risparmia <%=sconto%>€ (-<%= percentualeSconto%>%)</h5>
                             </div>
                             <div>
                                 <a href="/catalog/<%= ProdottoHot._id %>"><img src="<%= ProdottoHot.immagine%>" height="200px" width="225px"></a>
@@ -47,7 +48,7 @@
 
 <br>
 
-<div>
+<div style="border: solid black 2px; padding: 10px;">
     <h1> LE ULTIME NOVITA' </h1>
     <br>
     <div class="box">
@@ -56,20 +57,20 @@
                 <thead>
                 </thead>
                 <tbody>
-                    <tr style="width:100%">
+                    <tr>
                         <!-- controllo per array vuoto?-->
                         <% prodottiNuovi.forEach(function(ProdottoNew){%>
-                        <td style="width:25%">
-                            <div>
-                                <a href="/catalog/<%= ProdottoNew._id %>"><h2><%= ProdottoNew.nomeVisualizzato %></h2></a>             
-                            </div>
-                            <div>
-                                <h2><%= ProdottoNew.prezzoScontato %>€</h2>
-                            </div>
-                            <div>
-                                <a href="/catalog/<%= ProdottoNew._id %>"><img src="<%= ProdottoNew.immagine%>" height="200px" width="225px"></a>
-                            </div>
-                        </td> 
+                            <td>
+                                <div>
+                                    <a href="/catalog/<%= ProdottoNew._id %>"><h2><%= ProdottoNew.nomeVisualizzato %></h2></a>             
+                                </div>
+                                <div>
+                                    <h2><%= ProdottoNew.prezzoScontato %>€</h2>
+                                </div>
+                                <div>
+                                    <a href="/catalog/<%= ProdottoNew._id %>"><img src="<%= ProdottoNew.immagine%>" height="200px" width="225px"></a>
+                                </div>
+                            </td> 
                         <% conta=conta+1; %>
                         <% if(conta%4==0){ %>
                             </tr>
@@ -82,11 +83,6 @@
     </div>
 </div>
 <br>
-<!-- chi se la sente?
-<div>
-    <h1> CONSIGLIATI PER TE </h1>
-    <div class="box"> </div>
 </div>
--->
 
 <% include partials/footer%>
