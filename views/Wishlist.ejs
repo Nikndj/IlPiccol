@@ -4,27 +4,34 @@
 
 <h1> WISHLIST </h1>
 
-<div>
+<div class="jumbotron">
 	<% if (elementi.length > 0) {%>
-		<% var i = 0; %>
-		<tr>
+	<!--	<% var i = 0; %>
+		<tr>-->
 	        <% elementi.forEach(function(elemento){%>
-	            <td>
-	                <div>
+	           <!-- <td>-->
+				<div class="media">
+	                <div >
 	                	<a href="/catalog/<%= elemento._id %>">
-	                    	<img src="<%= elemento.immagine%>" height="100px" width="100px" style="float: left;">
-	                    	<h4 style="float: left;"><%= elemento.nome.toUpperCase() %></h4>
-	                    </a>
-	                    <h2> <span class="prezzo"><%=elemento.prezzo%></span> €</h2>
-	                    
+	                    	<img src="<%= elemento.immagine%>" height="90px" width="90px" style="float: left;">
+	                    	<h4 style="float: left;"> <%= elemento.nome.toUpperCase() %> </h4>
+						</a>
+					</div>
+					<div>
+						<h2><!-- <span class="prezzo"> --><%=elemento.prezzo%>  €</h2>
+					</div>
+	                <div>
 	                    <form action="eliminaProdottoWishlist/<%=elemento._id%>" method="POST">
-	                    	<button type="submit"> Elimina Prodotto </button>
-	                    	</form>
-	                    </div> 
-	            </td> 
+	                    	<button type="submit" class="btn btn-warning" > Elimina Prodotto </button>
+	                   	</form>
+					</div>
+					<hr> 
+				</div>
+	         <!--   </td> -->
 	        <% }); %>
-	    </tr>
+	   <!-- </tr>-->
 	<% } else {%>
+		<hr>
 		<h1> WISHLIST VUOTA <h1>
 	<% }%>
 </div>
