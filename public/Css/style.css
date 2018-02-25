@@ -74,6 +74,18 @@
   margin-right: 20px;
 }
 
+#checkout td {
+  border-right: solid lightgrey 1px;
+  padding: 10px;
+}
+
+#checkout img {
+  float: center;
+}
+
+
+
+
 
 html, body {
   height: 100%;
