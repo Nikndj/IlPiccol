@@ -17,7 +17,7 @@
 			                <% ordine.prodotti.forEach(function(elemento){ %>
 			                	<td>
 			                	<a href="/catalog/<%= elemento.prodotto._id %>">
-				                    <img src="<%= elemento.prodotto.immagine%>" height="100px" width="100px" style="float: left;">
+				                    <img src="<%= elemento.prodotto.immagine%>" height="150px" width="150px" style="float: left;">
 				                    <h4 style="float: left;"><%= elemento.prodotto.nome.toUpperCase() %></h4>
 			                    </a>
 			                    <h2> <span class="prezzo"><%=elemento.prodotto.prezzo * elemento.quantita%></span> €</h2>

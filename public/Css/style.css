@@ -5,11 +5,13 @@
 }
 
 #catalogo table {
+  width: 100%;
   border-left: solid grey 1px;
   border-right: solid grey 1px;
 }
 
 #catalogo td {
+  width: 25%;
   padding-left: 20px;
   padding-right: 20px;
   padding-bottom: 30px;
