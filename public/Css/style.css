@@ -8,6 +8,7 @@
   width: 100%;
   border-left: solid grey 1px;
   border-right: solid grey 1px;
+  margin-bottom: 20px;
 }
 
 #catalogo td {
@@ -51,10 +52,28 @@
   margin-right: 15%;
 }
 
-#adminAddItem input, textarea {
+#admin input, textarea {
   margin-right: 20px;
   margin-bottom: 10px;
 }
+
+/* CARRELLO */
+#carrello {
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
+#carrello input {
+  width: 10%;
+  float: left;
+  margin-right: 20px;
+}
+
+#carrello img {
+  float: left;
+  margin-right: 20px;
+}
+
 
 html, body {
   height: 100%;
