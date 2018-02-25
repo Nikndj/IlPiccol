@@ -12,18 +12,18 @@ var transporter = nodemailer.createTransport({
 });
 
 var schemaProdotto = new Schema({
-	"nome": String,
-	"nomeVisualizzato" : String,
-	"prezzo": Number,
-	"dataInserimento": Date,
-	"prezzoScontato": Number, //di base uguale al prezzo
-	"emailProduttore": String, //nel form type=email.
+	"nome": { "type": String, "required": true },
+	"nomeVisualizzato" :{ "type": String, "required": true },
+	"prezzo":{ "type": Number, "required": true },
+	"dataInserimento": { "type": Date, "required": true },
+	"prezzoScontato": { "type": Number, "required": false }, //di base uguale al prezzo
+	"emailProduttore": { "type": String, "required": true }, //nel form type=email.
 	"quantita": { "type": Number, "default": 1},
-	"immagine": String, //il link es."https://i.imgur.com/lyFdSv2.png"
+	"immagine": { "type": String, "required": true }, //il link es."https://i.imgur.com/lyFdSv2.png"
 	"commenti": [{"testo": String, "data": Date, "autore": String, "voto": Number}],
-	"descrizione": String, 
-	"votoMedio": Number,
-	"esaurito": { "type": Boolean, "default": false },
+	"descrizione": { "type": String, "required": true, "default": "Descrizione oggetto" }, 
+	"votoMedio": { "type": Number, "required": false, "default": 0},
+	"esaurito": { "type": Boolean, "required": true, "default": false },
 	"utentiInteressati": [{ "type": Schema.Types.ObjectId, "ref": "Utente"}]
 }, {usePushEach: true});
 
@@ -66,15 +66,4 @@ schemaProdotto.pre("save", function(next){
 	next();
 });
 
-
 module.exports = mongoose.model('Prodotto', schemaProdotto);
-
-
-
-
-/*<% prodotti.commenti.forEach(function(commento){%>
-<p><%= commento.autore%>, il <%= commento.data.getDate()%>/<%= commento.data.getMonth()%>/<%= commento.data.getFullYear()%>
-   , ore <%= commento.data.getHours()%>:<%= commento.data.getMinutes()%> con Voto: <%= commento.voto%> dice:</p>
-<p><%= commento.testo%></p>
-<hr>
-<% })%>*/

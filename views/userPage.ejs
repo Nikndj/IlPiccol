@@ -4,11 +4,42 @@
 </h1>
 
 <div>
-    <a href="">Accedi al tuo carrello</a>
+    <a href="/cart">Accedi al tuo carrello</a>
 </div>
+
 <div>
-    <a href="">Accedi alla tua wishlist</a>
+    <a href="/wishlist">Accedi alla tua wishlist</a>
 </div>
+
+<div>
+	<a href="/storicoOrdini">Osserva i tuoi ordini passati</a>
+</div>
+
+<hr>
+
+<div style="margin-left: 10%">
+	<form action="/aggiornaInformazioniUtente" method="POST">
+		<h2> Aggiorna le tue informazioni <h2>
+		<p> Nome: </p>
+		<input type="text" name="nome" value="<%=utente.nome%>" placeholder="Inserisci il tuo nome"> </input>
+		<p> Cognome: </p>
+		<input type="text" name="cognome" value="<%=utente.cognome%>" placeholder="Inserisci il tuo cognome"> </input>
+		<p> Data di nascita: </p>
+		<input type="date" name="data" value="<%=utente.dataNascita%>" placeholder="Inserisci la tua data di nascita"> </input>
+		<p> Indirizzo: </p>
+		<input type="text" name="indirizzo" value="<%=utente.indirizzo%>" placeholder="Inserisci il tuo indirizzo"> </input>
+		<p> CAP: </p>
+		<input type="number" name="cap" value="<%=utente.cap%>" placeholder="Inserisci il CAP della tua città"> </input>
+		<p> Città: </p>
+		<input type="text" name="citta" value="<%=utente.citta%>" placeholder="Inserisci la tua città"> </input>
+		<p> Numero Carta </p>
+		<input type="number" name="numeroCarta" value="<%=utente.numeroCarta%>" placeholder="Inserisci il numero della tua carta di credito"> </input>
+		<br>
+		<br>
+		<button type="submit"> Aggiorna </button>
+	</form>
+</div>
+
 <div>
     <a href="/logout">Logout</a>
 </div>

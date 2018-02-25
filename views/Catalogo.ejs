@@ -1,15 +1,15 @@
 <% include partials/header.ejs%>
 <% include partials/navbar.ejs%>
 
-<div>
+<div id="catalogo">
     <% var contatore=0; %>
     <table>
         <thead>
         </thead>
         <tbody>
-            <tr style="width:100%">
+            <tr>
                 <% prodotti.forEach(function(Prodotto){%>
-                <td style="width:25%">
+                <td>
                     <div>
                         <a class="aCatalog" href="/catalog/<%= Prodotto._id %>"><h2><%= Prodotto.nomeVisualizzato %></h2></a>             
                     </div>
@@ -17,22 +17,22 @@
                         <h3><%= Prodotto.prezzoScontato %>€</h3>
                     </div>
                     <div>
-                            <% if(Prodotto.votoMedio!=0){ %>
-                                <h4>Voto: <%= Prodotto.votoMedio %></h4>
-                                <% }else {%>
-                                <h4>Nessun Voto</h4>
-                                <% } %>
+                        <% if(Prodotto.votoMedio!=0){ %>
+                            <h4>Voto: <%= Prodotto.votoMedio %></h4>
+                        <% }else {%>
+                            <h4>Nessun Voto</h4>
+                        <% } %>
                     </div>
                     <div>
                         <a href="/catalog/<%= Prodotto._id %>"><img src="<%= Prodotto.immagine%>" height="200px" width="225px"></a>
                     </div>
                 </td> 
-                <% contatore=contatore+1; %>
+                <% contatore++; %>
                 <% if(contatore%4==0){ %>
                     </tr>
                     <tr>
                 <% } %>
-              <% }) %>
+              <% }); %>
             </tr>
         </tbody>
         </table>

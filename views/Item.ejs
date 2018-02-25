@@ -11,24 +11,29 @@
             </td>
             <td style="width: 66%">
                 <h1><%= prodotti.nomeVisualizzato%></h1>
+
                 <br>
+                
                 <% if (prodotti.prezzo > prodotti.prezzoScontato) {%> 
-                <h3>Prezzo base: <strike><%= prodotti.prezzo%>€</strike></h3>
-                <br>
-                <h2>Prezzo scontato: <%= prodotti.prezzoScontato%>€</h2>
+                    <h3>Prezzo base: <strike><%= prodotti.prezzo%>€</strike></h3>
+                    <br>
+                    <h2>Prezzo scontato: <%= prodotti.prezzoScontato%>€</h2>
+                    <% var sconto=Math.round((prodotti.prezzo-prodotti.prezzoScontato)*100)/100; %>
+                    <% var percentualeSconto=Math.round((100*sconto/prodotti.prezzo)*100)/100; %>
+                    <h4>Risparmia <%=sconto%>€ (-<%= percentualeSconto%>%)</h4>
                 <% } else {%>
-                <h3>Prezzo: <%= prodotti.prezzo%>€</h3>
+                        <h3>Prezzo: <%= prodotti.prezzo%>€</h3>
                 <% }%>
+
                 <br>
-                <% var sconto=Math.round((prodotti.prezzo-prodotti.prezzoScontato)*100)/100; %>
-                <% var percentualeSconto=Math.round((100*sconto/prodotti.prezzo)*100)/100; %>
-                <h4>Risparmia <%=sconto%>€ (-<%= percentualeSconto%>%)</h4>
+               
                 <br>
+
                 <h4>Disponibilità: <%=prodotti.quantita%> pezzi</h4>
                 <% if(prodotti.votoMedio==0){ %>
                 <h4>Nessuna Votazione</h4>
                 <%} else{ %>
-                <h5>Voto Medio: <%= prodotti.votoMedio%></h5>
+                    <h5>Voto Medio: <%= prodotti.votoMedio%></h5>
                 <%} %>
             </td>
         </tr>
@@ -36,7 +41,7 @@
     </table>
     <table>
         <thead></thead>
-        <tbody
+        <tbody>
         <tr>
             <td>
                 <h4>Descrizione Prodotto</h4>
@@ -56,7 +61,7 @@
                     , ore <%= commento.data.getHours()%>:<%= commento.data.getMinutes()%> con Voto: <%= commento.voto%> dice:</p>
                    <p><%= commento.testo%></p>
                    <hr>
-                   <% })%>
+                   <% });%>
                    <% } %>
             </td>
         </tr>
