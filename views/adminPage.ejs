@@ -3,7 +3,7 @@
 
 <div id="admin">
     <h1>Aggiungere Prodotti al DB:</h1>
-    <div id="adminAddItem">
+    <div id="adminAddItem" class="form-group">
         <br>
         <form action="/adminInsertProduct" method="POST">
             <input type="text" name="nome" placeholder="Nome" required="required">
@@ -20,11 +20,11 @@
     </div>
     <hr>
     <h1>Gestione di un Prodotto</h1>
-    <div id="adminUpdateItem">
+    <div id="adminUpdateItem" class="form-group">
         <br>
         <form action="/adminProductManagement" method="POST">
-            <input type="text" name="cerca" placeholder="Nome del prodotto" required="required" minlength="1">
-            <button type="submit" onclick="return confirm('Gestire Prodotto?')">Gestisci</button>
+            <input type="text" name="cerca" placeholder="Nome del prodotto" required="required" minlength="1" class="form-control">
+            <button type="submit" class="btn btn-primary">Gestisci</button>
         </form>
     </div>
 </div>

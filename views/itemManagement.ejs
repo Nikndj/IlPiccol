@@ -26,7 +26,7 @@
                 <div>
                 <form action="/itemManagementPrezzo" method="POST">
                     <label for="inputPrezzo">Cambia il Prezzo scontato di questo prodotto: </label>
-                    <input id="inputPrezzo" name="inputPrezzo" type="number" placeholder="Prezzo in euro" required="required" min="1" step="any" max="10000,00"></input>
+                    <input id="inputPrezzo" name="inputPrezzo" type="number" placeholder="Prezzo in euro" value="<%=Prodotto.prezzoScontato%>" required="required" min="1" step="any" max="10000,00"></input>
                     <input type="hidden" name="idProdotto" value="<%=Prodotto._id%>"></input>
                 </form>
                 <form action="/itemManagementImmagine" method="POST">
@@ -36,7 +36,7 @@
                 </form>
                 <form action="/itemManagementQuantita" method="POST">
                     <label for="inputQuantita">Aggiorna la quantità di questo prodotto: </label>
-                    <input id="inputQuantita" name="inputQuantita" type="number" placeholder="Quantità" required="required"></input>
+                    <input id="inputQuantita" name="inputQuantita" type="number" placeholder="Quantità" value="<%=Prodotto.quantita%>" required="required"></input>
                     <input type="hidden" name="idProdotto" value="<%=Prodotto._id%>"></input>
                     <input type="hidden" name="inputQuantitaHidden" value="null"></input>
                 </form>
