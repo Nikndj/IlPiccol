@@ -31,10 +31,6 @@ IlPiccol
 |   |       homepage.txt
 |   |
 \--- jQueryWishlist.js
-How-to:
-Requirements: *
-
-Setting up: *
 
 Navigate to localhost:3000
 
