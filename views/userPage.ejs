@@ -1,0 +1,53 @@
+<% include partials/header%>
+<% include partials/navbar%>
+
+<div style="margin: 25 px auto; text-align:center" class="container">
+<h1> Benvenuto nel tuo account! </h1>
+	<div class="container-fluid">
+    	<a href="/cart">Accedi al tuo carrello</a>
+	</div>
+	<div class="container-fluid">
+    	<a href="/wishlist">Accedi alla tua wishlist</a>
+	</div>
+	<div class="container-fluid">
+		<a href="/storicoOrdini">Osserva i tuoi ordini passati</a>
+	</div>
+</div>
+<hr>
+
+<div style="margin: 25 px auto; width: 30%" class="container">
+	<form action="/aggiornaInformazioniUtente" method="POST">
+		<h2> Aggiorna le tue informazioni <h2>
+		<div class="form-group">
+			<label for="NameChangeInput">Nome:</label>
+			<input id="NameChangeInput" class="form-control" type="text" name="nome" value="<%=utente.nome%>" placeholder="Inserisci il tuo nome"> </input>
+			<label for="SecondNameChangeInput">Cognome: </label>
+			<input id="SecondNameChangeInput" class="form-control" type="text" name="cognome" value="<%=utente.cognome%>" placeholder="Inserisci il tuo cognome"> </input>
+		</div>
+		<div class="form-group">
+			</div>
+		<div class="form-group">
+			<label for="BirthChangeInput">Data di nascita: </label>
+			<input id="BirthChangeInput" class="form-control" type="date" name="data" value="<%=utente.dataNascita%>" placeholder="Inserisci la tua data di nascita"> </input>
+		</div>
+		<div class="form-group">
+			<label for="AdressChangeInput">Indirizzo: </label>
+			<input id="AdressChangeInput" class="form-control" type="text" name="indirizzo" value="<%=utente.indirizzo%>" placeholder="Inserisci il tuo indirizzo"> </input>
+		</div>
+		<div class="form-group">
+			<label for="PostalChangeInput">CAP:</label>
+			<input id="PostalChangeInput" class="form-control" type="number" name="cap" value="<%=utente.cap%>" placeholder="Inserisci il CAP della tua città"> </input>
+		</div>
+	 	<div class="form-group">
+			<label for="CityChangeInput">Città: </label>
+			<input id="CityChangeInput" class="form-control" type="text" name="citta" value="<%=utente.citta%>" placeholder="Inserisci la tua città"> </input>
+		</div>
+		<div class="form-group">
+			<label for="CardChangeInput">Numero Carta: </label>
+			<input id="CardChangeInput" class="form-control" type="number" name="numeroCarta" value="<%=utente.numeroCarta%>" placeholder="Inserisci il numero della tua carta di credito"> </input>
+		</div>
+		<button type="submit" class="btn btn-primary"> Aggiorna </button>
+	</form>
+</div>
+
+<% include partials/footer%>

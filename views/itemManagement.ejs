@@ -1,0 +1,48 @@
+<% include partials/header%>
+<div>
+    <h3>Ricerca di nuovo per la gestione di un prodotto</h3>
+        <form action="/adminManagement" method="POST">
+            <input type="text" name="cerca" placeholder="Cerca..." size="35" maxlength="35">
+            <button type="submit">Cerca</button>
+        </form>
+    </div>
+
+<div>
+    <% prodotti.forEach(function(Prodotto){%>
+        <div>
+                <p>***</p>
+                <p><%= Prodotto.nomeVisualizzato %></p>
+                <p>Prezzo: <%= Prodotto.prezzo %></p>
+                <p>Prezzo Scontato: <%= Prodotto.prezzoScontato %></p>
+                <p>Quantità disponibili: <%= Prodotto.quantita %></p>
+                 <form action="/itemManagementMail" method="POST">
+                    <button type="submit" onclick="return confirm('Inviare email di riordino?')">Riordino?</button>
+                    <input type="hidden" name="inputProdottoHidden" value="<%= Prodotto.nome%>"></input>
+                    <input type="hidden" name="inputEmailHidden" value="<%= Prodotto.emailProduttore%>"></input>
+                </form>
+                <p>Immagine: <img src="<%= Prodotto.immagine %>" height="300px" width="300px"> </p>
+                <p>Descrizione: <%= Prodotto.descrizione%></p>
+                <div>
+                <form action="/itemManagementPrezzo" method="POST">
+                    <label for="inputPrezzo">Cambia il Prezzo scontato di questo prodotto: </label>
+                    <input id="inputPrezzo" name="inputPrezzo" type="number" placeholder="Prezzo in euro" required="required" min="1" step="any" max="10000,00"></input>
+                    <input type="hidden" name="idProdotto" value="<%=Prodotto._id%>"></input>
+                </form>
+                <form action="/itemManagementImmagine" method="POST">
+                    <label for="inputImmagine">Cambia l'immagine di questo prodotto: </label>
+                    <input id="inputImmagine" name="inputImmagine" type="text" placeholder="Link immagine (locale o remota)" required="required"></input>
+                    <input type="hidden" name="idProdotto" value="<%=Prodotto._id%>"></input>
+                </form>
+                <form action="/itemManagementQuantita" method="POST">
+                    <label for="inputQuantita">Aggiorna la quantità di questo prodotto: </label>
+                    <input id="inputQuantita" name="inputQuantita" type="number" placeholder="Quantità" required="required"></input>
+                    <input type="hidden" name="idProdotto" value="<%=Prodotto._id%>"></input>
+                    <input type="hidden" name="inputQuantitaHidden" value="null"></input>
+                </form>
+                </div>
+                <p>***</p>
+        </div>
+    <% }) %>
+</div>
+
+<% include partials/footer%>

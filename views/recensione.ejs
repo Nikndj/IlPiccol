@@ -1,0 +1,25 @@
+<% include partials/header%>
+<% include partials/navbar%>
+
+<div id="divRecensione">
+<form action="/recensione" method="POST">
+    <h2>Recensione</h2>
+    <textarea rows="5" cols="100"  maxlength="500" name="testoRecensione" placeholder="Ho acquistato..." required="required"></textarea>
+    <!-- è solo un'idea di usare il range -->
+    <br>
+    <hr style="padding-bottom:5px">
+    <p>Voto che dai a questo prodotto: <input type="range" name="votoRecensione" min="1" max="5" required="required" list="tickmarks" step="1" valueAsNumber defaultValue="3"></input>
+    <datalist id="tickmarks">
+            <option value="1" label="1">
+            <option value="2" label="2">
+            <option value="3" label="3">
+            <option value="4" label="4">
+            <option value="5" label="5">
+    </datalist>
+    <input type="hidden" name="prodottoRecensione" value="<%= idProdottoSent %>"></input>
+    <button type="submit">Invia</button>
+    </p>
+</form>
+</div>
+
+<% include partials/footer%>

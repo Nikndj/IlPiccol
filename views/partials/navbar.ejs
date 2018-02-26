@@ -1,0 +1,57 @@
+<nav class="navbar navbar-default">
+    <div class="container-fluid" >
+        <table style="width:100%; text-align: center;">
+            <tr style="border: solid black 1px">
+            <% if (user == null) { %>
+                <td style="width: 17%; border-right: solid black 1px;"><a href="/catalog"> CATALOGO </a></td>
+                <td style="width: 17%; border-right: solid black 1px;"><a href="/login"> LOGIN </a></td>
+                <td style="width: 17%; border-right: solid black 1px;"><a href="/register"> REGISTRATI </a></td>        
+            <% } else { %>
+                <% if (!user.admin) {%>
+                    <td style="width: 17%; border-right: solid black 1px;"> Ciao <%=user.username%> </td>
+                    <td style="width: 17%; border-right: solid black 1px;"><a href="/catalog"> CATALOGO </a></td>
+                    <td style="width: 17%; border-right: solid black 1px;"><a href="/userPage"> ACCOUNT PERSONALE </a></td>
+                    <td style="width: 17%; border-right: solid black 1px;"><a href="/cart"> CARRELLO </a></td>
+                    <td style="width: 17%; border-right: solid black 1px;"><a href="/logout"> LOGOUT </a></td>
+                <% } else { %>
+                    <td style="width: 17%; border-right: solid black 1px;"><p> Ciao ADMIN <%=user.username%> </p> </td>
+                    <td style="width: 17%; border-right: solid black 1px;"><a href="/catalog"> CATALOGO </a></td>
+                    <td style="width: 17%; border-right: solid black 1px;"><a href="/userPage"> ACCOUNT PERSONALE </a></td>
+                    <td style="width: 17%; border-right: solid black 1px;"><a href="/admin"> PAGINA ADMIN </a></td>
+                    <td style="width: 17%; border-right: solid black 1px;"><a href="/logout"> LOGOUT </a></td>
+                <% } %>
+            <% } %>
+            </tr>
+        </table>
+    </div>
+</nav>
+
+<div style="float: left;"><a href="/"><img src="Immagini/piccol.jpeg" alt="Logo Piccol"></a></div>
+
+<div id="search_bar">
+        <table border="1" style="height:78px;">
+            <tr>
+            <td style="width: 55%;">
+                Non trovi quello che cerchi? Esplora tra migliaia di prodotti usando la <span color="#FF0000">barra</span> 
+                e inserendo le parole chiave di tuo interesse, Piccol risponde sempre alle tue esigenze
+            </td>
+            <form action="/RisultatiRicerca" method="POST">
+            <td>
+                <input type="text" name="cerca" placeholder="Cerca..." required="required" minlength="1" maxlength="30" size="20">
+                
+                <select id="sceltaSort" name="sort" required="required">
+                    <option value="crescPrezzo">Ordine Crescente di Prezzo</option>
+                    <option value="decrPrezzo">Ordine Decrescente di Prezzo</option>
+                    <option value="recenti">Recenti</option>
+                    <option value="crescNome">Ordine Alfabetico</option>
+                    <option value="decrNome">Ordine Alfabetico Decrescente</option>
+                    <option value="crescVoto">Ordine Crescente di Voto</option>
+                    <option value="decrVoto">Ordine Decrescente di Voto</option>
+                </select> 
+                <button type="submit">Cerca</button>
+            </form>
+            </td>
+            </tr>
+        </table>
+</div>
+<br>

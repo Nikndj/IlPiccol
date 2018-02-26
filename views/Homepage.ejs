@@ -1,0 +1,88 @@
+<% include partials/header%>
+<% include partials/navbar%>
+
+<br>
+<div style="margin-left: 10%; margin-right: 10%;">
+    <div style="border: solid black 2px; padding: 10px;">
+    <h1> HOT - LE OFFERTE DEL MOMENTO <img src="Immagini/flame.png" alt="Fiamma"> </h1>
+    <br>
+    <div class="box">
+            <% var contatore=0; %>
+            <table>
+                <thead>
+                </thead>
+                <tbody>
+                    <tr style="width:99%">
+                        <!-- controllo per array vuoto?-->
+                        <% prodottiHot.forEach(function(ProdottoHot){%>
+                        <td style="width: 33%">
+                            <div>
+                                <a href="/catalog/<%= ProdottoHot._id %>"><h2><%= ProdottoHot.nomeVisualizzato %></h2></a>          
+                            </div>
+                            <div>
+                                <strike><h4><%= ProdottoHot.prezzo %>€</h4></strike>
+                            </div>
+                            <div>
+                                <h3><%= ProdottoHot.prezzoScontato %>€</h3>
+                            </div>
+                            <div>
+                                <% var sconto=Math.round((ProdottoHot.prezzo-ProdottoHot.prezzoScontato)*100)/100; %>
+                                <% var percentualeSconto=Math.round((100*sconto/ProdottoHot.prezzo)*100)/100; %>
+                                <h5>Risparmia <%=sconto%>€ (-<%= percentualeSconto%>%)</h5>
+                            </div>
+                            <div>
+                                <a href="/catalog/<%= ProdottoHot._id %>"><img src="<%= ProdottoHot.immagine%>" height="200px" width="225px"></a>
+                            </div>
+                        </td> 
+                        <% contatore=contatore+1; %>
+                        <% if(contatore%3==0){ %>
+                            </tr>
+                            <tr>
+                        <% } %>
+                      <% }) %>
+                    </tr>
+                </tbody>
+            </table>
+    </div>
+</div>
+
+<br>
+
+<div style="border: solid black 2px; padding: 10px;">
+    <h1> LE ULTIME NOVITA' </h1>
+    <br>
+    <div class="box">
+            <% var conta=0; %>
+            <table>
+                <thead>
+                </thead>
+                <tbody>
+                    <tr>
+                        <!-- controllo per array vuoto?-->
+                        <% prodottiNuovi.forEach(function(ProdottoNew){%>
+                            <td>
+                                <div>
+                                    <a href="/catalog/<%= ProdottoNew._id %>"><h2><%= ProdottoNew.nomeVisualizzato %></h2></a>             
+                                </div>
+                                <div>
+                                    <h2><%= ProdottoNew.prezzoScontato %>€</h2>
+                                </div>
+                                <div>
+                                    <a href="/catalog/<%= ProdottoNew._id %>"><img src="<%= ProdottoNew.immagine%>" height="200px" width="225px"></a>
+                                </div>
+                            </td> 
+                        <% conta=conta+1; %>
+                        <% if(conta%4==0){ %>
+                            </tr>
+                            <tr>
+                        <% } %>
+                      <% }) %>
+                    </tr>
+                </tbody>
+            </table>
+    </div>
+</div>
+<br>
+</div>
+
+<% include partials/footer%>

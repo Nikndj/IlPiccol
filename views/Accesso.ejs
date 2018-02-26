@@ -1,0 +1,30 @@
+<% include partials/header%>
+
+<div id="accesso">
+    <div>
+        <h2> Accedi al tuo account Piccol! </h2>
+    </div>
+
+    <div id="loginForm">
+        <a href="/">
+            <img src="https://vignette.wikia.nocookie.net/nonciclopedia/images/9/9a/Piccol.jpg/revision/latest?cb=20090418074550" height="200" width="200" style="float: left;">
+        </a>
+        <form action="/login" method="POST">
+            <div>
+                <p> ID </p>
+                <input type="text" name="username">
+            </div>
+            <br>
+            <div>
+                <p> Password </p>
+                <input type="password" name="password">
+            </div>
+            <br>
+            <div>
+                <button type="submit"> Accedi </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<% include partials/footer%>

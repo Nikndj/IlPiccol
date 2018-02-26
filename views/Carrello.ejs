@@ -1,0 +1,48 @@
+<% include partials/header%>
+<% include partials/navbar%>
+
+
+<h1> CARRELLO </h1>
+
+<div>
+	<% if (elementi.length > 0) {%>
+		<%var i = 0;%>
+		<tr>
+	        <% elementi.forEach(function(elemento){%>
+	            <td>
+	                <div>
+
+	                	<a href="/catalog/<%= elemento.prodotto._id %>">
+		                    <img src="<%= elemento.prodotto.immagine%>" height="100px" width="100px" style="float: left;">
+		                    <h4 style="float: left;"><%= elemento.prodotto.nome.toUpperCase() %></h4>
+	                    </a>
+	                    <h2> <span class="prezzo"><%=elemento.prodotto.prezzo * elemento.quantita%></span> €</h2>
+                      
+	                    <form action="modificaProdottoCarrello/<%=elemento.prodotto._id%>/<%=i%>" method="POST">
+	                    	<input type="number" name="<%=i%>" value="<%=elemento.quantita%>" class="quantita"> </input>
+	                    	<button type="submit"> Modifica Quantità </button>
+	                    	</form>
+                        
+	                    <form action="eliminaProdottoCarrello/<%=elemento.prodotto._id%>" method="POST">
+	                    	<button type="submit"> Elimina Prodotto </button>
+	                    	</form>
+	                    </div> 
+	            </td> 
+	            <% i++; %>
+	        <% }); %>
+	    </tr>
+	<% } else {%>
+		<h1> CARRELLO VUOTO </h1>
+	<% }%>
+</div>
+
+<div>
+	<br>
+	<h3> Prezzo finale: <span id="prezzoFinale"> </span> </h3>
+	<form action="/concludiOrdine" method="POST"> 
+		<button type="submit"> Completa Ordine </button>
+	</form>
+</div>
+
+<script src="modificaQuantita.js">  </script>
+<% include partials/footer%>

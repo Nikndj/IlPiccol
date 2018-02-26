@@ -1,0 +1,39 @@
+<% include partials/header%>
+<% include partials/navbar%>
+
+
+<h1> WISHLIST </h1>
+
+<div class="jumbotron">
+	<% if (elementi.length > 0) {%>
+	<!--	<% var i = 0; %>
+		<tr>-->
+	        <% elementi.forEach(function(elemento){%>
+	           <!-- <td>-->
+				<div class="media">
+	                <div >
+	                	<a href="/catalog/<%= elemento._id %>">
+	                    	<img src="<%= elemento.immagine%>" height="90px" width="90px" style="float: left;">
+	                    	<h4 style="float: left;"> <%= elemento.nome.toUpperCase() %> </h4>
+						</a>
+					</div>
+					<div>
+						<h2><!-- <span class="prezzo"> --><%=elemento.prezzo%>  €</h2>
+					</div>
+	                <div>
+	                    <form action="eliminaProdottoWishlist/<%=elemento._id%>" method="POST">
+	                    	<button type="submit" class="btn btn-warning" > Elimina Prodotto </button>
+	                   	</form>
+					</div>
+					<hr> 
+				</div>
+	         <!--   </td> -->
+	        <% }); %>
+	   <!-- </tr>-->
+	<% } else {%>
+		<hr>
+		<h1> WISHLIST VUOTA <h1>
+	<% }%>
+</div>
+
+<% include partials/footer%>

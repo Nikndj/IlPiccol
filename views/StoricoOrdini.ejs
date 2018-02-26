@@ -1,0 +1,45 @@
+<% include partials/header%>
+
+<h1 style="text-align: center;"> STORICO ORDINI <h1>
+
+<br>
+
+<div style="margin-left: 20%;">
+	<% if (ordini.length > 0) {%>
+		<%var i = 0;%>
+	        <% ordini.forEach(function(ordine){%>
+	        	<div>
+	        	<table>
+	        	<tbody>
+	 				<tr style="width: 100%">
+		            	<p> Ordine del <%=ordine.data.getDate()%>/<%=ordine.data.getMonth()%>/<%=ordine.data.getFullYear()%>, ore <%=ordine.data.getHours()%>:<%=ordine.data.getMinutes()%> </p>
+		                <div>
+			                <% ordine.prodotti.forEach(function(elemento){ %>
+			                	<td>
+			                	<a href="/catalog/<%= elemento.prodotto._id %>">
+				                    <img src="<%= elemento.prodotto.immagine%>" height="150px" width="150px" style="float: left;">
+				                    <h4 style="float: left;"><%= elemento.prodotto.nome.toUpperCase() %></h4>
+			                    </a>
+			                    <h2> <span class="prezzo"><%=elemento.prodotto.prezzo * elemento.quantita%></span> €</h2>
+			                    <h3> Q.tà: <%=elemento.quantita%> </h3>
+			                    </td>
+			                    <% i++ %>
+			                    <% if (i == 4) { %>
+			                    	</tr>
+			                    	<tr>
+			                    <% } %>
+			                <% }); %>
+			            <h3> Totale: <%=ordine.totale%>€ </h3>
+			            </div>
+			            <br>
+			            </tr>
+		        </tbody>
+	            </table>
+	            </div>
+	            <hr>
+	            <br>
+	        <% }); %>
+	<% } else {%>
+		<h1> NESSUN ORDINE DA VISUALIZZARE <h1>
+	<% }%>
+</div>
