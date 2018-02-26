@@ -6,8 +6,11 @@
 
 #catalogo table {
   width: 100%;
+
   border-left: solid rgba(6, 1, 53, 0.904) 1px;
   border-right: solid rgba(6, 1, 53, 0.904) 1px;
+  margin-bottom: 20px;
+
 }
 
 #catalogo td {
@@ -51,7 +54,7 @@
   margin-right: 15%;
 }
 
-#adminAddItem input, textarea {
+#admin input, textarea {
   margin-right: 20px;
   margin-bottom: 10px;
 }
@@ -68,6 +71,62 @@
 
 #formLinkAdmin{
   width: 260px;
+}
+
+/* CARRELLO */
+#carrello {
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
+#carrello input {
+  width: 10%;
+  float: left;
+  margin-right: 20px;
+}
+
+#carrello img {
+  float: left;
+  margin-right: 20px;
+}
+
+/* CHECKOUT */
+
+#checkout td {
+  border-right: solid lightgrey 1px;
+  padding: 10px;
+}
+
+#checkout img {
+  float: center;
+}
+
+/* NAVBAR */
+#navbar table {
+  width:100%; 
+  text-align: center;
+  border: solid black 1px;
+  height: 40px;
+}
+
+#navbar td {
+  padding: 0;
+  width: 17%; 
+  border-right: solid black 1px;
+}
+
+#navbar td:hover {
+  background-color: lightgrey;
+}
+
+#navbar td a {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+#navbar p {
+  margin-bottom: 0;
 }
 
 html, body {
