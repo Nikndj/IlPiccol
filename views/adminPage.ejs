@@ -3,25 +3,25 @@
 
 <div id="admin">
     <h1>Aggiungere Prodotti al DB:</h1>
-    <div id="adminAddItem">
+    <div id="adminAddItem" class="form-group">
         <br>
         <form action="/adminInsertProduct" method="POST">
-            <input type="text" name="nome" placeholder="Nome" required="required">
-            <input type="number" name="prezzo" placeholder="Prezzo in Euro" required="required" min="1" step="any" max="10000,00">
-            <input type="email" name="emailProduttore" placeholder="E-mail Produttore" required="required">
-            <input type="number" name="quantita" placeholder="Disponibilità (q.ta)" required="required">
-            <textarea name="descrizione" placeholder="Descrizione" required="required"></textarea>
-            <input type="text" name="immagine" placeholder="Link Immagine (Locale/Remoto)" required="required">
-            <button type="submit" onclick="return confirm('Creare Prodotto?')">Crea nuovo Prodotto</button>
+            <input type="text" name="nome" placeholder="Nome" required="required" class="form-control">
+            <input type="number" name="prezzo" placeholder="Prezzo in Euro" required="required" min="1" step="any" max="10000,00" class="form-control">
+            <input type="email" name="emailProduttore" placeholder="E-mail Produttore" required="required" class="form-control">
+            <input type="number" name="quantita" placeholder="Disponibilità (q.ta)" required="required" class="form-control">
+            <textarea name="descrizione" placeholder="Descrizione" required="required" class="form-control"></textarea>
+            <input type="text" name="immagine" placeholder="Link Immagine (Locale/Remoto)" required="required" class="form-control">
+            <button type="submit" onclick="return confirm('Creare Prodotto?')" class="btn btn-primary">Crea nuovo Prodotto</button>
         </form>
     </div>
     <hr>
     <h1>Gestione di un Prodotto</h1>
-    <div id="adminUpdateItem">
+    <div id="adminUpdateItem" class="form-group">
         <br>
         <form action="/adminProductManagement" method="POST">
-            <input type="text" name="cerca" placeholder="Nome del prodotto" required="required" minlength="1">
-            <button type="submit" onclick="return confirm('Gestire Prodotto?')">Gestisci</button>
+            <input type="text" name="cerca" placeholder="Nome del prodotto" required="required" minlength="1" class="form-control">
+            <button type="submit" class="btn btn-primary">Gestisci</button>
         </form>
     </div>
 </div>

@@ -11,7 +11,7 @@
                 <% prodotti.forEach(function(Prodotto){%>
                 <td>
                     <div>
-                        <a class="aCatalog" href="/catalog/<%= Prodotto._id %>"><h2><%= Prodotto.nomeVisualizzato %></h2></a>             
+                        <a href="/catalog/<%= Prodotto._id %>"><h2><%= Prodotto.nomeVisualizzato %></h2></a>             
                     </div>
                     <div>
                         <h3><%= Prodotto.prezzoScontato %>€</h3>
