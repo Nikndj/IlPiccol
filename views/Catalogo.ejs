@@ -9,9 +9,9 @@
         <tbody>
             <tr style="width:100%">
                 <% prodotti.forEach(function(Prodotto){%>
-                <td style="width:25%; text-align:center; padding-top:10px;">
+                <td class="alignC">
                     <div>
-                        <a class="aCatalog" href="/catalog/<%= Prodotto._id %>"><h2><%= Prodotto.nomeVisualizzato %></h2></a>             
+                        <a class="aricerca" href="/catalog/<%= Prodotto._id %>"><h2><%= Prodotto.nomeVisualizzato %></h2></a>             
                     </div>
                     <div>
                         <h3><%= Prodotto.prezzoScontato %>€</h3>

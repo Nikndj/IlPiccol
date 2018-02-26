@@ -15,9 +15,9 @@
                     <tr style="width:99%">
                         <!-- controllo per array vuoto?-->
                         <% prodottiHot.forEach(function(ProdottoHot){%>
-                        <td style="width: 33%;text-align:center; padding-top:20px">
+                        <td class="alignC padTOP" style="width:33%">
                             <div>
-                                <a class="anotshish" href="/catalog/<%= ProdottoHot._id %>"><h3><%= ProdottoHot.nomeVisualizzato %></h3></a>          
+                                <a class="anotbar" href="/catalog/<%= ProdottoHot._id %>"><h3><%= ProdottoHot.nomeVisualizzato %></h3></a>          
                             </div>
                             <div>
                                 <strike><h5><%= ProdottoHot.prezzo %>€</h5></strike>
@@ -60,9 +60,9 @@
                     <tr style="width:100%">
                         <!-- controllo per array vuoto?-->
                         <% prodottiNuovi.forEach(function(ProdottoNew){%>
-                            <td style="width:25%; text-align:center; padding-top:20px">
+                            <td class="alignC w25pc padTOP">
                                 <div>
-                                    <a class="anotshish" href="/catalog/<%= ProdottoNew._id %>"><h4><%= ProdottoNew.nomeVisualizzato %></h4></a>             
+                                    <a class="anotbar" href="/catalog/<%= ProdottoNew._id %>"><h4><%= ProdottoNew.nomeVisualizzato %></h4></a>             
                                 </div>
                                 <div>
                                     <h4><%= ProdottoNew.prezzoScontato %>€</h4>

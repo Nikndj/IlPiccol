@@ -2,7 +2,7 @@
 <div style="text-align:center">
     <a href="/"> HOME </a>
     <h3>Ricerca di nuovo per la gestione di un prodotto</h3>
-        <form action="/adminManagement" method="POST">
+        <form action="/adminProductManagement" method="POST">
             <input type="text" name="cerca" placeholder="Cerca..." size="35" maxlength="35">
             <button type="submit">Cerca</button>
         </form>
@@ -10,11 +10,9 @@
 
 <div>
     <% prodotti.forEach(function(Prodotto){%>
-        <div>
-                <hr style="height: 6px;
-                background: url(http://ibrahimjabbari.com/english/images/hr-11.png) repeat-x 0 0;
-                border: 0;">
-                <p><%= Prodotto.nomeVisualizzato %></p>
+            <hr style="border-top:10px solid ;color:rgba(1, 1, 44, 0.349);">
+            <div class="adminProductbox">
+                <h4><%= Prodotto.nomeVisualizzato %></h4>
                 <p>Prezzo: <%= Prodotto.prezzo %></p>
                 <p>Prezzo Scontato: <%= Prodotto.prezzoScontato %></p>
                 <p>Quantità disponibili: <%= Prodotto.quantita %></p>
@@ -33,7 +31,7 @@
                 </form>
                 <form action="/itemManagementImmagine" method="POST">
                     <label for="inputImmagine">Cambia l'immagine di questo prodotto: </label>
-                    <input id="inputImmagine" name="inputImmagine" type="text" placeholder="Link immagine (locale o remota)" required="required"></input>
+                    <input style="width:260px" id="inputImmagine" name="inputImmagine" type="text" placeholder="Link immagine (locale o remota)" required="required"></input>
                     <input type="hidden" name="idProdotto" value="<%=Prodotto._id%>"></input>
                 </form>
                 <form action="/itemManagementQuantita" method="POST">
