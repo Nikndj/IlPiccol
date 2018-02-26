@@ -5,7 +5,7 @@ Sito di e-commerce sviluppato per il corso di Programmazione Web, coorte 2015-20
 [Deploy su Heroku](https://ilpiccol.herokuapp.com/)
 [Video su YouTube]()
 
-##Strumentazione
+## Strumentazione
 Di seguito la strumentazione usata per il sito:
 - Node.js
 - MongoDB
@@ -13,7 +13,7 @@ Di seguito la strumentazione usata per il sito:
 - Passport
 - Bootstrap
 
-##USER STORIES
+## USER STORIES
 1) Come admin voglio poter accedere ad un’area privata tramite username e password;
 2) Come admin voglio gestire le rimanenze e i re-ordini dei prodotti;
 3) Il server deve inviare una email all’admin quando sta per terminare un prodotto; 
@@ -25,7 +25,8 @@ Di seguito la strumentazione usata per il sito:
 9) Come utente voglio poter vedere gli ultimi articoli aggiunti; 
 10) Come utente voglio poter lasciare feedback e voti e poter ordinare gli articoli in base al voto;
 
-##Struttura della cartella
+## Struttura della cartella
+
  IlPiccol
  |               
  +---models  /* modelli per il DB */
@@ -80,7 +81,8 @@ Di seguito la strumentazione usata per il sito:
  \___ Query.js
  \___ README.md
 
-##Per cominciare
+## Per cominciare
+
 Di seguito i passaggi da compiere:
 
     git clone https://github.com/bibaroc/Ojec.git
