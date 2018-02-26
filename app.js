@@ -664,6 +664,6 @@ app.get("*",function (req,res){
 });
 
 //per indicare su che porta deve ascoltare il server
-app.listen(3000, function() {
+app.listen(process.env.PORT || 3000, function() {
 	console.log("Connesso correttamente al server sulla porta 3000");
 });
