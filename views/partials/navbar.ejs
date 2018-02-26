@@ -1,24 +1,24 @@
-<nav class="navbar navbar-default">
-    <div class="container-fluid" >
-        <table style="width:100%; text-align: center;">
-            <tr style="border: solid black 1px">
+<nav>
+    <div id="navbar">
+        <table>
+            <tr>
             <% if (user == null) { %>
-                <td style="width: 17%; border-right: solid black 1px;"><a href="/catalog"> CATALOGO </a></td>
-                <td style="width: 17%; border-right: solid black 1px;"><a href="/login"> LOGIN </a></td>
-                <td style="width: 17%; border-right: solid black 1px;"><a href="/register"> REGISTRATI </a></td>        
+                <td><a href="/catalog"> CATALOGO </a></td>
+                <td><a href="/login"> LOGIN </a></td>
+                <td><a href="/register"> REGISTRATI </a></td>        
             <% } else { %>
                 <% if (!user.admin) {%>
-                    <td style="width: 17%; border-right: solid black 1px;"><p> Ciao <%=user.username%> </p> </td>
-                    <td style="width: 17%; border-right: solid black 1px;"><a href="/catalog"> CATALOGO </a></td>
-                    <td style="width: 17%; border-right: solid black 1px;"><a href="/userPage"> ACCOUNT PERSONALE </a></td>
-                    <td style="width: 17%; border-right: solid black 1px;"><a href="/cart"> CARRELLO </a></td>
-                    <td style="width: 17%; border-right: solid black 1px;"><a href="/logout"> LOGOUT </a></td>
+                    <td><p> Ciao <%=user.username%> </p> </td>
+                    <td><a href="/catalog"><span> CATALOGO </span></a></td>
+                    <td><a href="/userPage"> ACCOUNT PERSONALE </a></td>
+                    <td ><a href="/cart"> CARRELLO </a></td>
+                    <td><a href="/logout"> LOGOUT </a></td>
                 <% } else { %>
-                    <td style="width: 17%; border-right: solid black 1px;"><p> Ciao ADMIN <%=user.username%> </p> </td>
-                    <td style="width: 17%; border-right: solid black 1px;"><a href="/catalog"> CATALOGO </a></td>
-                    <td style="width: 17%; border-right: solid black 1px;"><a href="/userPage"> ACCOUNT PERSONALE </a></td>
-                    <td style="width: 17%; border-right: solid black 1px;"><a href="/admin"> PAGINA ADMIN </a></td>
-                    <td style="width: 17%; border-right: solid black 1px;"><a href="/logout"> LOGOUT </a></td>
+                    <td><p> Ciao ADMIN <%=user.username%> </p> </td>
+                    <td><a href="/catalog"><p> CATALOGO </p> </a></td>
+                    <td><a href="/userPage"> ACCOUNT PERSONALE </a></td>
+                    <td><a href="/admin"> PAGINA ADMIN </a></td>
+                    <td><a href="/logout"> LOGOUT </a></td>
                 <% } %>
             <% } %>
             </tr>
