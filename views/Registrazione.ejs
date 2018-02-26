@@ -1,13 +1,12 @@
 <% include partials/header%>
 
-<div class="container">
+<div id="contenuto" class="jumbotron">
 
     <h2 style="text-align: center;"> Registratrati a Piccol! </h2>
     <h4 style="text-align: center;"> È gratis ogni secondo giovedì del mese di Febbraio :) </h2> 
 
     <div id="register" style="width: 30%; margin: 25px auto;">
         <form action="/register" method="POST">
-           <!-- <p> Nome Utente </p>-->
             <div class="form-group">
                 <label for="UsernameInput">Nome Utente</label>
                 <input type="text" name="username" placeholder="Username" id="UsernameInput" class="form-control" required="required">
@@ -24,17 +23,6 @@
                 <label for="EmailInput">Email</label>
                 <input type="email" name="email" placeholder="Email" id="EmailInput" class="form-control" required="required">
             </div>
-           <!-- <br>
-            <p> Password </p>
-            
-            <br>
-            <p> Ripeti Password </p>
-            
-            <br>
-            <p> Indirizzo Email </p>
-            
-            <br>
-            <br>-->
             <button type="submit" class="btn btn-primary"> Submit </button>
         </form>
     </div> 
