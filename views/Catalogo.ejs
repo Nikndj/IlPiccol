@@ -7,9 +7,9 @@
         <thead>
         </thead>
         <tbody>
-            <tr>
+            <tr style="width:100%">
                 <% prodotti.forEach(function(Prodotto){%>
-                <td>
+                <td style="width:25%; text-align:center; padding-top:10px;">
                     <div>
                         <a class="aCatalog" href="/catalog/<%= Prodotto._id %>"><h2><%= Prodotto.nomeVisualizzato %></h2></a>             
                     </div>

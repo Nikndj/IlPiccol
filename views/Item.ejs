@@ -6,14 +6,12 @@
     </thead>
     <tbody>
         <tr style="width: 100%">
-            <td style="width: 33%">
-                <img src="<%= prodotti.immagine%>" height="400px" width="460px">
+            <td style="width:30%; padding-right:20px; padding-left:10px; padding-bottom:10px; padding-top:10px;">
+                <div style="border:solid black 1px;"><img src="<%= prodotti.immagine%>" height="100%" width="100%"></div>
             </td>
-            <td style="width: 66%">
+            <td style="width:30%">
                 <h1><%= prodotti.nomeVisualizzato%></h1>
-
-                <br>
-                
+                <hr>
                 <% if (prodotti.prezzo > prodotti.prezzoScontato) {%> 
                     <h3>Prezzo base: <strike><%= prodotti.prezzo%>€</strike></h3>
                     <br>
@@ -24,11 +22,7 @@
                 <% } else {%>
                         <h3>Prezzo: <%= prodotti.prezzo%>€</h3>
                 <% }%>
-
-                <br>
-               
-                <br>
-
+                <hr>
                 <h4>Disponibilità: <%=prodotti.quantita%> pezzi</h4>
                 <% if(prodotti.votoMedio==0){ %>
                 <h4>Nessuna Votazione</h4>
@@ -36,18 +30,34 @@
                     <h5>Voto Medio: <%= prodotti.votoMedio%></h5>
                 <%} %>
             </td>
+            <td style="width:30%">
+                <div style="text-align:center">
+                 <form action="/catalog/<%= prodotti._id%>" method="POST">
+                 <label for="addCart">Aggiungi al Carrello: </label>
+                 <input type="number" id="quantita" name="quantita" value="1" min="1" max="<%= prodotti.quantita%>" style="width:45px;"></input>
+                 <button type="submit" id="addCart" style="background: url(/Immagini/cart.png); width:60px;height:60px; vertical-align:middle"></button>
+                 <input type="hidden" name="azioneUtente" value="cart"></input>
+                 </form>
+                </div>
+                <div style="text-align:center">
+                 <form action="/catalog/<%= prodotti._id%>/wishlist" method="POST">
+                 <label for="addWish">Aggiungi a WishList: </label>
+                 <button type="submit" id="addWish" style="background: url(/Immagini/wishlist.png); width:60px;height:60px; vertical-align:middle"></button>
+                 <input type="hidden" name="azioneUtente" value="wishlist"></input>
+                 </form>
+                </div>
+            </td>
         </tr>
     </tbody>
     </table>
-    <table>
+    <hr style="margin-top:50px">
+    <div style="text-align:center; padding-left:20%; padding-right:20%;">
+            <h4>Descrizione Prodotto</h4>
+            <p><%= prodotti.descrizione%></p>
+    </div>
+    <table style="width:100%">
         <thead></thead>
-        <tbody>
-        <tr>
-            <td>
-                <h4>Descrizione Prodotto</h4>
-                <p><%= prodotti.descrizione%></p>
-            </td>
-        </tr>
+        <tbody style="text-align:left">
         <tr>
             <td> 
                 <% if(prodotti.commenti.length==0){ %>
@@ -68,25 +78,7 @@
     </tbody>
 </table>
 
-<!-- predisposizione per carrello-->
-<div>
-    <form action="/catalog/<%= prodotti._id%>" method="POST">
-    <label for="addCart">Aggiungi al Carrello: </label>
-    <input type="number" id="quantita" name="quantita" value="1" min="1" max="<%= prodotti.quantita%>"></input>
-    <input type="submit" id="addCart" value="Add to cart"></input>
-    <input type="hidden" name="azioneUtente" value="cart"></input>
-    </form>
-</div>
-<!-- predisposizione per wishlist -->
-<div>
-    <form action="/catalog/<%= prodotti._id%>/wishlist" method="POST">
-    <label for="addWish">Aggiungi a WishList: </label>
-    <input type="submit" id="addWish" value="Add to WishList"></input>
-    <input type="hidden" name="azioneUtente" value="wishlist"></input>
-    </form>
-</div>
-
-<div>
+<div style="text-align:center; width:100%">
 <form action="/catalog/<%= prodotti._id%>/recensioni" method="POST">
     <label for="bottoneToRecensione">Recensisci questo prodotto!</label>
     <input type="hidden" name="prodottoRecensione" value="<%= prodotti._id %>"></input>

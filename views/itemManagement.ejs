@@ -1,5 +1,6 @@
 <% include partials/header%>
-<div>
+<div style="text-align:center">
+    <a href="/"> HOME </a>
     <h3>Ricerca di nuovo per la gestione di un prodotto</h3>
         <form action="/adminManagement" method="POST">
             <input type="text" name="cerca" placeholder="Cerca..." size="35" maxlength="35">
@@ -10,7 +11,9 @@
 <div>
     <% prodotti.forEach(function(Prodotto){%>
         <div>
-                <p>***</p>
+                <hr style="height: 6px;
+                background: url(http://ibrahimjabbari.com/english/images/hr-11.png) repeat-x 0 0;
+                border: 0;">
                 <p><%= Prodotto.nomeVisualizzato %></p>
                 <p>Prezzo: <%= Prodotto.prezzo %></p>
                 <p>Prezzo Scontato: <%= Prodotto.prezzoScontato %></p>
@@ -40,7 +43,6 @@
                     <input type="hidden" name="inputQuantitaHidden" value="null"></input>
                 </form>
                 </div>
-                <p>***</p>
         </div>
     <% }) %>
 </div>
