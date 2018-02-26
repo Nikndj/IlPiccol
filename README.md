@@ -25,7 +25,7 @@ Di seguito la strumentazione usata per il sito:
 9) Come utente voglio poter vedere gli ultimi articoli aggiunti; 
 10) Come utente voglio poter lasciare feedback e voti e poter ordinare gli articoli in base al voto;
 
-## Struttura della cartella
+## Struttura della cartella:
 
  IlPiccol
  |               
