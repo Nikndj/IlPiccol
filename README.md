@@ -26,59 +26,59 @@ Di seguito la strumentazione usata per il sito:
 10) Come utente voglio poter lasciare feedback e voti e poter ordinare gli articoli in base al voto;
 
 ##Struttura della cartella
-IlPiccol
-|               
-+---models  /* modelli per il DB */
-|        \___ ordini.js
-|        \___ prodotti.js
-|        \___ utenti.js
-|
-+---node_modules /* contenitore di tutti i modelli e i pacchetti della strumentazione */
-|
-+---public /* cartella con file e oggetti pubblici */
-|        |
-|        +---Css
-|              \___ Accesso.css
-|              \___ Carrello.css
-|              \___ Catalogo.css
-|              \___ Homepage.css
-|              \___ Registrazione.css
-|              \___ style.css
-|        +---Immagini
-|        \___ modificaQuantita.js
-|
-+---views /*contenitore di tutti i file ejs */
-|       |
-|       +---partials
-|                  \___ footer.ejs
-|                  \___ header.ejs
-|                  \___ navbar.ejs
-|       \___ Accesso.ejs
-|       \___ adminPage.ejs
-|       \___ Carrello.ejs
-|       \___ Catalogo.ejs
-|       \___ Checkout.ejs
-|       \___ Contatti.ejs
-|       \___ Homepage.ejs
-|       \___ Item.ejs
-|       \___ itemManagement.ejs
-|       \___ NotFound.ejs
-|       \___ recensione.ejs
-|       \___ Registrazione.ejs
-|       \___ RisultatiRicerca.ejs
-|       \___ secret.ejs
-|       \___ StoricoOrdini.ejs
-|       \___ Supporto.ejs
-|       \___ userPage.ejs
-|       \___ Wishlist.ejs
-\___ app.js
-\___ mailsender.js
-\___ mongo.bat
-\___ mongod.bat
-\___ package_lock.json
-\___ package.json
-\___ Query.js
-\___ README.md
+ IlPiccol
+ |               
+ +---models  /* modelli per il DB */
+ |        \___ ordini.js
+ |        \___ prodotti.js
+ |        \___ utenti.js
+ |
+ +---node_modules /* contenitore di tutti i modelli e i pacchetti della strumentazione */
+ |
+ +---public /* cartella con file e oggetti pubblici */
+ |        |
+ |        +---Css
+ |              \___ Accesso.css
+ |              \___ Carrello.css
+ |              \___ Catalogo.css
+ |              \___ Homepage.css
+ |              \___ Registrazione.css
+ |              \___ style.css
+ |        +---Immagini
+ |        \___ modificaQuantita.js
+ |
+ +---views /*contenitore di tutti i file ejs */
+ |       |
+ |       +---partials
+ |                  \___ footer.ejs
+ |                  \___ header.ejs
+ |                   \___ navbar.ejs
+ |       \___ Accesso.ejs
+ |       \___ adminPage.ejs
+ |       \___ Carrello.ejs
+ |       \___ Catalogo.ejs
+ |       \___ Checkout.ejs
+ |       \___ Contatti.ejs
+ |       \___ Homepage.ejs
+ |       \___ Item.ejs
+ |       \___ itemManagement.ejs
+ |       \___ NotFound.ejs
+ |       \___ recensione.ejs
+ |       \___ Registrazione.ejs
+ |       \___ RisultatiRicerca.ejs
+ |       \___ secret.ejs
+ |       \___ StoricoOrdini.ejs
+ |       \___ Supporto.ejs
+ |       \___ userPage.ejs
+ |       \___ Wishlist.ejs
+ \___ app.js
+ \___ mailsender.js
+ \___ mongo.bat
+ \___ mongod.bat
+ \___ package_lock.json
+ \___ package.json
+ \___ Query.js
+ \___ README.md
 
 ##Per cominciare
 Di seguito i passaggi da compiere:
