@@ -7,11 +7,11 @@
         <thead>
         </thead>
         <tbody>
-            <tr>
+            <tr style="width:100%">
                 <% prodotti.forEach(function(Prodotto){%>
-                <td>
+                <td class="alignC">
                     <div>
-                        <a href="/catalog/<%= Prodotto._id %>"><h2><%= Prodotto.nomeVisualizzato %></h2></a>             
+                        <a class="aricerca" href="/catalog/<%= Prodotto._id %>"><h2><%= Prodotto.nomeVisualizzato %></h2></a>             
                     </div>
                     <div>
                         <h3><%= Prodotto.prezzoScontato %>€</h3>

@@ -3,22 +3,22 @@
         <table>
             <tr>
             <% if (user == null) { %>
-                <td><a href="/catalog"> CATALOGO </a></td>
-                <td><a href="/login"> LOGIN </a></td>
-                <td><a href="/register"> REGISTRATI </a></td>        
+                <td style="width: 17%; border-right: solid black 1px;"><a class="abar" href="/catalog"> CATALOGO </a></td>
+                <td style="width: 17%; border-right: solid black 1px;"><a class="abar"href="/login"> LOGIN </a></td>
+                <td style="width: 17%; border-right: solid black 1px;"><a class="abar" href="/register"> REGISTRATI </a></td>        
             <% } else { %>
                 <% if (!user.admin) {%>
-                    <td><p> Ciao <%=user.username%> </p> </td>
-                    <td><a href="/catalog"><span> CATALOGO </span></a></td>
-                    <td><a href="/userPage"> ACCOUNT PERSONALE </a></td>
-                    <td ><a href="/cart"> CARRELLO </a></td>
-                    <td><a href="/logout"> LOGOUT </a></td>
+                    <td style="width: 17%; border-right: solid black 1px;"> Ciao <%=user.username%> </td>
+                    <td style="width: 17%; border-right: solid black 1px;"><a class="abar" href="/catalog"> CATALOGO </a></td>
+                    <td style="width: 17%; border-right: solid black 1px;"><a class="abar" href="/userPage"> ACCOUNT PERSONALE </a></td>
+                    <td style="width: 17%; border-right: solid black 1px;"><a class="abar"  href="/cart"> CARRELLO </a></td>
+                    <td style="width: 17%; border-right: solid black 1px;"><a class="abar" href="/logout"> LOGOUT </a></td>
                 <% } else { %>
-                    <td><p> Ciao ADMIN <%=user.username%> </p> </td>
-                    <td><a href="/catalog"><p> CATALOGO </p> </a></td>
-                    <td><a href="/userPage"> ACCOUNT PERSONALE </a></td>
-                    <td><a href="/admin"> PAGINA ADMIN </a></td>
-                    <td><a href="/logout"> LOGOUT </a></td>
+                    <td style="width: 17%; border-right: solid black 1px;"><p> Ciao ADMIN <%=user.username%> </p> </td>
+                    <td style="width: 17%; border-right: solid black 1px;"><a class="abar" href="/catalog"> CATALOGO </a></td>
+                    <td style="width: 17%; border-right: solid black 1px;"><a class="abar" href="/userPage"> ACCOUNT PERSONALE </a></td>
+                    <td style="width: 17%; border-right: solid black 1px;"><a class="abar" href="/admin"> PAGINA ADMIN </a></td>
+                    <td style="width: 17%; border-right: solid black 1px;"><a class="abar" href="/logout"> LOGOUT </a></td>
                 <% } %>
             <% } %>
             </tr>
@@ -26,10 +26,10 @@
     </div>
 </nav>
 
-<div style="float: left;"><a href="/"><img src="Immagini/piccol.jpeg" alt="Logo Piccol"></a></div>
+<div style="float: left;"><a href="/"><img src="/Immagini/piccol.jpeg" alt="Logo Piccol"></a></div>
 
 <div id="search_bar">
-        <table border="1" style="height:78px;">
+        <table border="1" class="borderNav" style="height:78px;">
             <tr>
             <td style="width: 55%;">
                 Non trovi quello che cerchi? Esplora tra migliaia di prodotti usando la <span color="#FF0000">barra</span> 
