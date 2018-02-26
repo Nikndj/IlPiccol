@@ -85,7 +85,7 @@ Di seguito la strumentazione usata per il sito:
 
 Di seguito i passaggi da compiere:
 
-    git clone https://github.com/bibaroc/Ojec.git
+    git clone https://github.com/Nikndj/IlPiccol
     cd ./IlPiccol
     npm install
     node app.js
