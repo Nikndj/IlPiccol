@@ -1,6 +1,5 @@
-# IlPiccol
-Best site of stupid offers
- SEEEEEEEEEEEES
+IL PICCOL
+Project of a web application for UNICAM-PW
 
  USER STORIES
  1) Come admin voglio poter accedere ad un’area privata tramite username e password; (V)
@@ -13,3 +12,48 @@ Best site of stupid offers
  8) Come utente voglio poter aggiungere prodotti ad una wishlist; (V)
  9) Come utente voglio poter vedere gli ultimi articoli aggiunti; (V)
  10) Come utente voglio poter lasciare feedback e voti e poter ordinare gli articoli in base al voto;(V)
+
+
+Essentials:
+The project is a simple e-commerce website made with NodeJS, MondoDB, JavaScript and JQuery.
+Application deployed on Heroku – Presentation on YouTube
+
+Folder Structure: 
+IlPiccol
+|               
++---CatalogoPage
+|   |   Catalogo.css
+|   |   catalogo.html
+|   |   dump.jpg
+|   |   index.html
+|   |   
++---Css
+|   |       Accesso.css
+|   |       Carrello.css
+|   |       Registrazione.css
+|   |     
+  +---Html
+|   |       Accesso.html
+|   |       Carrello.html
+|   |       Registrazione.html
+|   |       flame.png
+|   |       piccol.jpeg
+|   |       quattro.png
+|   |       star.jpeg
+|   |       testoh.html
+|   |       homepage.txt
+|   |
+\--- jQueryWishlist.js
+
+Navigate to localhost:3000
+
+Final notes:
+Website created by:
+Del Giudice Nicola, nicola.delgiudice@studenti.unicam.it
+Calamita Leonardo, leonardo.calamita@studenti.unicam.it
+Bucchicchio Luigi, luigi.bucchicchio@studenti.unicam.it
+Guardabassi Matteo, matteo.guardabassi@studenti.unicam.it
+
+Admin credentials:
+id: admin pw: 123
+
