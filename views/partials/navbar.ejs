@@ -37,18 +37,26 @@
             </td>
             <form action="/RisultatiRicerca" method="POST">
             <td>
-                <input type="text" name="cerca" placeholder="Cerca..." required="required" minlength="1" maxlength="30" size="20">
+                <div class="row">
+                    <div class="col">
+                        <input type="text" name="cerca" placeholder="Cerca..." required="required" minlength="1" maxlength="30" size="20" class="form-control">
+                    </div>                
                 
-                <select id="sceltaSort" name="sort" required="required">
-                    <option value="crescPrezzo">Ordine Crescente di Prezzo</option>
-                    <option value="decrPrezzo">Ordine Decrescente di Prezzo</option>
-                    <option value="recenti">Recenti</option>
-                    <option value="crescNome">Ordine Alfabetico</option>
-                    <option value="decrNome">Ordine Alfabetico Decrescente</option>
-                    <option value="crescVoto">Ordine Crescente di Voto</option>
-                    <option value="decrVoto">Ordine Decrescente di Voto</option>
-                </select> 
-                <button type="submit">Cerca</button>
+                <div class="col">
+                    <select id="sceltaSort" name="sort" required="required" class="form-control">
+                            <option value="crescPrezzo">Ordine Crescente di Prezzo</option>
+                            <option value="decrPrezzo">Ordine Decrescente di Prezzo</option>
+                            <option value="recenti">Recenti</option>
+                            <option value="crescNome">Ordine Alfabetico</option>
+                            <option value="decrNome">Ordine Alfabetico Decrescente</option>
+                            <option value="crescVoto">Ordine Crescente di Voto</option>
+                            <option value="decrVoto">Ordine Decrescente di Voto</option>
+                    </select>                
+                </div>
+                <div class="col">
+                        <button type="submit" class="btn btn-secondary">Cerca</button>    
+                </div>                
+            </div>
             </form>
             </td>
             </tr>

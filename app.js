@@ -12,7 +12,8 @@ var express = require('express'),
  nodemailer = require('nodemailer'),
  app = express();
 
-mongoose.connect('mongodb://localhost/ilpiccoldb', {useMongoClient: true});
+var url='mongodb://admin:admin@ds012168.mlab.com:12168/ilpiccoldb'
+mongoose.connect(url, {useMongoClient: true});
 
 //mailer
 var transporter = nodemailer.createTransport({
