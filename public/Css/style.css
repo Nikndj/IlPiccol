@@ -5,11 +5,13 @@
 }
 
 #catalogo table {
+  width: 100%;
   border-left: solid grey 1px;
   border-right: solid grey 1px;
 }
 
 #catalogo td {
+  width: 25%;
   padding-left: 20px;
   padding-right: 20px;
   padding-bottom: 30px;
@@ -62,4 +64,14 @@ html, body {
 
 .hidden{
   display: none;
+}
+
+.piedone{
+  position: absolute;
+  right: 0;
+  left: 0;
+  padding: 1rem;
+  background-color: yellow;
+  text-align: right;
+
 }

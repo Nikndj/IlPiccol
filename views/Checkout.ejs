@@ -1,3 +1,63 @@
-<a href="/"> HOME </a>
+<%include partials/header%>
+<%include partials/navbar%>
 
 <h1> SKIAVO DEL CAPITALISMO <h1>
+
+<div>
+    <table>
+    <tbody>
+         <tr style="width: 100%">
+            <p> Ordine del <%=ordine.data.getDate()%>/<%=ordine.data.getMonth()%>/<%=ordine.data.getFullYear()%>, ore <%=ordine.data.getHours()%>:<%=ordine.data.getMinutes()%> </p>
+            <div>
+                <% var i = 0; %>
+                <% ordine.prodotti.forEach(function(elemento){ %>
+                    <td>
+                    <a href="/catalog/<%= elemento.prodotto._id %>">
+                        <img src="<%= elemento.prodotto.immagine%>" height="100px" width="100px" style="float: left;">
+                        <h4 style="float: left;"><%= elemento.prodotto.nomeVisualizzato %></h4>
+                    </a>
+                    <h2> <span class="prezzo"><%=elemento.prodotto.prezzo * elemento.quantita%></span> €</h2>
+                    <h3> Q.tà: <%=elemento.quantita%> </h3>
+                    </td>
+                    <% i++ %>
+                    <% if (i == 4) { %>
+                        </tr>
+                        <tr>
+                    <% } %>
+                <% }); %>
+            <h3> Totale: <%=ordine.totale%>€ </h3>
+            </div>
+            <br>
+            </tr>
+    </tbody>
+    </table>
+    </div>
+    <% var inserisciLink = false; %>
+    <% if (utente.indirizzo == "" || utente.citta == "" || utente.cap == 0 || utente.indirizzo == undefined || utente.citta == undefined || utente.cap == undefined) { %>
+        <div>
+            <p> Il tuo informazioni di recapito non sono ancora state correttamente impostate </p>
+            <% inserisciLink = true; %>
+        </div>
+    <% } else { %>
+        <div>
+            <h4> Invieremo l'ordine da te effettuato a <%=utente.citta%> (CAP: <%=utente.cap%>), in <%=utente.indirizzo%> </h4>
+        </div>
+    <% } %>
+
+    <% if (utente.numeroCarta == "" || utente.numeroCarta == undefined) { %>
+        <div>
+            <p> Le tue informazione per il pagamento non sono ancora state correttamente impostate </p>
+            <% inserisciLink = true; %>
+        </div>
+    <% } else { %>
+        <div>
+            <h4> Il totale per l'ordine sarà accreditato alla tua carta (numero <%=utente.numeroCarta%>) </h4>
+        </div>
+    <% } %>
+
+    <% if (inserisciLink) { %>
+        <h4> Prima di poter procedere con la spedizione, completa l'inserimento delle tue informazioni <a href="/userPage"> nella tua pagina personale </a> </h4>
+    <% } %>
+    <hr>
+    <br>
+

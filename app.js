@@ -9,15 +9,12 @@ var express = require('express'),
  localStrategy= require('passport-local'),
  passportLocalMongoose= require('passport-local-mongoose'),
  path = require('path'),
+ nodemailer = require('nodemailer'),
  app = express();
 
-
-/*prima bisogna far partire mongod.bat (dovrebbe funzionare
- se si è lasciato il path di default nell'installazione)*/
 mongoose.connect('mongodb://localhost/ilpiccoldb', {useMongoClient: true});
 
 //mailer
-var nodemailer = require('nodemailer');
 var transporter = nodemailer.createTransport({
 	service: 'gmail',
 	auth: {
@@ -43,6 +40,12 @@ app.use(passport.session());
 passport.use(new localStrategy(Utente.authenticate()));
 passport.serializeUser(Utente.serializeUser());
 passport.deserializeUser(Utente.deserializeUser());
+
+app.use(function(req, res, next){
+	var utente = req.user || null;
+	res.locals.user = utente;
+	next();
+});
 
 //ROUTES
 app.get('/', function(req, res) {
@@ -92,7 +95,7 @@ app.get('/itemManagement',function(req,res){
 
 app.post('/itemManagementPrezzo', function(req,res){
 	Prodotto.findByIdAndUpdate(req.body.idProdotto, {
-		"prezzoScontato": req.body.inputPrezzo, "dataInserimento": new Date()},function(err, prodottoDaAggiornare){
+		"prezzoScontato": req.body.inputPrezzo},function(err, prodottoDaAggiornare){
 		if(err){
 			console.log("Non è stato trovato")
 			console.log(err);
@@ -121,7 +124,7 @@ app.post('/itemManagementMail',function(req,res){
 
 app.post('/itemManagementImmagine', function(req,res){
 	Prodotto.findByIdAndUpdate(req.body.idProdotto,{
-		"immagine": req.body.inputImmagine, "dataInserimento": new Date()}, function(err, prodottoDaAggiornare){
+		"immagine": req.body.inputImmagine}, function(err, prodottoDaAggiornare){
 		if(err){
 			console.log("Non è stato trovato")
 			console.log(err);
@@ -321,35 +324,40 @@ app.post('/eliminaProdottoCarrello/:id', isLoggedIn, function(req, res){
 
 app.post('/concludiOrdine', isLoggedIn, function(req, res){
 	var carrello = req.user.carrello;
-	Utente.findById(req.user._id).populate({path: 'carrello.prodotto'}).exec(function(err, utente){
-		var totale = 0;
-		utente.carrello.forEach(function(elemento){
-			totale += elemento.prodotto.prezzo * elemento.quantita;
-			elemento.prodotto.quantita -= elemento.quantita;
-			elemento.prodotto.save(function(err){});
+	if (carrello.length == 0) {
+		res.redirect('/');
+	} else {
+		Utente.findById(req.user._id).populate({path: 'carrello.prodotto'}).exec(function(err, utente){
+			var totale = 0;
+			utente.carrello.forEach(function(elemento){
+				totale += elemento.prodotto.prezzo * elemento.quantita;
+				elemento.prodotto.quantita -= elemento.quantita;
+				elemento.prodotto.save(function(err){});
+			});
+			Ordine.create({
+				"utente": utente._id,
+				"prodotti": utente.carrello,
+				"totale": totale,
+				"data": Date.now()
+			}, function(err, ordine){
+				if (err) console.log(err);
+				else {
+					utente.carrello = [];
+					utente.ordiniPassati.push(ordine._id);
+					console.log(utente.ordiniPassati);
+					utente.save(function(err){
+						if (err) console.log(err);
+						else{
+							Ordine.findById(ordine._id).populate({path: 'prodotti.prodotto'}).exec(function(err, ordine){
+								if (err) console.log(err);
+								else res.render('Checkout.ejs', { ordine: ordine, utente: utente });
+							});
+						} 
+					});
+				}
+			}); 
 		});
-		Ordine.create({
-			"utente": utente._id,
-			"prodotti": utente.carrello,
-			"totale": totale,
-			"data": Date.now()
-		}, function(err, ordine){
-			if (err) console.log(err);
-			else {
-				utente.carrello = [];
-				utente.ordiniPassati.push(ordine._id);
-				console.log(utente.ordiniPassati);
-				utente.save(function(err){
-					if (err) console.log(err);
-					else res.render('/checkout', { ordine: ordine });
-				});
-			}
-		}); 
-	});
-});
-
-app.get('/checkout', isLoggedIn, function(req, res){
-	res.render('Checkout.ejs');
+	}
 });
 
 app.get('/storicoOrdini', isLoggedIn, function(req, res){
@@ -484,7 +492,8 @@ app.post("/register", function(req, res) {
 				return res.render("Registrazione.ejs");
 			}
 			passport.authenticate("local")(req, res, function(){
-				res.render("userPage.ejs", { utente: req.user });
+				//res.render("userPage.ejs", { utente: req.user });
+				res.redirect("/userPage");
 			});
 		});
 	} else {
@@ -493,23 +502,14 @@ app.post("/register", function(req, res) {
 	}
 });
 
-//LOGIN ROUTES
-app.get('/login', function(req, res) {
-	res.render('Accesso.ejs');
-});
-
 app.get('/userPage', isLoggedIn, function(req, res){
-	if (req.user.admin){
-		res.redirect('/admin')
-	}else{
-		Utente.findById(req.params.id, function(err, foundUtente){
-			if(err){
-				console.log(err);
-			}else{
-				res.render("userPage.ejs", {utente: req.user});
-			}
-		})
-	}
+	Utente.findById(req.params.id, function(err, foundUtente){
+		if(err){
+			console.log(err);
+		}else{
+			res.render("userPage.ejs", {utente: req.user});
+		}
+	});
 });
 
 app.post('/aggiornaInformazioniUtente', isLoggedIn, function(req, res){
@@ -532,34 +532,40 @@ app.post('/aggiornaInformazioniUtente', isLoggedIn, function(req, res){
 	res.redirect('/userPage');
 });
 
-app.post("/login", login());
-    
-function login() {
-	return function (req, res) {
-		Utente.findOne({"username": req.body.username}, function (err, utente) {
-			if (err){
-				console.log(err);
-				res.redirect("/login");
-			}
-			if(utente.admin){
-				passport.authenticate("local")(req, res, function(){
-					res.redirect("/admin");
-				});
-			} else {
-				passport.authenticate("local")(req, res, function(){
-					res.redirect("/");
-				});
-			}
-		});
-	}	
-}
+//LOGIN ROUTES
+app.get('/login', function(req, res) {
+	res.render('Accesso.ejs');
+});
 
+app.post("/login", login);
+
+function login(req, res) {
+	Utente.findOne({"username": req.body.username}, function (err, utente) {
+		if (err){
+			console.log(err);
+			res.redirect("/login");
+		} else {
+			if (utente == null) 
+				res.redirect("/login");
+			else {
+				if(utente.admin){
+					passport.authenticate("local")(req, res, function(){
+						res.redirect("/admin");
+					});
+				} else {
+					passport.authenticate("local")(req, res, function(){
+						res.redirect("/");
+					});
+				}
+			}
+		}
+	});
+}
 
 app.get("/logout", function(req, res){
 	req.logOut();
 	res.redirect("/");
 });
-
 
 function isLoggedIn(req, res, next) {
 	if (req.isAuthenticated()) {
