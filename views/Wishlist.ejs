@@ -1,36 +1,41 @@
 <% include partials/header%>
 <% include partials/navbar%>
 
-<div class="container">
-<h1> WISHLIST </h1>
 
-<div class="jumbotron">
+
+
+<div class="container">
+	<h1> WISHLIST </h1>
+<div class="jumbotron VerticalMiddle">
 	<% if (elementi.length > 0) {%>
+	<!--	<% var i = 0; %>
+		<tr>-->
 	        <% elementi.forEach(function(elemento){%>
-				<div class="media" style="margin-bottom: 20px;">
-	                <div >
-						<a href="/catalog/<%= elemento._id %>">
-							<h4> <%= elemento.nome.toUpperCase() %> </h4>
-	                    	<img src="<%= elemento.immagine%>" height="90px" width="90px" >
+	           <!-- <td>-->
+				<div>
+	                <div>
+	                	<a href="/catalog/<%= elemento._id %>">
+	                    	<img src="<%= elemento.immagine%>" height="90px" width="90px" style="float: left;">
+	                    	<h4 style="float: left; padding-right:10px;padding-left:10px"> <%= elemento.nome.toUpperCase() %> </h4>
 						</a>
 					</div>
-					<div>
-						<h2> <%=elemento.prezzo%>  €</h2>
+					<div style="padding-left:10px">
+						<h4>- <%=elemento.prezzo%>  €</h4>
 					</div>
-	                <div>
+	                <div style="text-align:right">
 	                    <form action="eliminaProdottoWishlist/<%=elemento._id%>" method="POST">
 	                    	<button type="submit" class="btn btn-warning" > Elimina Prodotto </button>
 	                   	</form>
 					</div>
 					<hr> 
 				</div>
+	         <!--   </td> -->
 	        <% }); %>
+	   <!-- </tr>-->
 	<% } else {%>
 		<hr>
 		<h1> WISHLIST VUOTA <h1>
 	<% }%>
 </div>
-
 </div>
-
 <% include partials/footer%>

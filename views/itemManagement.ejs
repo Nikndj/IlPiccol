@@ -1,5 +1,6 @@
 <% include partials/header%>
-<div>
+<div style="text-align:center">
+    <a href="/"> HOME </a>
     <h3>Ricerca di nuovo per la gestione di un prodotto</h3>
         <form action="/adminProductManagement" method="POST">
             <input type="text" name="cerca" placeholder="Cerca..." size="35" maxlength="35">
@@ -9,10 +10,10 @@
 
 <div>
     <% prodotti.forEach(function(Prodotto){%>
-        <div>
-                <p>***</p>
-                <p><%= Prodotto.nomeVisualizzato %></p>
-                <p>Prezzo: <%= Prodotto.prezzo %></p>
+            <hr style="border-top:10px solid ;color:rgba(1, 1, 44, 0.349);">
+            <div class="adminProductbox">
+                <h4><%= Prodotto.nomeVisualizzato %></h4>
+                <p>Prezzo: <%= Prodotto.prezzo %> €</p>
                 <p>Prezzo Scontato: <%= Prodotto.prezzoScontato %></p>
                 <p>Quantità disponibili: <%= Prodotto.quantita %></p>
                  <form action="/itemManagementMail" method="POST">
@@ -30,7 +31,7 @@
                 </form>
                 <form action="/itemManagementImmagine" method="POST">
                     <label for="inputImmagine">Cambia l'immagine di questo prodotto: </label>
-                    <input id="inputImmagine" name="inputImmagine" type="text" placeholder="Link immagine (locale o remota)" value="<%=Prodotto.immagine%>" required="required"></input>
+                    <input style="width:260px" id="inputImmagine" name="inputImmagine" type="text" placeholder="Link immagine (locale o remota)" required="required"></input>
                     <input type="hidden" name="idProdotto" value="<%=Prodotto._id%>"></input>
                 </form>
                 <form action="/itemManagementQuantita" method="POST">
@@ -40,7 +41,6 @@
                     <input type="hidden" name="inputQuantitaHidden" value="null"></input>
                 </form>
                 </div>
-                <p>***</p>
         </div>
     <% }) %>
 </div>

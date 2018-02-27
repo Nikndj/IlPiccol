@@ -6,9 +6,11 @@
 
 #catalogo table {
   width: 100%;
-  border-left: solid grey 1px;
-  border-right: solid grey 1px;
+
+  border-left: solid rgba(6, 1, 53, 0.904) 1px;
+  border-right: solid rgba(6, 1, 53, 0.904) 1px;
   margin-bottom: 20px;
+
 }
 
 #catalogo td {
@@ -55,6 +57,20 @@
 #admin input, textarea {
   margin-right: 20px;
   margin-bottom: 10px;
+}
+
+.adminProductbox{
+  margin-right: 20px;
+  margin-left: 20px;
+  text-align: center;
+}
+
+#formNumberAdmin{
+  width: 180px;
+}
+
+#formLinkAdmin{
+  width: 260px;
 }
 
 /* CARRELLO */
@@ -113,12 +129,54 @@
   margin-bottom: 0;
 }
 
-
-
 html, body {
   height: 100%;
   margin: 0;
   padding: 0;
+}
+body{
+  background: url(/Immagini/background2.jpg);
+  background-size: 100%;
+}
+a:visited,a:link{
+  color: rgba(2, 2, 54, 0.788);
+  text-align: center;
+}
+a:hover.abar{
+  color:yellow;
+}
+a:hover.anotbar{
+  color:whitesmoke;
+}
+.aricerca:visited,.aricerca:link,{
+  color: rgba(2, 2, 54, 0.788);
+}
+.aricerca:hover{
+  color:whitesmoke;
+}
+
+.borderNav{
+  border-color: rgba(3, 1, 27, 0.904);
+}
+
+.VerticalMiddle{
+  vertical-align: middle;
+}
+
+.alignC{
+  text-align: center;
+}
+
+.w25pc{
+  width: 25%;
+}
+
+.w100pc{
+  width: 100%;
+}
+
+.padTOP{
+  padding-top: 20px;
 }
 
 .hidden{
@@ -130,7 +188,7 @@ html, body {
   right: 0;
   left: 0;
   padding: 1rem;
-  background-color: yellow;
+  background-color: transparent;
   text-align: right;
 
 }
