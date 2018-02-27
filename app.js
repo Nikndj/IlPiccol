@@ -12,8 +12,9 @@ var express = require('express'),
  nodemailer = require('nodemailer'),
  app = express();
 
-var url='mongodb://admin:admin@ds012168.mlab.com:12168/ilpiccoldb'
-mongoose.connect(url, {useMongoClient: true});
+/*var url='mongodb://admin:admin@ds012168.mlab.com:12168/ilpiccoldb'
+mongoose.connect(url, {useMongoClient: true});*/
+mongoose.connect('mongodb://localhost/ilpiccoldb', {useMongoClient: true});
 
 //mailer
 var transporter = nodemailer.createTransport({
@@ -460,15 +461,25 @@ app.get('/wishlist', isLoggedIn, function(req, res){
 
 app.post('/eliminaProdottoWishlist/:id', isLoggedIn, function(req, res){
 	Utente.findById(req.user._id).exec(function(err, utente){
-		utente.wishlist.forEach(function(elemento){
-			if (req.params.id == elemento){
-				utente.wishlist.splice(utente.wishlist.indexOf(elemento), 1);
-				utente.save(function(err){
-					if (err) console.log(err);
-					else res.redirect('/wishlist');
-				});
-			}
-		});
+		var indiceList = utente.wishlist.indexOf(req.params.id);
+		if (indiceList >= 0) {
+			utente.wishlist.splice(indiceList, 1);
+			utente.save(function(err){
+				if (err) console.log(err);
+				else {
+					Prodotto.findById(req.params.id).exec(function(err, prodotto){
+						var indiceUtente = prodotto.utentiInteressati.indexOf(utente._id);
+						if (indiceUtente >= 0) {
+							prodotto.utentiInteressati.splice(indiceUtente, 1);
+							prodotto.save(function(err){
+								if (err) console.log(err);
+								else res.redirect('/wishlist');
+							});
+						}
+					});
+				}
+			});
+		}
 	});
 });
 
