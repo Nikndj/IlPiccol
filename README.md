@@ -3,7 +3,7 @@ Best site of stupid offers
 Sito di e-commerce sviluppato per il corso di Programmazione Web, coorte 2015-2016
 
 [Deploy su Heroku](https://ilpiccol.herokuapp.com/)
-[Video su YouTube]()
+[Video su YouTube](https://youtu.be/qK2cilvYpR4)
 
 ## Strumentazione
 Di seguito la strumentazione usata per il sito:
@@ -99,7 +99,7 @@ Username: admin
 password: admin
 
 Collaboratori:
-Nicola Del Giudice
-Luigi Bucchicchio
-Leonardo Calamita
-Matteo Guardabassi
+Nicola Del Giudice 095163
+Luigi Bucchicchio 095562
+Leonardo Calamita 095119
+Matteo Guardabassi 095565
